@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to TherapyConnect - Payment Successful</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .success-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .success-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            padding: 4rem 3rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #66c2a5, #8dd3c7);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .success-message {
+            color: #8b92b0;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .next-steps {
+            background: rgba(102, 194, 165, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .next-steps h3 {
+            color: #66c2a5;
+            margin-bottom: 1rem;
+        }
+
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .next-steps li {
+            padding: 0.75rem 0;
+            color: #8b92b0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .next-steps li:last-child {
+            border-bottom: none;
+        }
+
+        .next-steps li:before {
+            content: '✓ ';
+            color: #66c2a5;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 640px) {
+            .success-box {
+                padding: 2rem;
+            }
+
+            .success-title {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <!-- Success Container -->
+    <div class="success-container">
+        <div class="success-box">
+            <div class="success-icon">🎉</div>
+            <h1 class="success-title">Welcome to TherapyConnect!</h1>
+            <p class="success-message">
+                Your payment was successful. We're excited to support you on your mental wellness journey.
+            </p>
+
+            <div class="next-steps">
+                <h3>What Happens Next:</h3>
+                <ul>
+                    <li>Check your email for confirmation and account details</li>
+                    <li>Complete your profile to help us match you with the perfect therapist</li>
+                    <li>Browse our therapist directory and schedule your first session</li>
+                    <li>Access wellness resources and mental health tools</li>
+                    <li>Join our supportive community</li>
+                </ul>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="dashboard.html" class="btn btn-large btn-primary">Go to Dashboard</a>
+                <a href="therapists.html" class="btn btn-large btn-secondary">Browse Therapists</a>
+            </div>
+
+            <p style="margin-top: 2rem; color: #8b92b0; font-size: 0.9rem;">
+                Need help? <a href="support.html" style="color: #66c2a5;">Contact our support team</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Get session ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+        
+        if (sessionId) {
+            console.log('Stripe Session ID:', sessionId);
+            
+            // Update user status in localStorage
+            const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+            userData.subscriptionStatus = 'active';
+            userData.stripeSessionId = sessionId;
+            userData.activatedAt = new Date().toISOString();
+            localStorage.setItem('therapyConnectUser', JSON.stringify(userData));
+            
+            // You can verify the session with your backend here
+            // fetch(`/api/verify-session/${sessionId}`)
+            //     .then(response => response.json())
+            //     .then(data => console.log('Session verified:', data));
+        }
+    </script>
+    <link rel="stylesheet" href="chat-widget.css">
+    <script src="chat-widget.js"></script>
+</body>
+</html>

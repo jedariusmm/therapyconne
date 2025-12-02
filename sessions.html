@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Sessions - TherapyConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chat-widget.css">
+    <style>
+        .sessions-container {
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .sessions-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.1), rgba(141, 211, 199, 0.05));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .sessions-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(102, 194, 165, 0.2);
+            flex-wrap: wrap;
+        }
+
+        .session-tab {
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .session-tab.active {
+            color: var(--therapeutic-green);
+        }
+
+        .session-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--therapeutic-green);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .session-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .session-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .session-card:hover {
+            border-color: var(--therapeutic-green);
+            box-shadow: 0 5px 20px rgba(102, 194, 165, 0.2);
+        }
+
+        .session-card.upcoming {
+            border-left: 4px solid var(--therapeutic-green);
+        }
+
+        .session-card.completed {
+            border-left: 4px solid #6b7280;
+        }
+
+        .session-card.cancelled {
+            border-left: 4px solid #ef4444;
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .session-info {
+            display: flex;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .therapist-avatar-sm {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .session-details h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .session-type {
+            color: var(--therapeutic-green);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .session-datetime {
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .datetime-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .status-badge.upcoming {
+            background: rgba(102, 194, 165, 0.2);
+            color: var(--therapeutic-green);
+        }
+
+        .status-badge.completed {
+            background: rgba(107, 114, 128, 0.2);
+            color: #9ca3af;
+        }
+
+        .status-badge.cancelled {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .status-badge.in-progress {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            animation: pulse 2s infinite;
+        }
+
+        .session-notes {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid rgba(102, 194, 165, 0.3);
+        }
+
+        .session-notes h4 {
+            color: var(--therapeutic-green);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .session-notes p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .session-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-join {
+            background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-join:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 194, 165, 0.4);
+        }
+
+        .btn-action {
+            background: transparent;
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            color: var(--therapeutic-green);
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-action:hover {
+            background: rgba(102, 194, 165, 0.1);
+            border-color: var(--therapeutic-green);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px dashed rgba(102, 194, 165, 0.3);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--therapeutic-green);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .countdown-timer {
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.2), rgba(141, 211, 199, 0.1));
+            border: 1px solid var(--therapeutic-green);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .countdown-timer h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .countdown {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--therapeutic-green);
+        }
+
+        @media (max-width: 768px) {
+            .session-header {
+                flex-direction: column;
+            }
+
+            .session-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .session-datetime {
+                flex-direction: column;
+                align-items: start;
+                gap: 0.5rem;
+            }
+
+            .session-actions {
+                width: 100%;
+            }
+
+            .btn-join,
+            .btn-action {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">TherapyConnect</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="sessions.html" class="active">Sessions</a>
+                <a href="therapists.html">Therapists</a>
+                <a href="resources.html">Resources</a>
+                <a href="profile.html">Profile</a>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sessions-container">
+        <div class="container">
+            <!-- Header -->
+            <div class="sessions-header">
+                <h1 style="color: white; margin-bottom: 1rem;">My Sessions 📅</h1>
+                <p style="color: var(--gray);">Track your AI therapy chat sessions and wellness activity in real-time</p>
+            </div>
+
+            <!-- Session Stats -->
+            <div class="stats-row" id="session-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-number" id="total-sessions">0</div>
+                    <div class="stat-label">Total Sessions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-number" id="current-streak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🧘</div>
+                    <div class="stat-number" id="exercises-completed">0</div>
+                    <div class="stat-label">Exercises Done</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-number" id="articles-read">0</div>
+                    <div class="stat-label">Articles Read</div>
+                </div>
+            </div>
+
+            <!-- Session Tabs -->
+            <div class="sessions-tabs">
+                <button class="session-tab active" onclick="switchSessionTab('upcoming')">📅 My Chat Sessions</button>
+            </div>
+
+            <!-- Upcoming Sessions Tab -->
+            <div class="tab-content active" id="upcoming-tab">
+                <div class="session-list">
+                    <!-- Session Starting Soon -->
+                    <div class="session-card upcoming">
+                        <div class="countdown-timer">
+                            <h4>Session Starting Soon!</h4>
+                            <div class="countdown" id="countdown">Starting in 23:45:12</div>
+                        </div>
+
+                        <div class="session-header">
+                            <div class="session-info">
+                                <div class="therapist-avatar-sm">👩‍⚕️</div>
+                                <div class="session-details">
+                                    <h3>Dr. Sarah Chen</h3>
+                                    <div class="session-type">📹 Video Session • 60 minutes</div>
+                                    <div class="session-datetime">
+                                        <div class="datetime-item">📅 Tomorrow, Nov 12</div>
+                                        <div class="datetime-item">🕐 2:00 PM EST</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="status-badge upcoming">Confirmed</span>
+                        </div>
+
+                        <div class="session-notes">
+                            <h4>Your Notes:</h4>
+                            <p>Want to discuss coping strategies for work-related anxiety and stress management techniques.</p>
+                        </div>
+
+                        <div class="session-actions">
+                            <button class="btn-join" onclick="joinSession('session1')">📹 Join Session</button>
+                            <button class="btn-action" onclick="rescheduleSession('session1')">🔄 Reschedule</button>
+                            <button class="btn-action" onclick="cancelSession('session1')">✕ Cancel</button>
+                        </div>
+                    </div>
+
+                    <!-- Next Upcoming Session -->
+                    <div class="session-card upcoming">
+                        <div class="session-header">
+                            <div class="session-info">
+                                <div class="therapist-avatar-sm">👨‍⚕️</div>
+                                <div class="session-details">
+                                    <h3>Dr. Michael Torres</h3>
+                                    <div class="session-type">💬 Chat Session • 45 minutes</div>
+                                    <div class="session-datetime">
+                                        <div class="datetime-item">📅 Friday, Nov 15</div>
+                                        <div class="datetime-item">🕐 10:00 AM EST</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="status-badge upcoming">Confirmed</span>
+                        </div>
+
+                        <div class="session-notes">
+                            <h4>Your Notes:</h4>
+                            <p>Follow-up on EMDR progress and discuss recent triggers.</p>
+                        </div>
+
+                        <div class="session-actions">
+                            <button class="btn-action" onclick="addToCalendar('session2')">📆 Add to Calendar</button>
+                            <button class="btn-action" onclick="rescheduleSession('session2')">🔄 Reschedule</button>
+                            <button class="btn-action" onclick="cancelSession('session2')">✕ Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="book-session.html" class="btn-join" style="text-decoration: none;">📅 Book New Session</a>
+                </div>
+            </div>
+
+            <!-- Completed Sessions Tab -->
+            <div class="tab-content" id="completed-tab">
+                <div class="session-list">
+                    <div class="session-card completed">
+                        <div class="session-header">
+                            <div class="session-info">
+                                <div class="therapist-avatar-sm">👩‍⚕️</div>
+                                <div class="session-details">
+                                    <h3>Dr. Sarah Chen</h3>
+                                    <div class="session-type">📹 Video Session • 60 minutes</div>
+                                    <div class="session-datetime">
+                                        <div class="datetime-item">📅 Nov 7, 2025</div>
+                                        <div class="datetime-item">🕐 2:00 PM EST</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="status-badge completed">Completed</span>
+                        </div>
+
+                        <div class="session-notes">
+                            <h4>Session Summary:</h4>
+                            <p>Discussed breathing techniques and cognitive reframing. Practiced 4-7-8 breathing method. Homework: Daily gratitude journaling.</p>
+                        </div>
+
+                        <div class="session-actions">
+                            <button class="btn-action" onclick="viewNotes('session3')">📝 View Full Notes</button>
+                            <button class="btn-action" onclick="bookAgain('Dr. Sarah Chen')">🔁 Book Again</button>
+                        </div>
+                    </div>
+
+                    <div class="session-card completed">
+                        <div class="session-header">
+                            <div class="session-info">
+                                <div class="therapist-avatar-sm">👨‍⚕️</div>
+                                <div class="session-details">
+                                    <h3>Dr. Michael Torres</h3>
+                                    <div class="session-type">📹 Video Session • 60 minutes</div>
+                                    <div class="session-datetime">
+                                        <div class="datetime-item">📅 Nov 3, 2025</div>
+                                        <div class="datetime-item">🕐 10:00 AM EST</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="status-badge completed">Completed</span>
+                        </div>
+
+                        <div class="session-notes">
+                            <h4>Session Summary:</h4>
+                            <p>Continued EMDR processing. Made significant progress on childhood trauma. Follow-up scheduled.</p>
+                        </div>
+
+                        <div class="session-actions">
+                            <button class="btn-action" onclick="viewNotes('session4')">📝 View Full Notes</button>
+                            <button class="btn-action" onclick="bookAgain('Dr. Michael Torres')">🔁 Book Again</button>
+                        </div>
+                    </div>
+
+                    <div class="session-card completed">
+                        <div class="session-header">
+                            <div class="session-info">
+                                <div class="therapist-avatar-sm">👩‍⚕️</div>
+                                <div class="session-details">
+                                    <h3>Dr. Sarah Chen</h3>
+                                    <div class="session-type">💬 Chat Session • 45 minutes</div>
+                                    <div class="session-datetime">
+                                        <div class="datetime-item">📅 Oct 28, 2025</div>
+                                        <div class="datetime-item">🕐 3:00 PM EST</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="status-badge completed">Completed</span>
+                        </div>
+
+                        <div class="session-notes">
+                            <h4>Session Summary:</h4>
+                            <p>Check-in on anxiety levels. Reviewed progress on CBT exercises. Adjusted coping strategies for work situations.</p>
+                        </div>
+
+                        <div class="session-actions">
+                            <button class="btn-action" onclick="viewNotes('session5')">📝 View Full Notes</button>
+                            <button class="btn-action" onclick="bookAgain('Dr. Sarah Chen')">🔁 Book Again</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cancelled Sessions Tab -->
+            <div class="tab-content" id="cancelled-tab">
+                <div class="session-list">
+                    <div class="session-card cancelled">
+                        <div class="session-header">
+                            <div class="session-info">
+                                <div class="therapist-avatar-sm">👨‍⚕️</div>
+                                <div class="session-details">
+                                    <h3>Dr. James Anderson</h3>
+                                    <div class="session-type">📹 Video Session • 60 minutes</div>
+                                    <div class="session-datetime">
+                                        <div class="datetime-item">📅 Oct 25, 2025</div>
+                                        <div class="datetime-item">🕐 4:00 PM EST</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="status-badge cancelled">Cancelled</span>
+                        </div>
+
+                        <div class="session-notes">
+                            <h4>Cancellation Reason:</h4>
+                            <p>Schedule conflict - Rescheduled to a later date.</p>
+                        </div>
+
+                        <div class="session-actions">
+                            <button class="btn-action" onclick="bookAgain('Dr. James Anderson')">📅 Rebook</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Sessions Tab -->
+            <div class="tab-content" id="all-tab">
+                <div class="session-list">
+                    <p style="color: var(--gray); text-align: center; padding: 2rem;">
+                        All your sessions are organized above by status. Use the tabs to filter by Upcoming, Completed, or Cancelled sessions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="chat-widget.js"></script>
+    <script>
+        // Load real user session data
+        window.addEventListener('DOMContentLoaded', () => {
+            loadUserSessions();
+        });
+
+        function loadUserSessions() {
+            const user = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+            if (!user.email) {
+                window.location.href = 'sign-in.html';
+                return;
+            }
+
+            const progressKey = `progress_${user.email}`;
+            const progress = JSON.parse(localStorage.getItem(progressKey) || '{}');
+            const stats = progress.stats || {
+                sessionsCompleted: 0,
+                exercisesCompleted: 0,
+                articlesRead: 0,
+                streak: 0
+            };
+            
+            // Get detailed sessions
+            const sessionsKey = `therapy_sessions_${user.email}`;
+            const detailedSessions = JSON.parse(localStorage.getItem(sessionsKey) || '[]');
+            
+            // Update stats
+            document.getElementById('total-sessions').textContent = detailedSessions.length;
+            document.getElementById('current-streak').textContent = stats.streak;
+            document.getElementById('exercises-completed').textContent = stats.exercisesCompleted;
+            document.getElementById('articles-read').textContent = stats.articlesRead;
+            
+            // Update tab counts
+            document.querySelector('.session-tab:nth-child(1)').textContent = `📅 My Chat Sessions (${detailedSessions.length})`;
+            
+            // Display sessions
+            const upcomingTab = document.getElementById('upcoming-tab');
+            if (detailedSessions.length === 0) {
+                upcomingTab.innerHTML = `
+                    <div style="text-align: center; padding: 4rem 2rem; background: rgba(255,255,255,0.05); border-radius: 20px; border: 2px dashed rgba(102,194,165,0.3);">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">💬</div>
+                        <h3 style="color: white; margin-bottom: 1rem;">No Sessions Yet</h3>
+                        <p style="color: var(--gray); margin-bottom: 2rem;">Start chatting with your AI therapist to track your wellness journey!</p>
+                        <button onclick="startNewSession()" style="background: linear-gradient(135deg, #66c2a5, #8dd3c7); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 1.05rem;">
+                            💬 Start Your First Session
+                        </button>
+                    </div>
+                `;
+            } else {
+                const sessionHTML = detailedSessions.reverse().map((session, index) => {
+                    const date = new Date(session.startTime);
+                    const endDate = session.endTime ? new Date(session.endTime) : null;
+                    const timeAgo = getTimeAgo(date);
+                    const sessionNum = detailedSessions.length - index;
+                    const isActive = !session.endTime;
+                    const duration = session.duration || Math.floor((Date.now() - session.startTime) / 60000);
+                    
+                    // Get session summary
+                    const summary = session.summary || `Discussed ${session.topics.join(', ') || 'wellness topics'}. ${session.messageCount} messages exchanged.`;
+                    
+                    return `
+                        <div class="session-card ${isActive ? 'upcoming' : 'completed'}">
+                            <div class="session-header">
+                                <div class="session-info">
+                                    <div class="therapist-avatar-sm">🧠</div>
+                                    <div class="session-details">
+                                        <h3>AI Therapist Session #${sessionNum}</h3>
+                                        <div class="session-type">💬 ${isActive ? 'Active Session' : 'Completed'} • ${duration} minutes • ${session.messageCount} messages</div>
+                                        <div class="session-datetime">
+                                            <div class="datetime-item">📅 ${date.toLocaleDateString()}</div>
+                                            <div class="datetime-item">🕐 ${date.toLocaleTimeString()}</div>
+                                        </div>
+                                        ${session.topics.length > 0 ? `
+                                            <div style="margin-top: 0.5rem;">
+                                                <span style="color: var(--therapeutic-green); font-size: 0.85rem;">Topics: ${session.topics.join(', ')}</span>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                                <span class="status-badge ${isActive ? 'upcoming' : 'completed'}">${isActive ? 'Active' : 'Completed'}</span>
+                            </div>
+
+                            <div class="session-notes">
+                                <h4>Session Summary:</h4>
+                                <p>${summary}</p>
+                            </div>
+
+                            <div class="session-actions">
+                                ${isActive ? `
+                                    <button class="btn-action" onclick="continueSession(${session.id})" style="background: linear-gradient(135deg, #66c2a5, #8dd3c7);">
+                                        ▶️ Continue Session
+                                    </button>
+                                    <button class="btn-action" onclick="endSessionNow(${session.id})" style="background: rgba(239,68,68,0.2); color: #ef4444;">
+                                        ⏹️ End Session
+                                    </button>
+                                ` : `
+                                    <button class="btn-action" onclick="viewSessionDetails(${session.id})" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                                        �️ View Full Conversation
+                                    </button>
+                                    <button class="btn-action" onclick="startNewSession()" style="background: linear-gradient(135deg, #66c2a5, #8dd3c7);">
+                                        💬 Start New Session
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                upcomingTab.innerHTML = `
+                    <div class="session-list">
+                        ${sessionHTML}
+                    </div>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button onclick="startNewSession()" class="btn-join" style="background: linear-gradient(135deg, #66c2a5, #8dd3c7); border: none;">
+                            💬 Start New Chat Session
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function startNewSession() {
+            // Try to find chat button
+            const chatBtn = document.getElementById('chatBubbleBtn');
+            if (chatBtn) {
+                chatBtn.click();
+            } else {
+                // Navigate to dashboard with chat
+                window.location.href = 'dashboard.html';
+            }
+        }
+
+        function continueSession(sessionId) {
+            // Open chat widget to continue the session
+            const chatBtn = document.getElementById('chatBubbleBtn');
+            if (chatBtn) {
+                chatBtn.click();
+                setTimeout(() => {
+                    alert('💬 Session continued! Your conversation history is restored.');
+                }, 300);
+            } else {
+                alert('⏳ Chat is loading... Please try again in a moment.');
+                setTimeout(() => {
+                    const retryBtn = document.getElementById('chatBubbleBtn');
+                    if (retryBtn) retryBtn.click();
+                }, 1000);
+            }
+        }
+
+        function endSessionNow(sessionId) {
+            if (confirm('Are you sure you want to end this session? A summary will be generated.')) {
+                const user = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+                const sessionsKey = `therapy_sessions_${user.email}`;
+                let sessions = JSON.parse(localStorage.getItem(sessionsKey) || '[]');
+                const session = sessions.find(s => s.id === sessionId);
+                
+                if (session) {
+                    session.endTime = Date.now();
+                    session.duration = Math.floor((session.endTime - session.startTime) / 60000);
+                    session.summary = `Session covered ${session.topics.join(', ') || 'wellness topics'}. Lasted ${session.duration} minutes with ${session.messageCount} messages exchanged.`;
+                    localStorage.setItem(sessionsKey, JSON.stringify(sessions));
+                    loadUserSessions();
+                    alert('✅ Session ended. Summary has been saved.');
+                }
+            }
+        }
+
+        function viewSessionDetails(sessionId) {
+            const user = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+            const sessionsKey = `therapy_sessions_${user.email}`;
+            const sessions = JSON.parse(localStorage.getItem(sessionsKey) || '[]');
+            const session = sessions.find(s => s.id === sessionId);
+            
+            if (!session) return;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.95);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                padding: 2rem;
+                overflow-y: auto;
+            `;
+            
+            const messages = session.messages.map(msg => {
+                const time = new Date(msg.timestamp).toLocaleTimeString();
+                return `
+                    <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem; ${msg.role === 'user' ? 'flex-direction: row-reverse;' : ''}">
+                        <div style="font-size: 2rem; flex-shrink: 0;">${msg.role === 'user' ? '👤' : '🧠'}</div>
+                        <div>
+                            <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-bottom: 0.5rem;">${msg.role === 'user' ? 'You' : 'AI Therapist'} • ${time}</div>
+                            <div style="background: ${msg.role === 'user' ? 'rgba(102,126,234,0.2)' : 'rgba(102,194,165,0.2)'}; padding: 1rem; border-radius: 12px; color: white; line-height: 1.6;">
+                                ${msg.content}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            modal.innerHTML = `
+                <div style="max-width: 800px; width: 100%; background: rgba(26,26,46,0.98); border-radius: 20px; padding: 2rem; max-height: 90vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2 style="color: white; margin: 0;">Session Details</h2>
+                        <button onclick="this.closest('div').parentElement.remove()" style="background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
+                    </div>
+                    <div style="background: rgba(102,194,165,0.1); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--therapeutic-green); margin-bottom: 1rem;">Session Summary</h3>
+                        <p style="color: white; line-height: 1.6;">${session.summary || 'No summary available'}</p>
+                        <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <span style="color: rgba(255,255,255,0.7);">📅 ${new Date(session.startTime).toLocaleDateString()}</span>
+                            <span style="color: rgba(255,255,255,0.7);">⏱️ ${session.duration || '?'} minutes</span>
+                            <span style="color: rgba(255,255,255,0.7);">💬 ${session.messageCount} messages</span>
+                        </div>
+                    </div>
+                    <h3 style="color: white; margin-bottom: 1.5rem;">Full Conversation</h3>
+                    <div>${messages}</div>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button onclick="continueSession(${session.id})" style="background: linear-gradient(135deg, #66c2a5, #8dd3c7); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                            Continue This Conversation
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return Math.floor(seconds / 60) + ' minutes ago';
+            if (seconds < 86400) return Math.floor(seconds / 3600) + ' hours ago';
+            if (seconds < 604800) return Math.floor(seconds / 86400) + ' days ago';
+            return Math.floor(seconds / 604800) + ' weeks ago';
+        }
+
+        function openProgressTracker() {
+            window.location.href = 'resources.html';
+            setTimeout(() => {
+                if (window.openProgressTracker) {
+                    window.openProgressTracker();
+                }
+            }, 500);
+        }
+
+        function switchSessionTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.session-tab').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+
+        function joinSession(sessionId) {
+            alert('Joining session...\n\nRedirecting to video call interface...');
+            // window.location.href = 'video-call.html?session=' + sessionId;
+        }
+
+        function rescheduleSession(sessionId) {
+            if (confirm('Would you like to reschedule this session?')) {
+                alert('Opening rescheduling calendar...');
+                // window.location.href = 'book-session.html?reschedule=' + sessionId;
+            }
+        }
+
+        function cancelSession(sessionId) {
+            if (confirm('Are you sure you want to cancel this session?\n\nCancellations within 24 hours may be subject to a fee.')) {
+                alert('Session cancelled. You can rebook anytime from your dashboard.');
+            }
+        }
+
+        function addToCalendar(sessionId) {
+            alert('Adding to calendar...\n\nCalendar invite will be sent to your email.');
+        }
+
+        function viewNotes(sessionId) {
+            alert('Opening session notes...\n\nThis would display detailed notes from your session.');
+        }
+
+        function bookAgain(therapistName) {
+            localStorage.setItem('selectedTherapist', therapistName);
+            window.location.href = 'book-session.html';
+        }
+
+        // Countdown timer
+        function updateCountdown() {
+            const sessionDate = new Date();
+            sessionDate.setDate(sessionDate.getDate() + 1);
+            sessionDate.setHours(14, 0, 0, 0);
+            
+            const now = new Date();
+            const diff = sessionDate - now;
+            
+            if (diff > 0) {
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                const countdownEl = document.getElementById('countdown');
+                if (countdownEl) {
+                    countdownEl.textContent = `Starting in ${hours}h ${minutes}m ${seconds}s`;
+                }
+            }
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('therapyConnectUser');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

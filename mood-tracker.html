@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Tracker - TherapyConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .mood-container {
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .mood-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.1), rgba(141, 211, 199, 0.05));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .quick-log-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .quick-log-title {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .mood-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .mood-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(102, 194, 165, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .mood-btn:hover {
+            transform: translateY(-5px);
+            border-color: var(--therapeutic-green);
+            box-shadow: 0 5px 20px rgba(102, 194, 165, 0.3);
+        }
+
+        .mood-btn.selected {
+            background: rgba(102, 194, 165, 0.2);
+            border-color: var(--therapeutic-green);
+        }
+
+        .mood-emoji {
+            font-size: 3rem;
+        }
+
+        .mood-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .mood-btn.selected .mood-label {
+            color: var(--therapeutic-green);
+        }
+
+        .factors-section {
+            margin-bottom: 2rem;
+        }
+
+        .factors-section h4 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .factor-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .factor-tag:hover,
+        .factor-tag.selected {
+            background: rgba(102, 194, 165, 0.2);
+            border-color: var(--therapeutic-green);
+            color: var(--therapeutic-green);
+        }
+
+        .notes-section {
+            margin-bottom: 2rem;
+        }
+
+        .notes-section h4 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .notes-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            color: white;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .notes-input:focus {
+            outline: none;
+            border-color: var(--therapeutic-green);
+        }
+
+        .log-btn-container {
+            text-align: center;
+        }
+
+        .log-mood-btn {
+            background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal));
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .log-mood-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 194, 165, 0.4);
+        }
+
+        .mood-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--therapeutic-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .calendar-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-header h3 {
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .month-nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: rgba(102, 194, 165, 0.2);
+            border: none;
+            color: var(--therapeutic-green);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(102, 194, 165, 0.3);
+        }
+
+        .current-month {
+            color: white;
+            font-weight: 600;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.75rem;
+        }
+
+        .day-label {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.5rem;
+        }
+
+        .day-cell {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .day-cell:hover {
+            border-color: var(--therapeutic-green);
+            background: rgba(102, 194, 165, 0.1);
+        }
+
+        .day-number {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .day-mood {
+            font-size: 1.5rem;
+        }
+
+        .day-cell.empty {
+            background: transparent;
+            border: none;
+            cursor: default;
+        }
+
+        .insights-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .insights-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-card {
+            background: rgba(102, 194, 165, 0.1);
+            border-left: 4px solid var(--therapeutic-green);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .insight-title {
+            color: var(--therapeutic-green);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .insight-text {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .trends-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .trends-section h3 {
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .trend-chart {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 200px;
+            margin-bottom: 1rem;
+        }
+
+        .bar-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bar {
+            width: 100%;
+            max-width: 40px;
+            background: linear-gradient(to top, var(--therapeutic-green), var(--peaceful-teal));
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .bar:hover {
+            opacity: 0.8;
+            transform: scaleY(1.05);
+        }
+
+        .bar-label {
+            color: var(--gray);
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        .mood-distribution {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+        }
+
+        .dist-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+        }
+
+        .dist-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dist-percentage {
+            color: var(--therapeutic-green);
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .dist-label {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .calendar-grid {
+                gap: 0.5rem;
+            }
+
+            .day-mood {
+                font-size: 1.2rem;
+            }
+
+            .mood-selector-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">TherapyConnect</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="sessions.html">Sessions</a>
+                <a href="therapists.html">Therapists</a>
+                <a href="resources.html">Resources</a>
+                <a href="profile.html">Profile</a>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mood-container">
+        <div class="container">
+            <div class="mood-header">
+                <h1 style="color: white; margin-bottom: 1rem;">Mood Tracker 😊</h1>
+                <p style="color: var(--gray);">Track your daily moods and discover patterns in your emotional wellbeing</p>
+            </div>
+
+            <!-- Quick Log Section -->
+            <div class="quick-log-section">
+                <h2 class="quick-log-title">✨ How are you feeling right now?</h2>
+
+                <div class="mood-selector-grid">
+                    <div class="mood-btn" onclick="selectMood(this, 'amazing')" data-value="10">
+                        <div class="mood-emoji">😄</div>
+                        <div class="mood-label">Amazing</div>
+                    </div>
+                    <div class="mood-btn" onclick="selectMood(this, 'happy')" data-value="9">
+                        <div class="mood-emoji">😊</div>
+                        <div class="mood-label">Happy</div>
+                    </div>
+                    <div class="mood-btn" onclick="selectMood(this, 'good')" data-value="8">
+                        <div class="mood-emoji">🙂</div>
+                        <div class="mood-label">Good</div>
+                    </div>
+                    <div class="mood-btn" onclick="selectMood(this, 'okay')" data-value="6">
+                        <div class="mood-emoji">😐</div>
+                        <div class="mood-label">Okay</div>
+                    </div>
+                    <div class="mood-btn" onclick="selectMood(this, 'meh')" data-value="5">
+                        <div class="mood-emoji">😕</div>
+                        <div class="mood-label">Meh</div>
+                    </div>
+                    <div class="mood-btn" onclick="selectMood(this, 'sad')" data-value="4">
+                        <div class="mood-emoji">😔</div>
+                        <div class="mood-label">Sad</div>
+                    </div>
+                    <div class="mood-btn" onclick="selectMood(this, 'anxious')" data-value="3">
+                        <div class="mood-emoji">😰</div>
+                        <div class="mood-label">Anxious</div>
+                    </div>
+                    <div class="mood-btn" onclick="selectMood(this, 'stressed')" data-value="2">
+                        <div class="mood-emoji">😫</div>
+                        <div class="mood-label">Stressed</div>
+                    </div>
+                </div>
+
+                <div class="factors-section">
+                    <h4>What's influencing your mood? (Select all that apply)</h4>
+                    <div class="factors-grid">
+                        <div class="factor-tag" onclick="toggleFactor(this)">💼 Work</div>
+                        <div class="factor-tag" onclick="toggleFactor(this)">👨‍👩‍👧 Family</div>
+                        <div class="factor-tag" onclick="toggleFactor(this)">👥 Friends</div>
+                        <div class="factor-tag" onclick="toggleFactor(this)">💪 Exercise</div>
+                        <div class="factor-tag" onclick="toggleFactor(this)">😴 Sleep</div>
+                        <div class="factor-tag" onclick="toggleFactor(this)">🍎 Diet</div>
+                        <div class="factor-tag" onclick="toggleFactor(this)">☀️ Weather</div>
+                        <div class="factor-tag" onclick="toggleFactor(this)">💊 Medication</div>
+                        <div class="factor-tag" onclick="toggleFactor(this)">🎯 Goals</div>
+                        <div class="factor-tag" onclick="toggleFactor(this)">💰 Finances</div>
+                        <div class="factor-tag" onclick="toggleFactor(this)">❤️ Relationship</div>
+                        <div class="factor-tag" onclick="toggleFactor(this)">🏥 Health</div>
+                    </div>
+                </div>
+
+                <div class="notes-section">
+                    <h4>Additional notes (optional)</h4>
+                    <textarea class="notes-input" id="moodNotes" placeholder="What's on your mind? Any specific triggers or positive moments?"></textarea>
+                </div>
+
+                <div class="log-btn-container">
+                    <button class="log-mood-btn" onclick="logMood()">💾 Save Mood Entry</button>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="mood-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value">7.8</div>
+                    <div class="stat-label">Average Mood (This Week)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value">14</div>
+                    <div class="stat-label">Day Tracking Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-value">+12%</div>
+                    <div class="stat-label">Improvement vs Last Week</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">😊</div>
+                    <div class="stat-value">Happy</div>
+                    <div class="stat-label">Most Common Mood</div>
+                </div>
+            </div>
+
+            <!-- Calendar View -->
+            <div class="calendar-section">
+                <div class="calendar-header">
+                    <h3>📅 Monthly Mood Calendar</h3>
+                    <div class="month-nav">
+                        <button class="nav-btn" onclick="changeMonth(-1)">← Prev</button>
+                        <div class="current-month">November 2025</div>
+                        <button class="nav-btn" onclick="changeMonth(1)">Next →</button>
+                    </div>
+                </div>
+
+                <div class="calendar-grid">
+                    <div class="day-label">Sun</div>
+                    <div class="day-label">Mon</div>
+                    <div class="day-label">Tue</div>
+                    <div class="day-label">Wed</div>
+                    <div class="day-label">Thu</div>
+                    <div class="day-label">Fri</div>
+                    <div class="day-label">Sat</div>
+
+                    <!-- Empty cells for alignment -->
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty"></div>
+
+                    <!-- November days -->
+                    <div class="day-cell" onclick="viewDayDetails(1)">
+                        <div class="day-number">1</div>
+                        <div class="day-mood">😊</div>
+                    </div>
+                    <div class="day-cell" onclick="viewDayDetails(2)">
+                        <div class="day-number">2</div>
+                        <div class="day-mood">🙂</div>
+                    </div>
+                    <div class="day-cell" onclick="viewDayDetails(3)">
+                        <div class="day-number">3</div>
+                        <div class="day-mood">😊</div>
+                    </div>
+                    <div class="day-cell" onclick="viewDayDetails(4)">
+                        <div class="day-number">4</div>
+                        <div class="day-mood">😄</div>
+                    </div>
+                    <div class="day-cell" onclick="viewDayDetails(5)">
+                        <div class="day-number">5</div>
+                        <div class="day-mood">😐</div>
+                    </div>
+                    <div class="day-cell" onclick="viewDayDetails(6)">
+                        <div class="day-number">6</div>
+                        <div class="day-mood">🙂</div>
+                    </div>
+                    <div class="day-cell" onclick="viewDayDetails(7)">
+                        <div class="day-number">7</div>
+                        <div class="day-mood">😊</div>
+                    </div>
+                    <div class="day-cell" onclick="viewDayDetails(8)">
+                        <div class="day-number">8</div>
+                        <div class="day-mood">😄</div>
+                    </div>
+                    <div class="day-cell" onclick="viewDayDetails(9)">
+                        <div class="day-number">9</div>
+                        <div class="day-mood">😊</div>
+                    </div>
+                    <div class="day-cell" onclick="viewDayDetails(10)">
+                        <div class="day-number">10</div>
+                        <div class="day-mood">🙂</div>
+                    </div>
+                    <div class="day-cell" onclick="viewDayDetails(11)">
+                        <div class="day-number">11</div>
+                        <div class="day-mood">😊</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Insights -->
+            <div class="insights-section">
+                <h3>🤖 AI-Powered Insights</h3>
+
+                <div class="insight-card">
+                    <div class="insight-title">
+                        <span>📈</span>
+                        <span>Positive Trend Detected</span>
+                    </div>
+                    <div class="insight-text">
+                        Your mood has improved by 12% compared to last week. You've logged 5 "Happy" or "Amazing" days in the past 7 days. Keep up the great work!
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-title">
+                        <span>💪</span>
+                        <span>Exercise Connection</span>
+                    </div>
+                    <div class="insight-text">
+                        We've noticed that on days when you exercise, your mood averages 8.5/10 compared to 6.2/10 on non-exercise days. Consider maintaining your fitness routine!
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-title">
+                        <span>😴</span>
+                        <span>Sleep Pattern Observation</span>
+                    </div>
+                    <div class="insight-text">
+                        Your mood tends to dip on days when sleep quality is marked as poor. Prioritizing rest could help maintain emotional balance.
+                    </div>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-title">
+                        <span>🎯</span>
+                        <span>Best Days</span>
+                    </div>
+                    <div class="insight-text">
+                        Thursdays and Saturdays are typically your best mood days (avg 8.7/10). Consider scheduling important activities or self-care on these days.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trends Section -->
+            <div class="trends-section">
+                <h3>📊 Mood Trends (Last 7 Days)</h3>
+
+                <div class="trend-chart">
+                    <div class="chart-bars">
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: 85%;"></div>
+                            <div class="bar-label">Mon</div>
+                        </div>
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: 90%;"></div>
+                            <div class="bar-label">Tue</div>
+                        </div>
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: 75%;"></div>
+                            <div class="bar-label">Wed</div>
+                        </div>
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: 95%;"></div>
+                            <div class="bar-label">Thu</div>
+                        </div>
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: 80%;"></div>
+                            <div class="bar-label">Fri</div>
+                        </div>
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: 88%;"></div>
+                            <div class="bar-label">Sat</div>
+                        </div>
+                        <div class="bar-wrapper">
+                            <div class="bar" style="height: 92%;"></div>
+                            <div class="bar-label">Sun</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 style="color: white; margin-bottom: 1.5rem;">Mood Distribution (This Month)</h4>
+                <div class="mood-distribution">
+                    <div class="dist-item">
+                        <div class="dist-emoji">😄</div>
+                        <div class="dist-percentage">25%</div>
+                        <div class="dist-label">Amazing</div>
+                    </div>
+                    <div class="dist-item">
+                        <div class="dist-emoji">😊</div>
+                        <div class="dist-percentage">35%</div>
+                        <div class="dist-label">Happy</div>
+                    </div>
+                    <div class="dist-item">
+                        <div class="dist-emoji">🙂</div>
+                        <div class="dist-percentage">20%</div>
+                        <div class="dist-label">Good</div>
+                    </div>
+                    <div class="dist-item">
+                        <div class="dist-emoji">😐</div>
+                        <div class="dist-percentage">12%</div>
+                        <div class="dist-label">Okay</div>
+                    </div>
+                    <div class="dist-item">
+                        <div class="dist-emoji">😕</div>
+                        <div class="dist-percentage">5%</div>
+                        <div class="dist-label">Meh</div>
+                    </div>
+                    <div class="dist-item">
+                        <div class="dist-emoji">😔</div>
+                        <div class="dist-percentage">3%</div>
+                        <div class="dist-label">Sad</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let selectedMood = null;
+
+        function selectMood(element, mood) {
+            document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedMood = mood;
+        }
+
+        function toggleFactor(element) {
+            element.classList.toggle('selected');
+        }
+
+        function logMood() {
+            if (!selectedMood) {
+                alert('Please select a mood first!');
+                return;
+            }
+
+            const factors = Array.from(document.querySelectorAll('.factor-tag.selected'))
+                .map(el => el.textContent.trim());
+            const notes = document.getElementById('moodNotes').value;
+
+            alert(`✓ Mood logged successfully!\n\nMood: ${selectedMood}\nFactors: ${factors.length > 0 ? factors.join(', ') : 'None'}\n\nYour mood entry has been saved.`);
+
+            // Reset form
+            document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelectorAll('.factor-tag').forEach(tag => tag.classList.remove('selected'));
+            document.getElementById('moodNotes').value = '';
+            selectedMood = null;
+        }
+
+        function changeMonth(direction) {
+            console.log('Changing month by', direction);
+            alert('Month navigation would update the calendar view.');
+        }
+
+        function viewDayDetails(day) {
+            alert(`November ${day}, 2025\n\nMood details and notes for this day would appear here.`);
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('therapyConnectUser');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="chat-widget.css">
+    <script src="chat-widget.js"></script>
+</body>
+</html>

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breathing Exercises - TherapyConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .breathing-container {
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .breathing-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.1), rgba(141, 211, 199, 0.05));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .exercises-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .exercise-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .exercise-card:hover {
+            border-color: var(--therapeutic-green);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(102, 194, 165, 0.3);
+        }
+
+        .exercise-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .exercise-title {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-duration {
+            color: var(--therapeutic-green);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .exercise-description {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .exercise-benefits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .benefit-tag {
+            background: rgba(102, 194, 165, 0.2);
+            color: var(--therapeutic-green);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .practice-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .practice-modal.active {
+            display: flex;
+        }
+
+        .practice-content {
+            text-align: center;
+            padding: 3rem;
+            max-width: 600px;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .close-modal-btn:hover {
+            background: rgba(102, 194, 165, 0.2);
+        }
+
+        .practice-title {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .practice-subtitle {
+            color: var(--gray);
+            margin-bottom: 3rem;
+        }
+
+        .breathing-circle {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.3), rgba(141, 211, 199, 0.2));
+            border: 3px solid var(--therapeutic-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .breathing-circle.breathing-in {
+            animation: breatheIn 4s ease-in-out infinite;
+        }
+
+        .breathing-circle.breathing-out {
+            animation: breatheOut 4s ease-in-out infinite;
+        }
+
+        .breathing-circle.box-breathing {
+            animation: boxBreathing 16s ease-in-out infinite;
+        }
+
+        @keyframes breatheIn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        @keyframes breatheOut {
+            0%, 100% { transform: scale(1.3); }
+            50% { transform: scale(1); }
+        }
+
+        @keyframes boxBreathing {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.3); }
+            75% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        .instruction-text {
+            color: white;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .timer-display {
+            color: var(--therapeutic-green);
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .practice-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 194, 165, 0.4);
+        }
+
+        .control-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(102, 194, 165, 0.3);
+        }
+
+        .stats-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stats-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: var(--therapeutic-green);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .tips-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .tips-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .tip-card {
+            background: rgba(102, 194, 165, 0.1);
+            border-left: 4px solid var(--therapeutic-green);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .tip-title {
+            color: var(--therapeutic-green);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tip-text {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .breathing-circle {
+                width: 250px;
+                height: 250px;
+            }
+
+            .instruction-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">TherapyConnect</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="sessions.html">Sessions</a>
+                <a href="therapists.html">Therapists</a>
+                <a href="resources.html">Resources</a>
+                <a href="profile.html">Profile</a>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breathing-container">
+        <div class="container">
+            <div class="breathing-header">
+                <h1 style="color: white; margin-bottom: 1rem;">Breathing Exercises 🫁</h1>
+                <p style="color: var(--gray);">Calm your mind and reduce anxiety with guided breathing techniques</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-section">
+                <h3>📊 Your Practice Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-value">9</div>
+                        <div class="stat-label">Day Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-value">47</div>
+                        <div class="stat-label">Total Sessions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-value">235</div>
+                        <div class="stat-label">Minutes Practiced</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-value">4-7-8</div>
+                        <div class="stat-label">Favorite Exercise</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercises Grid -->
+            <div class="exercises-grid">
+                <!-- 4-7-8 Breathing -->
+                <div class="exercise-card" onclick="startExercise('478')">
+                    <div class="exercise-icon">🌊</div>
+                    <h3 class="exercise-title">4-7-8 Breathing</h3>
+                    <p class="exercise-duration">⏱️ 2-5 minutes</p>
+                    <p class="exercise-description">
+                        Inhale for 4 counts, hold for 7 counts, exhale for 8 counts. Perfect for falling asleep and reducing anxiety.
+                    </p>
+                    <div class="exercise-benefits">
+                        <span class="benefit-tag">Sleep Aid</span>
+                        <span class="benefit-tag">Anxiety Relief</span>
+                        <span class="benefit-tag">Beginner-Friendly</span>
+                    </div>
+                </div>
+
+                <!-- Box Breathing -->
+                <div class="exercise-card" onclick="startExercise('box')">
+                    <div class="exercise-icon">⬜</div>
+                    <h3 class="exercise-title">Box Breathing</h3>
+                    <p class="exercise-duration">⏱️ 3-10 minutes</p>
+                    <p class="exercise-description">
+                        Breathe in, hold, breathe out, hold - all for 4 counts each. Used by Navy SEALs for stress management.
+                    </p>
+                    <div class="exercise-benefits">
+                        <span class="benefit-tag">Focus</span>
+                        <span class="benefit-tag">Stress Relief</span>
+                        <span class="benefit-tag">Performance</span>
+                    </div>
+                </div>
+
+                <!-- Deep Breathing -->
+                <div class="exercise-card" onclick="startExercise('deep')">
+                    <div class="exercise-icon">🌬️</div>
+                    <h3 class="exercise-title">Deep Breathing</h3>
+                    <p class="exercise-duration">⏱️ 5-10 minutes</p>
+                    <p class="exercise-description">
+                        Simple deep belly breathing to activate the parasympathetic nervous system and promote relaxation.
+                    </p>
+                    <div class="exercise-benefits">
+                        <span class="benefit-tag">Relaxation</span>
+                        <span class="benefit-tag">Grounding</span>
+                        <span class="benefit-tag">Easy</span>
+                    </div>
+                </div>
+
+                <!-- Alternate Nostril -->
+                <div class="exercise-card" onclick="startExercise('alternate')">
+                    <div class="exercise-icon">🧘</div>
+                    <h3 class="exercise-title">Alternate Nostril</h3>
+                    <p class="exercise-duration">⏱️ 5-10 minutes</p>
+                    <p class="exercise-description">
+                        Ancient yogic technique that balances both hemispheres of the brain and calms the nervous system.
+                    </p>
+                    <div class="exercise-benefits">
+                        <span class="benefit-tag">Balance</span>
+                        <span class="benefit-tag">Mental Clarity</span>
+                        <span class="benefit-tag">Advanced</span>
+                    </div>
+                </div>
+
+                <!-- Resonant Breathing -->
+                <div class="exercise-card" onclick="startExercise('resonant')">
+                    <div class="exercise-icon">💫</div>
+                    <h3 class="exercise-title">Resonant Breathing</h3>
+                    <p class="exercise-duration">⏱️ 10-20 minutes</p>
+                    <p class="exercise-description">
+                        Breathe at a rate of 5-6 breaths per minute to achieve heart-rate variability coherence.
+                    </p>
+                    <div class="exercise-benefits">
+                        <span class="benefit-tag">Heart Health</span>
+                        <span class="benefit-tag">Deep Calm</span>
+                        <span class="benefit-tag">Meditation</span>
+                    </div>
+                </div>
+
+                <!-- Energizing Breath -->
+                <div class="exercise-card" onclick="startExercise('energizing')">
+                    <div class="exercise-icon">⚡</div>
+                    <h3 class="exercise-title">Energizing Breath</h3>
+                    <p class="exercise-duration">⏱️ 2-5 minutes</p>
+                    <p class="exercise-description">
+                        Quick, forceful exhales to boost energy levels and mental alertness when feeling tired or sluggish.
+                    </p>
+                    <div class="exercise-benefits">
+                        <span class="benefit-tag">Energy Boost</span>
+                        <span class="benefit-tag">Alertness</span>
+                        <span class="benefit-tag">Morning Practice</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="tips-section">
+                <h3>💡 Breathing Tips & Best Practices</h3>
+
+                <div class="tip-card">
+                    <div class="tip-title">
+                        <span>🧘</span>
+                        <span>Create a Comfortable Environment</span>
+                    </div>
+                    <div class="tip-text">
+                        Find a quiet space where you won't be disturbed. Sit or lie in a comfortable position with your spine straight. You can close your eyes or maintain a soft gaze.
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-title">
+                        <span>⏰</span>
+                        <span>Practice Regularly</span>
+                    </div>
+                    <div class="tip-text">
+                        Consistency is key. Even 5 minutes daily is more beneficial than longer sessions done sporadically. Try practicing at the same time each day to build a habit.
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-title">
+                        <span>🫁</span>
+                        <span>Breathe Through Your Nose</span>
+                    </div>
+                    <div class="tip-text">
+                        Nasal breathing filters and warms the air, and helps activate the parasympathetic nervous system more effectively than mouth breathing.
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-title">
+                        <span>💆</span>
+                        <span>Don't Force It</span>
+                    </div>
+                    <div class="tip-text">
+                        If you feel dizzy or uncomfortable, return to normal breathing. These techniques should feel calming, not stressful. Start with shorter sessions and build up gradually.
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-title">
+                        <span>📱</span>
+                        <span>Use During Stressful Moments</span>
+                    </div>
+                    <div class="tip-text">
+                        These exercises are powerful tools for managing anxiety in real-time. Practice them during calm moments so they're available when you need them most.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Practice Modal -->
+    <div class="practice-modal" id="practiceModal">
+        <button class="close-modal-btn" onclick="closePractice()">✕ Exit Practice</button>
+        <div class="practice-content">
+            <h2 class="practice-title" id="practiceTitle">4-7-8 Breathing</h2>
+            <p class="practice-subtitle" id="practiceSubtitle">Follow the circle and instructions</p>
+
+            <div class="breathing-circle" id="breathingCircle">
+                <div class="instruction-text" id="instructionText">Breathe In</div>
+            </div>
+
+            <div class="timer-display" id="timerDisplay">Session: 0:00</div>
+
+            <div class="practice-controls">
+                <button class="control-btn" id="startPauseBtn" onclick="togglePractice()">▶️ Start</button>
+                <button class="control-btn secondary" onclick="resetPractice()">🔄 Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let practiceInterval;
+        let sessionTimer;
+        let sessionSeconds = 0;
+        let isPracticing = false;
+        let currentExercise = null;
+
+        const exercises = {
+            '478': {
+                name: '4-7-8 Breathing',
+                subtitle: 'Inhale 4, Hold 7, Exhale 8',
+                pattern: [
+                    { text: 'Breathe In', duration: 4000, animation: 'breathing-in' },
+                    { text: 'Hold', duration: 7000, animation: 'breathing-in' },
+                    { text: 'Breathe Out', duration: 8000, animation: 'breathing-out' }
+                ]
+            },
+            'box': {
+                name: 'Box Breathing',
+                subtitle: 'Inhale 4, Hold 4, Exhale 4, Hold 4',
+                pattern: [
+                    { text: 'Breathe In', duration: 4000, animation: 'breathing-in' },
+                    { text: 'Hold', duration: 4000, animation: 'breathing-in' },
+                    { text: 'Breathe Out', duration: 4000, animation: 'breathing-out' },
+                    { text: 'Hold', duration: 4000, animation: 'breathing-out' }
+                ]
+            },
+            'deep': {
+                name: 'Deep Breathing',
+                subtitle: 'Slow, deep belly breaths',
+                pattern: [
+                    { text: 'Breathe In Deeply', duration: 5000, animation: 'breathing-in' },
+                    { text: 'Breathe Out Slowly', duration: 5000, animation: 'breathing-out' }
+                ]
+            },
+            'alternate': {
+                name: 'Alternate Nostril Breathing',
+                subtitle: 'Breathe through one nostril at a time',
+                pattern: [
+                    { text: 'Breathe In (Left)', duration: 4000, animation: 'breathing-in' },
+                    { text: 'Hold', duration: 4000, animation: 'breathing-in' },
+                    { text: 'Breathe Out (Right)', duration: 4000, animation: 'breathing-out' },
+                    { text: 'Breathe In (Right)', duration: 4000, animation: 'breathing-in' },
+                    { text: 'Hold', duration: 4000, animation: 'breathing-in' },
+                    { text: 'Breathe Out (Left)', duration: 4000, animation: 'breathing-out' }
+                ]
+            },
+            'resonant': {
+                name: 'Resonant Breathing',
+                subtitle: '5-6 breaths per minute',
+                pattern: [
+                    { text: 'Breathe In', duration: 5000, animation: 'breathing-in' },
+                    { text: 'Breathe Out', duration: 5000, animation: 'breathing-out' }
+                ]
+            },
+            'energizing': {
+                name: 'Energizing Breath',
+                subtitle: 'Quick forceful exhales',
+                pattern: [
+                    { text: 'Deep Breath In', duration: 2000, animation: 'breathing-in' },
+                    { text: 'Quick Exhale!', duration: 500, animation: 'breathing-out' }
+                ]
+            }
+        };
+
+        function startExercise(type) {
+            currentExercise = exercises[type];
+            document.getElementById('practiceTitle').textContent = currentExercise.name;
+            document.getElementById('practiceSubtitle').textContent = currentExercise.subtitle;
+            document.getElementById('practiceModal').classList.add('active');
+        }
+
+        function closePractice() {
+            document.getElementById('practiceModal').classList.remove('active');
+            resetPractice();
+        }
+
+        function togglePractice() {
+            const btn = document.getElementById('startPauseBtn');
+            if (isPracticing) {
+                isPracticing = false;
+                btn.textContent = '▶️ Resume';
+                clearInterval(practiceInterval);
+                clearInterval(sessionTimer);
+            } else {
+                isPracticing = true;
+                btn.textContent = '⏸️ Pause';
+                runBreathingPattern();
+                sessionTimer = setInterval(() => {
+                    sessionSeconds++;
+                    const mins = Math.floor(sessionSeconds / 60);
+                    const secs = sessionSeconds % 60;
+                    document.getElementById('timerDisplay').textContent = 
+                        `Session: ${mins}:${secs.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+        }
+
+        function resetPractice() {
+            isPracticing = false;
+            sessionSeconds = 0;
+            document.getElementById('startPauseBtn').textContent = '▶️ Start';
+            document.getElementById('timerDisplay').textContent = 'Session: 0:00';
+            document.getElementById('instructionText').textContent = 'Ready';
+            document.getElementById('breathingCircle').className = 'breathing-circle';
+            clearInterval(practiceInterval);
+            clearInterval(sessionTimer);
+        }
+
+        function runBreathingPattern() {
+            let stepIndex = 0;
+            const pattern = currentExercise.pattern;
+
+            function nextStep() {
+                if (!isPracticing) return;
+
+                const step = pattern[stepIndex];
+                const circle = document.getElementById('breathingCircle');
+                const text = document.getElementById('instructionText');
+
+                text.textContent = step.text;
+                circle.className = 'breathing-circle ' + step.animation;
+
+                stepIndex = (stepIndex + 1) % pattern.length;
+            }
+
+            nextStep();
+            practiceInterval = setInterval(nextStep, pattern.reduce((sum, s) => sum + s.duration, 0) / pattern.length);
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('therapyConnectUser');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

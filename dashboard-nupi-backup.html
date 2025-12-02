@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUPI AI Dashboard - Your AI Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, #000000, #1a0033, #000000, #003311);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .subscription-badge {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #00ff88, #00d4ff);
+            border-radius: 20px;
+            color: #000;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .welcome {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .welcome h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .chat-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: rgba(0, 255, 136, 0.1);
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ai-avatar {
+            font-size: 3rem;
+        }
+
+        .chat-messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            max-width: 80%;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.ai {
+            align-self: flex-start;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 12px;
+        }
+
+        .message.user .message-avatar {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .message-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .message.ai .message-content {
+            border-color: rgba(0, 255, 136, 0.2);
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .chat-input-container {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .send-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #00ff88, #00d4ff);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.5);
+        }
+
+        .quick-actions {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 10px;
+            color: #00ff88;
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: #00ff88;
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+
+    <header class="header">
+        <div class="logo">🤖 NUPI AI</div>
+        <div class="user-info">
+            <span class="subscription-badge" id="subscription-status">Active Trial</span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="welcome">
+            <h1>Welcome to Your AI Assistant!</h1>
+            <p id="ai-name">Loading your AI...</p>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="ai-avatar" id="ai-avatar">🤖</div>
+                <div class="ai-info">
+                    <h2 id="ai-title">Your AI Assistant</h2>
+                    <p>Powered by advanced AI • Ready to help</p>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <div class="message ai">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>Hello! I'm your AI assistant. How can I help you today?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <input 
+                        type="text" 
+                        class="chat-input" 
+                        id="message-input" 
+                        placeholder="Type your message here..."
+                        onkeypress="if(event.key==='Enter') sendMessage()"
+                    />
+                    <button class="send-btn" onclick="sendMessage()">Send →</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h3 style="color: #888; margin-bottom: 1rem;">Quick Actions</h3>
+            <div class="action-buttons">
+                <button class="action-btn" onclick="sendQuick('Tell me about yourself')">About You</button>
+                <button class="action-btn" onclick="sendQuick('What can you help with?')">Capabilities</button>
+                <button class="action-btn" onclick="sendQuick('Give me creative ideas')">Ideas</button>
+                <button class="action-btn" onclick="sendQuick('Help me solve a problem')">Problem Solve</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+        const selectedAI = localStorage.getItem('selectedAI') || 'NUPI AI';
+
+        if (!userData.email) {
+            window.location.href = 'sign-in.html';
+        }
+
+        const aiConfigs = {
+            'Creative Pro': { icon: '🎨', name: 'NUPI Creative Pro' },
+            'Business Elite': { icon: '💼', name: 'NUPI Business Elite' },
+            'Code Master': { icon: '💻', name: 'NUPI Code Master' },
+            'Study Buddy': { icon: '📚', name: 'NUPI Study Buddy' },
+            'Life Coach': { icon: '🌟', name: 'NUPI Life Coach' },
+            'Content Writer': { icon: '✍️', name: 'NUPI Content Writer' },
+            'Language Tutor': { icon: '🌍', name: 'NUPI Language Tutor' },
+            'Finance Advisor': { icon: '💰', name: 'NUPI Finance Advisor' },
+            'Health Guide': { icon: '🏥', name: 'NUPI Health Guide' }
+        };
+
+        const config = aiConfigs[selectedAI] || { icon: '🤖', name: selectedAI };
+        document.getElementById('ai-avatar').textContent = config.icon;
+        document.getElementById('ai-title').textContent = config.name;
+        document.getElementById('ai-name').textContent = `You're chatting with ${config.name}`;
+
+        function sendQuick(msg) {
+            document.getElementById('message-input').value = msg;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            addMsg(msg, 'user');
+            input.value = '';
+
+            setTimeout(() => {
+                const responses = [
+                    `I'm ${config.name}, specialized in ${selectedAI}. I can help you with that!`,
+                    `Great question! As your ${selectedAI} assistant, let me help you.`,
+                    `I understand. Let me provide some insights based on my ${selectedAI} expertise.`
+                ];
+                addMsg(responses[Math.floor(Math.random() * responses.length)], 'ai');
+            }, 1500);
+        }
+
+        function addMsg(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            const avatar = sender === 'ai' ? config.icon : '👤';
+            div.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div class="message-content"><p>${text}</p></div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function logout() {
+            if (confirm('Logout?')) {
+                localStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

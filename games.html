@@ -1,0 +1,3104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - TherapyConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chat-widget.css">
+    <style>
+        .resources-container {
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .resources-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.1), rgba(141, 211, 199, 0.05));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .resource-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid rgba(102, 194, 165, 0.2);
+            flex-wrap: wrap;
+        }
+
+        .resource-tab {
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-tab.active {
+            color: var(--therapeutic-green);
+        }
+
+        .resource-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--therapeutic-green);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 194, 165, 0.3);
+            border-color: var(--therapeutic-green);
+        }
+
+        .resource-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .resource-content {
+            padding: 1.5rem;
+        }
+
+        .resource-category {
+            display: inline-block;
+            background: rgba(102, 194, 165, 0.2);
+            color: var(--therapeutic-green);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .resource-title {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .resource-description {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .resource-meta {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(102, 194, 165, 0.2);
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resource-action {
+            background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .resource-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 194, 165, 0.4);
+        }
+
+        .featured-section {
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.15), rgba(141, 211, 199, 0.1));
+            border: 1px solid var(--therapeutic-green);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .featured-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .featured-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .exercise-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .exercise-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .exercise-item:hover {
+            border-color: var(--therapeutic-green);
+            background: rgba(102, 194, 165, 0.1);
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(102, 194, 165, 0.2);
+        }
+
+        .exercise-info {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex: 1;
+        }
+
+        .exercise-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .exercise-details h4 {
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .exercise-details p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .exercise-duration {
+            background: rgba(102, 194, 165, 0.2);
+            color: var(--therapeutic-green);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .start-btn {
+            background: var(--therapeutic-green);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--therapeutic-green);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .play-button {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .video-info {
+            padding: 1rem;
+        }
+
+        .video-info h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .video-info p {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resource-grid,
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .exercise-info {
+                flex-direction: column;
+                align-items: start;
+                gap: 1rem;
+            }
+
+            .exercise-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .resource-tabs {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">TherapyConnect</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="sessions.html">Sessions</a>
+                <a href="therapists.html">Therapists</a>
+                <a href="resources.html" class="active">Resources</a>
+                <a href="profile.html">Profile</a>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="resources-container">
+        <div class="container">
+            <!-- Header -->
+            <div class="resources-header">
+                <h1 style="color: white; margin-bottom: 1rem; font-size: 3rem;">🎮 Wellness Games</h1>
+                <p style="color: var(--gray); max-width: 700px; margin: 0 auto; font-size: 1.2rem;">
+                    Interactive therapy games to support your mental health journey - 100% FREE, no sign-in required!
+                </p>
+            </div>
+
+            <!-- NO TABS - Just Games! -->
+
+            <!-- Games Tab (FREE) -->
+            <div class="tab-content active" id="games-content">
+                <h3 style="color: white; margin: 0 0 2rem;">🎮 Interactive Therapy Games (FREE - No Sign In Required)</h3>
+                
+                <div class="resource-grid">
+                    <!-- Breathing Exercise -->
+                    <div class="resource-card" style="cursor: pointer;" onclick="openGame('breathing')">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🌊</div>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Calm Breathing</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Follow the breathing circle to reduce stress and anxiety. Practice 4-second inhales and exhales.</p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Stress Relief</span>
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Anxiety</span>
+                            </div>
+                        </div>
+                        <button class="resource-btn" onclick="event.stopPropagation(); openGame('breathing')">Play Now</button>
+                    </div>
+
+                    <!-- Mood Tracker -->
+                    <div class="resource-card" style="cursor: pointer;" onclick="openGame('mood')">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">😊</div>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Mood Tracker</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Track your daily emotions and build self-awareness. Choose from 8 different moods.</p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Self-Awareness</span>
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Emotions</span>
+                            </div>
+                        </div>
+                        <button class="resource-btn" onclick="event.stopPropagation(); openGame('mood')">Play Now</button>
+                    </div>
+
+                    <!-- Gratitude Journal -->
+                    <div class="resource-card" style="cursor: pointer;" onclick="openGame('gratitude')">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🙏</div>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Gratitude Journal</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Practice gratitude by listing things you're thankful for. Builds positive thinking.</p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Positivity</span>
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Gratitude</span>
+                            </div>
+                        </div>
+                        <button class="resource-btn" onclick="event.stopPropagation(); openGame('gratitude')">Play Now</button>
+                    </div>
+
+                    <!-- Memory Match -->
+                    <div class="resource-card" style="cursor: pointer;" onclick="openGame('memory')">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🧩</div>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Memory Match</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Find matching pairs of wellness symbols. Improves focus and cognitive function.</p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Memory</span>
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Focus</span>
+                            </div>
+                        </div>
+                        <button class="resource-btn" onclick="event.stopPropagation(); openGame('memory')">Play Now</button>
+                    </div>
+
+                    <!-- Daily Affirmations -->
+                    <div class="resource-card" style="cursor: pointer;" onclick="openGame('affirmations')">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">✨</div>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Daily Affirmations</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Draw a positive affirmation card to boost your confidence and mood.</p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Self-Esteem</span>
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Motivation</span>
+                            </div>
+                        </div>
+                        <button class="resource-btn" onclick="event.stopPropagation(); openGame('affirmations')">Play Now</button>
+                    </div>
+
+                    <!-- Worry Box -->
+                    <div class="resource-card" style="cursor: pointer;" onclick="openGame('worry')">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">📦</div>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Worry Box</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Write down your worries and release them. Practice letting go of anxiety.</p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Anxiety Relief</span>
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Stress</span>
+                            </div>
+                        </div>
+                        <button class="resource-btn" onclick="event.stopPropagation(); openGame('worry')">Play Now</button>
+                    </div>
+
+                    <!-- Mindfulness Quiz -->
+                    <div class="resource-card" style="cursor: pointer;" onclick="openGame('quiz')">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🧠</div>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Mindfulness Quiz</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Test your knowledge about mental wellness and mindfulness practices.</p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Learning</span>
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Education</span>
+                            </div>
+                        </div>
+                        <button class="resource-btn" onclick="event.stopPropagation(); openGame('quiz')">Play Now</button>
+                    </div>
+
+                    <!-- Emotion Wheel -->
+                    <div class="resource-card" style="cursor: pointer;" onclick="openGame('emotion')">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🎨</div>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Emotion Wheel</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Explore and identify your complex emotions with the emotion wheel.</p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Self-Awareness</span>
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Emotions</span>
+                            </div>
+                        </div>
+                        <button class="resource-btn" onclick="event.stopPropagation(); openGame('emotion')">Play Now</button>
+                    </div>
+
+                    <!-- Zen Puzzle -->
+                    <div class="resource-card" style="cursor: pointer;" onclick="openGame('puzzle')">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🎯</div>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Zen Puzzle</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem;">Relax your mind with calming peaceful symbols and patterns.</p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Relaxation</span>
+                                <span style="background: rgba(102,126,234,0.2); color: #667eea; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">Calm</span>
+                            </div>
+                        </div>
+                        <button class="resource-btn" onclick="event.stopPropagation(); openGame('puzzle')">Play Now</button>
+                    </div>
+                </div>
+
+                <!-- Game Modal -->
+                <div id="game-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; align-items: center; justify-content: center; padding: 2rem;">
+                    <div id="game-content" style="background: white; border-radius: 20px; padding: 3rem; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;">
+                        <!-- Game content loads here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- All other tabs removed - Games only! -->
+            <div style="display: none;">
+                <div class="featured-section">
+                    <h2 style="color: white; margin-bottom: 0.5rem;">💕 Relationship & Couples Counseling</h2>
+                    <p style="color: var(--gray); margin-bottom: 1rem;">Expert guidance for healthy relationships, communication, and emotional connection</p>
+                    
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 2rem; border-radius: 15px; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(102,126,234,0.3); border: 2px solid rgba(255,255,255,0.1);">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="font-size: 3rem;">🧠</div>
+                            <div>
+                                <h3 style="color: white; margin: 0 0 0.25rem 0; font-size: 1.4rem;">AI Relationship Therapist</h3>
+                                <p style="color: rgba(255,255,255,0.8); margin: 0; font-size: 0.9rem;">Available 24/7 • Powered by Claude AI</p>
+                            </div>
+                        </div>
+                        <p style="color: rgba(255,255,255,0.95); margin-bottom: 1.5rem; line-height: 1.6;">Get instant, compassionate relationship advice for couples communication, dating challenges, conflict resolution, and emotional support. Your conversations are private and secure.</p>
+                        <button onclick="document.getElementById('chatBubbleBtn').click()" style="background: white; color: #667eea; border: none; padding: 1.25rem 2.5rem; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 1.05rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; width: 100%;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)'">
+                            💬 Start Chat Now - It's Free!
+                        </button>
+                        <p style="text-align: center; color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 1rem; margin-bottom: 0;">
+                            ⚡ Instant responses • 🔒 100% private • 💙 Empathetic support
+                        </p>
+                    </div>
+                </div>
+
+                <h3 style="color: white; margin: 2rem 0 1.5rem;">Featured Relationship Topics</h3>
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🤝</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Communication</span>
+                            <h3 class="resource-title">Effective Communication in Relationships</h3>
+                            <p class="resource-description">
+                                Learn how to express your feelings, listen actively, and resolve conflicts peacefully with your partner.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>10 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Sarah Chen</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('communication')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🕊️</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Intimacy</span>
+                            <h3 class="resource-title">Building Emotional Intimacy</h3>
+                            <p class="resource-description">
+                                Strengthen your emotional bond through vulnerability, trust-building, and deep connection with your partner.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>12 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Michael Torres</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('intimacy')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🌿</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Conflict Resolution</span>
+                            <h3 class="resource-title">Healthy Conflict Resolution</h3>
+                            <p class="resource-description">
+                                Turn disagreements into opportunities for growth. Learn fair fighting techniques and compromise strategies.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>8 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Lisa Anderson</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('conflict')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🌸</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Trust & Boundaries</span>
+                            <h3 class="resource-title">Setting Healthy Boundaries</h3>
+                            <p class="resource-description">
+                                Establish clear boundaries while maintaining connection. Learn to say no without guilt and respect each other's needs.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>15 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. James Wilson</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('boundaries')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🌅</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Healing</span>
+                            <h3 class="resource-title">Recovering from Heartbreak</h3>
+                            <p class="resource-description">
+                                Navigate the pain of breakups and lost love. Find healing, self-compassion, and hope for the future.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>20 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Emma Rodriguez</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('heartbreak')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">�</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Dating</span>
+                            <h3 class="resource-title">Modern Dating & Connection</h3>
+                            <p class="resource-description">
+                                Navigate dating apps, first dates, and building authentic connections in the modern world.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>14 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Alex Kim</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('dating')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">💪</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Independence</span>
+                            <h3 class="resource-title">Maintaining Your Identity</h3>
+                            <p class="resource-description">
+                                Stay true to yourself while being in a relationship. Balance togetherness with personal growth.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>11 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Rachel Green</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('identity')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🎭</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Attachment</span>
+                            <h3 class="resource-title">Understanding Attachment Styles</h3>
+                            <p class="resource-description">
+                                Discover your attachment style and how it affects your relationships. Learn healthier patterns.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>18 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Marcus Stone</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('attachment')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🌙</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Long Distance</span>
+                            <h3 class="resource-title">Thriving in Long-Distance Love</h3>
+                            <p class="resource-description">
+                                Keep your connection strong across the miles. Communication strategies and creative date ideas.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>13 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Sophia Lee</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('longdistance')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🔥</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Passion</span>
+                            <h3 class="resource-title">Keeping the Spark Alive</h3>
+                            <p class="resource-description">
+                                Reignite passion and romance in long-term relationships. Date ideas and intimacy tips.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>16 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. James Wilson</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('passion')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🛡️</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Safety</span>
+                            <h3 class="resource-title">Recognizing Healthy vs Toxic Love</h3>
+                            <p class="resource-description">
+                                Learn the red flags and green flags. Know when to stay and when to prioritize your safety.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>22 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Maya Johnson</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('toxicvshealth')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">👨‍👩‍👧‍👦</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Family</span>
+                            <h3 class="resource-title">Parenting Together as Partners</h3>
+                            <p class="resource-description">
+                                Co-parenting strategies, staying connected as a couple, and managing parenting stress together.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>19 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Emily Rodriguez</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('parenting')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">💰</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Finance</span>
+                            <h3 class="resource-title">Money Talks: Financial Communication</h3>
+                            <p class="resource-description">
+                                Navigate money discussions without fights. Budget together and align financial goals as a couple.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>14 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Thomas Wright</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('finance')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🌈</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">LGBTQ+</span>
+                            <h3 class="resource-title">LGBTQ+ Relationship Support</h3>
+                            <p class="resource-description">
+                                Navigate unique challenges, celebrate your love, and build strong LGBTQ+ relationships.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>17 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Jordan Taylor</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('lgbtq')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🎯</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Growth</span>
+                            <h3 class="resource-title">Growing Together Through Challenges</h3>
+                            <p class="resource-description">
+                                Turn obstacles into opportunities. Strengthen your bond through life's ups and downs.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>12 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Nina Patel</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('growth')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🧘</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Mindfulness</span>
+                            <h3 class="resource-title">Mindful Relationship Practices</h3>
+                            <p class="resource-description">
+                                Bring presence and awareness to your relationship. Practice gratitude and conscious connection.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>10 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Lisa Anderson</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('mindfulness')">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <div style="font-size: 4rem;">🔄</div>
+                        </div>
+                        <div class="resource-body">
+                            <span class="resource-category">Recovery</span>
+                            <h3 class="resource-title">Rebuilding After Betrayal</h3>
+                            <p class="resource-description">
+                                Healing from infidelity or broken trust. Steps to forgiveness, rebuilding, or moving forward.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">
+                                    <span>⏱️</span>
+                                    <span>25 min read</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span>👤</span>
+                                    <span>Dr. Robert Kim</span>
+                                </div>
+                            </div>
+                            <button class="resource-action" onclick="readArticle('betrayal')">Read Article</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: white; margin: 3rem 0 1.5rem;">Relationship Exercises & Activities</h3>
+                <div class="exercise-list" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">🤝</div>
+                            <div class="exercise-details">
+                                <h4>Couples Communication Exercise</h4>
+                                <p>Practice active listening and expressing needs</p>
+                            </div>
+                        </div>
+                        <span class="exercise-duration">15 min</span>
+                        <button class="start-btn" onclick="startExercise('I want to do the couples communication exercise')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">🌺</div>
+                            <div class="exercise-details">
+                                <h4>Love Languages Discovery</h4>
+                                <p>Understand how you and your partner give and receive love</p>
+                            </div>
+                        </div>
+                        <span class="exercise-duration">20 min</span>
+                        <button class="start-btn" onclick="startExercise('Help me discover my love language')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">�</div>
+                            <div class="exercise-details">
+                                <h4>Goal Setting Together</h4>
+                                <p>Create shared vision and relationship goals</p>
+                            </div>
+                        </div>
+                        <span class="exercise-duration">30 min</span>
+                        <button class="start-btn" onclick="startExercise('Help us set relationship goals together')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">🕊️</div>
+                            <div class="exercise-details">
+                                <h4>Trust Building Activities</h4>
+                                <p>Strengthen trust through vulnerability and honesty</p>
+                            </div>
+                        </div>
+                        <span class="exercise-duration">25 min</span>
+                        <button class="start-btn" onclick="startExercise('Guide us through trust building activities')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">💝</div>
+                            <div class="exercise-details">
+                                <h4>Appreciation & Gratitude Practice</h4>
+                                <p>Express what you value in each other daily</p>
+                            </div>
+                        </div>
+                        <span class="exercise-duration">10 min</span>
+                        <button class="start-btn" onclick="startExercise('Help us practice gratitude together')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">🎲</div>
+                            <div class="exercise-details">
+                                <h4>Question Game for Deeper Connection</h4>
+                                <p>Ask meaningful questions to know each other better</p>
+                            </div>
+                        </div>
+                        <span class="exercise-duration">20 min</span>
+                        <button class="start-btn" onclick="startExercise('Give us deep connection questions')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">🗓️</div>
+                            <div class="exercise-details">
+                                <h4>Weekly Check-In Ritual</h4>
+                                <p>Regular relationship health assessments</p>
+                            </div>
+                        </div>
+                        <span class="exercise-duration">15 min</span>
+                        <button class="start-btn" onclick="startExercise('Guide our weekly relationship check-in')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">🎨</div>
+                            <div class="exercise-details">
+                                <h4>Creative Date Night Ideas</h4>
+                                <p>Fun and unique activities to reconnect</p>
+                            </div>
+                        </div>
+                        <span class="exercise-duration">5 min</span>
+                        <button class="start-btn" onclick="startExercise('Suggest creative date night ideas for us')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">💬</div>
+                            <div class="exercise-details">
+                                <h4>Conflict Resolution Practice</h4>
+                                <p>Learn healthy ways to resolve disagreements</p>
+                            </div>
+                        </div>
+                        <span class="exercise-duration">30 min</span>
+                        <button class="start-btn" onclick="startExercise('Help us work through a conflict')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">📝</div>
+                            <div class="exercise-details">
+                                <h4>Love Letter Writing</h4>
+                                <p>Express your feelings in a heartfelt letter</p>
+                            </div>
+                        </div>
+                        <span class="exercise-duration">20 min</span>
+                        <button class="start-btn" onclick="startExercise('Help me write a love letter')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">🌟</div>
+                            <div class="exercise-details">
+                                <h4>Vision Board for Couples</h4>
+                                <p>Create a shared vision for your future together</p>
+                            </div>
+                        </div>
+                        <span class="exercise-duration">45 min</span>
+                        <button class="start-btn" onclick="startExercise('Guide us in creating a relationship vision board')">Start</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Articles Tab -->
+            <div class="tab-content" id="articles-content">
+                <div class="featured-section">
+                    <h2 style="color: white; margin-bottom: 0.5rem;">✨ Featured This Week</h2>
+                    <p style="color: var(--gray);">Hand-picked content from our expert therapists</p>
+                    
+                    <div class="featured-grid">
+                        <div class="featured-item">
+                            <div class="featured-icon">🌿</div>
+                            <div>
+                                <h4 style="color: white; margin-bottom: 0.5rem;">Understanding Anxiety</h4>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Learn practical strategies to manage anxiety in daily life</p>
+                            </div>
+                        </div>
+                        <div class="featured-item">
+                            <div class="featured-icon">�</div>
+                            <div>
+                                <h4 style="color: white; margin-bottom: 0.5rem;">Building Resilience</h4>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Develop mental strength and bounce back from challenges</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: white; margin-bottom: 1.5rem;">Latest Articles</h3>
+                <div class="resource-grid">
+                    <div class="resource-card" onclick="openResource('article1')">
+                        <div class="resource-image">🌿</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Anxiety</span>
+                            <h3 class="resource-title">5 Techniques to Calm Your Mind</h3>
+                            <p class="resource-description">
+                                Discover evidence-based breathing techniques and mindfulness practices to reduce anxiety and find inner peace.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 8 min read</div>
+                                <div class="meta-item">👁️ 1.2k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article2')">
+                        <div class="resource-image">🌸</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Self-Care</span>
+                            <h3 class="resource-title">Building a Self-Care Routine</h3>
+                            <p class="resource-description">
+                                Learn how to create a personalized self-care routine that fits your lifestyle and supports your wellbeing.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 12 min read</div>
+                                <div class="meta-item">👁️ 2.5k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article3')">
+                        <div class="resource-image">🌙</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Sleep</span>
+                            <h3 class="resource-title">Better Sleep, Better Mental Health</h3>
+                            <p class="resource-description">
+                                Understand the connection between sleep and mental health, plus tips for improving your sleep quality.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 10 min read</div>
+                                <div class="meta-item">👁️ 3.1k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article4')">
+                        <div class="resource-image">🤝</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Relationships</span>
+                            <h3 class="resource-title">Healthy Communication in Relationships</h3>
+                            <p class="resource-description">
+                                Master the art of effective communication to build stronger, more meaningful connections.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 15 min read</div>
+                                <div class="meta-item">👁️ 1.8k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article5')">
+                        <div class="resource-image">�</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Motivation</span>
+                            <h3 class="resource-title">Setting Achievable Mental Health Goals</h3>
+                            <p class="resource-description">
+                                Learn how to set realistic, meaningful goals that support your mental health journey.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 7 min read</div>
+                                <div class="meta-item">👁️ 960 views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article6')">
+                        <div class="resource-image">🌅</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Depression</span>
+                            <h3 class="resource-title">Understanding and Managing Depression</h3>
+                            <p class="resource-description">
+                                A comprehensive guide to recognizing symptoms and finding effective coping strategies.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 14 min read</div>
+                                <div class="meta-item">👁️ 2.9k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article7')">
+                        <div class="resource-image">🧠</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Mental Health</span>
+                            <h3 class="resource-title">The Mind-Body Connection</h3>
+                            <p class="resource-description">
+                                Explore how physical health impacts mental wellbeing and vice versa.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 11 min read</div>
+                                <div class="meta-item">👁️ 1.5k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article8')">
+                        <div class="resource-image">💪</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Resilience</span>
+                            <h3 class="resource-title">Building Mental Toughness</h3>
+                            <p class="resource-description">
+                                Develop resilience to bounce back stronger from life's challenges.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 13 min read</div>
+                                <div class="meta-item">👁️ 2.1k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article9')">
+                        <div class="resource-image">🌱</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Personal Growth</span>
+                            <h3 class="resource-title">Breaking Bad Habits</h3>
+                            <p class="resource-description">
+                                Understand habit loops and create lasting positive changes.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 9 min read</div>
+                                <div class="meta-item">👁️ 1.7k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article10')">
+                        <div class="resource-image">🎭</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Emotions</span>
+                            <h3 class="resource-title">Emotional Intelligence Guide</h3>
+                            <p class="resource-description">
+                                Master your emotions and improve your relationships.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 16 min read</div>
+                                <div class="meta-item">👁️ 3.2k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article11')">
+                        <div class="resource-image">🔥</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Stress</span>
+                            <h3 class="resource-title">Burnout Prevention & Recovery</h3>
+                            <p class="resource-description">
+                                Recognize burnout signs and restore your energy.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 12 min read</div>
+                                <div class="meta-item">👁️ 2.8k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article12')">
+                        <div class="resource-image">🏆</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Achievement</span>
+                            <h3 class="resource-title">Overcoming Imposter Syndrome</h3>
+                            <p class="resource-description">
+                                Feel confident in your accomplishments and abilities.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 10 min read</div>
+                                <div class="meta-item">👁️ 1.9k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article13')">
+                        <div class="resource-image">🧘‍♀️</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Mindfulness</span>
+                            <h3 class="resource-title">Meditation for Beginners</h3>
+                            <p class="resource-description">
+                                Start your meditation journey with simple techniques.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 8 min read</div>
+                                <div class="meta-item">👁️ 2.4k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article14')">
+                        <div class="resource-image">🌍</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Social</span>
+                            <h3 class="resource-title">Overcoming Social Anxiety</h3>
+                            <p class="resource-description">
+                                Build confidence in social situations step by step.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 15 min read</div>
+                                <div class="meta-item">👁️ 3.5k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article15')">
+                        <div class="resource-image">🎯</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Productivity</span>
+                            <h3 class="resource-title">Focus & Concentration Techniques</h3>
+                            <p class="resource-description">
+                                Improve your attention span and get more done.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 11 min read</div>
+                                <div class="meta-item">👁️ 2.2k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article16')">
+                        <div class="resource-image">💔</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Grief</span>
+                            <h3 class="resource-title">Navigating Loss & Grief</h3>
+                            <p class="resource-description">
+                                Healing through different stages of grief and loss.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 18 min read</div>
+                                <div class="meta-item">👁️ 2.7k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article17')">
+                        <div class="resource-image">✨</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Self-Esteem</span>
+                            <h3 class="resource-title">Building Unshakeable Confidence</h3>
+                            <p class="resource-description">
+                                Develop authentic self-worth from the inside out.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 14 min read</div>
+                                <div class="meta-item">👁️ 3.8k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openResource('article18')">
+                        <div class="resource-image">🌺</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Wellness</span>
+                            <h3 class="resource-title">Holistic Self-Care Practices</h3>
+                            <p class="resource-description">
+                                Care for mind, body, and spirit with integrated practices.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">⏱️ 12 min read</div>
+                                <div class="meta-item">👁️ 2.6k views</div>
+                            </div>
+                            <button class="resource-action">Read Article</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Videos Tab -->
+            <div class="tab-content" id="videos-content">
+                <h3 style="color: white; margin-bottom: 1.5rem;">Guided Sessions & Tutorials</h3>
+                <div class="video-grid">
+                    <div class="video-card" onclick="playVideo('video1')">
+                        <div class="video-thumbnail">
+                            🧘‍♀️
+                            <div class="play-button">▶️</div>
+                        </div>
+                        <div class="video-info">
+                            <h4>10-Minute Guided Meditation</h4>
+                            <p>Reduce stress and anxiety • 10:24</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card" onclick="playVideo('video2')">
+                        <div class="video-thumbnail">
+                            🌬️
+                            <div class="play-button">▶️</div>
+                        </div>
+                        <div class="video-info">
+                            <h4>Deep Breathing Techniques</h4>
+                            <p>Learn calming breathwork • 8:15</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card" onclick="playVideo('video3')">
+                        <div class="video-thumbnail">
+                            💪
+                            <div class="play-button">▶️</div>
+                        </div>
+                        <div class="video-info">
+                            <h4>Building Mental Resilience</h4>
+                            <p>Strengthen your mindset • 15:40</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card" onclick="playVideo('video4')">
+                        <div class="video-thumbnail">
+                            🌟
+                            <div class="play-button">▶️</div>
+                        </div>
+                        <div class="video-info">
+                            <h4>Morning Mindfulness Practice</h4>
+                            <p>Start your day right • 12:30</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card" onclick="playVideo('video5')">
+                        <div class="video-thumbnail">
+                            😴
+                            <div class="play-button">▶️</div>
+                        </div>
+                        <div class="video-info">
+                            <h4>Sleep Meditation for Anxiety</h4>
+                            <p>Peaceful bedtime routine • 20:00</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card" onclick="playVideo('video6')">
+                        <div class="video-thumbnail">
+                            💬
+                            <div class="play-button">▶️</div>
+                        </div>
+                        <div class="video-info">
+                            <h4>Effective Communication Skills</h4>
+                            <p>Improve relationships • 18:22</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercises Tab -->
+            <div class="tab-content" id="exercises-content">
+                <h3 style="color: white; margin-bottom: 1.5rem;">Interactive Wellness Exercises</h3>
+                <div class="exercise-list">
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">🧘</div>
+                            <div class="exercise-details">
+                                <h4>Body Scan Meditation</h4>
+                                <p>Progressive relaxation technique to release tension and increase body awareness</p>
+                            </div>
+                        </div>
+                        <div class="exercise-duration">15 min</div>
+                        <button class="start-btn" onclick="startExercise('bodyscan')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">🌬️</div>
+                            <div class="exercise-details">
+                                <h4>4-7-8 Breathing Exercise</h4>
+                                <p>Powerful breathing technique to calm anxiety and promote relaxation</p>
+                            </div>
+                        </div>
+                        <div class="exercise-duration">5 min</div>
+                        <button class="start-btn" onclick="startExercise('breathing')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">📝</div>
+                            <div class="exercise-details">
+                                <h4>Gratitude Journaling</h4>
+                                <p>Daily practice to shift focus towards positive experiences and build resilience</p>
+                            </div>
+                        </div>
+                        <div class="exercise-duration">10 min</div>
+                        <button class="start-btn" onclick="startExercise('gratitude')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">🎯</div>
+                            <div class="exercise-details">
+                                <h4>Grounding Technique (5-4-3-2-1)</h4>
+                                <p>Use your senses to anchor yourself in the present moment during anxiety</p>
+                            </div>
+                        </div>
+                        <div class="exercise-duration">8 min</div>
+                        <button class="start-btn" onclick="startExercise('grounding')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">💭</div>
+                            <div class="exercise-details">
+                                <h4>Thought Reframing</h4>
+                                <p>CBT technique to challenge negative thoughts and develop balanced thinking</p>
+                            </div>
+                        </div>
+                        <div class="exercise-duration">12 min</div>
+                        <button class="start-btn" onclick="startExercise('reframing')">Start</button>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">🌈</div>
+                            <div class="exercise-details">
+                                <h4>Visualization for Calm</h4>
+                                <p>Guided imagery exercise to create a peaceful mental sanctuary</p>
+                            </div>
+                        </div>
+                        <div class="exercise-duration">10 min</div>
+                        <button class="start-btn" onclick="startExercise('visualization')">Start</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools Tab -->
+            <div class="tab-content" id="tools-content">
+                <h3 style="color: white; margin-bottom: 1.5rem;">Wellness Tools & Trackers</h3>
+                <div class="resource-grid">
+                    <div class="resource-card" onclick="openTool('mood-tracker')">
+                        <div class="resource-image">😊</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Tracking</span>
+                            <h3 class="resource-title">Mood Tracker</h3>
+                            <p class="resource-description">
+                                Track your daily mood patterns and identify triggers to better understand your emotional wellbeing.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openProgressTracker()">
+                        <div class="resource-image">📊</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Progress</span>
+                            <h3 class="resource-title">Progress Tracker</h3>
+                            <p class="resource-description">
+                                View your real-time wellness progress including sessions, exercises completed, and mood trends.
+                            </p>
+                            <button class="resource-action">Open Tracker</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('journal')">
+                        <div class="resource-image">📔</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Reflection</span>
+                            <h3 class="resource-title">Digital Journal</h3>
+                            <p class="resource-description">
+                                Express your thoughts and feelings in a private, secure digital journal with guided prompts.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('goals')">
+                        <div class="resource-image">🎯</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Progress</span>
+                            <h3 class="resource-title">Goal Setting Planner</h3>
+                            <p class="resource-description">
+                                Set, track, and achieve your mental health goals with our structured planning tool.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('sleep')">
+                        <div class="resource-image">😴</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Rest</span>
+                            <h3 class="resource-title">Sleep Quality Tracker</h3>
+                            <p class="resource-description">
+                                Monitor your sleep patterns and discover what helps you get the best rest.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('anxiety-log')">
+                        <div class="resource-image">�</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Analysis</span>
+                            <h3 class="resource-title">Anxiety Log</h3>
+                            <p class="resource-description">
+                                Record anxiety episodes to identify patterns, triggers, and effective coping strategies.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('self-care')">
+                        <div class="resource-image">💚</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Wellness</span>
+                            <h3 class="resource-title">Self-Care Checklist</h3>
+                            <p class="resource-description">
+                                Daily reminders and activities to maintain your physical and mental wellbeing.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('gratitude')">
+                        <div class="resource-image">🙏</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Positivity</span>
+                            <h3 class="resource-title">Gratitude Journal</h3>
+                            <p class="resource-description">
+                                Daily gratitude practice to shift focus to the positive.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('habit')">
+                        <div class="resource-image">📅</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Routine</span>
+                            <h3 class="resource-title">Habit Tracker</h3>
+                            <p class="resource-description">
+                                Build and maintain healthy habits with visual tracking.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('breathing')">
+                        <div class="resource-image">🌬️</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Calm</span>
+                            <h3 class="resource-title">Breathing Exercise Timer</h3>
+                            <p class="resource-description">
+                                Guided breathing patterns for instant relaxation.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('energy')">
+                        <div class="resource-image">⚡</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Vitality</span>
+                            <h3 class="resource-title">Energy Level Monitor</h3>
+                            <p class="resource-description">
+                                Track your energy patterns throughout the day.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('thought')">
+                        <div class="resource-image">💭</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Cognitive</span>
+                            <h3 class="resource-title">Thought Record</h3>
+                            <p class="resource-description">
+                                Challenge negative thoughts with CBT techniques.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('affirmations')">
+                        <div class="resource-image">💫</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Motivation</span>
+                            <h3 class="resource-title">Daily Affirmations</h3>
+                            <p class="resource-description">
+                                Positive statements to start your day with confidence.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('relationships')">
+                        <div class="resource-image">💞</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Connection</span>
+                            <h3 class="resource-title">Relationship Tracker</h3>
+                            <p class="resource-description">
+                                Monitor relationship health and communication quality.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('meditation')">
+                        <div class="resource-image">🧘</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Mindfulness</span>
+                            <h3 class="resource-title">Meditation Timer</h3>
+                            <p class="resource-description">
+                                Customizable timer with bells and ambient sounds.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('triggers')">
+                        <div class="resource-image">🚨</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Awareness</span>
+                            <h3 class="resource-title">Trigger Tracker</h3>
+                            <p class="resource-description">
+                                Identify what triggers stress or anxiety for you.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('coping')">
+                        <div class="resource-image">🛠️</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Skills</span>
+                            <h3 class="resource-title">Coping Skills Library</h3>
+                            <p class="resource-description">
+                                Collection of healthy coping strategies for tough moments.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('values')">
+                        <div class="resource-image">🎯</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Clarity</span>
+                            <h3 class="resource-title">Values Assessment</h3>
+                            <p class="resource-description">
+                                Discover what matters most to you in life.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('stress')">
+                        <div class="resource-image">📉</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Relief</span>
+                            <h3 class="resource-title">Stress Level Monitor</h3>
+                            <p class="resource-description">
+                                Track stress levels and find patterns over time.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openTool('boundaries')">
+                        <div class="resource-image">🚧</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Protection</span>
+                            <h3 class="resource-title">Boundary Setting Guide</h3>
+                            <p class="resource-description">
+                                Learn to set and maintain healthy boundaries.
+                            </p>
+                            <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Podcasts Tab -->
+            <div class="tab-content" id="podcasts-content">
+                <h3 style="color: white; margin-bottom: 1.5rem;">Mental Health Podcasts</h3>
+                <div class="resource-grid">
+                    <div class="resource-card" onclick="openPodcast('podcast1')">
+                        <div class="resource-image">🎧</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Weekly</span>
+                            <h3 class="resource-title">The Mindful Moment</h3>
+                            <p class="resource-description">
+                                Weekly episodes exploring mindfulness, meditation, and living in the present moment.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">🎙️ 45 episodes</div>
+                                <div class="meta-item">⭐ 4.8</div>
+                            </div>
+                            <button class="resource-action">Listen Now</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openPodcast('podcast2')">
+                        <div class="resource-image">🎙️</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Daily</span>
+                            <h3 class="resource-title">Therapy Unplugged</h3>
+                            <p class="resource-description">
+                                Real therapists discuss mental health topics, answer questions, and share insights.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">🎙️ 120 episodes</div>
+                                <div class="meta-item">⭐ 4.9</div>
+                            </div>
+                            <button class="resource-action">Listen Now</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openPodcast('podcast3')">
+                        <div class="resource-image">🌟</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Biweekly</span>
+                            <h3 class="resource-title">Stories of Resilience</h3>
+                            <p class="resource-description">
+                                Inspiring stories of people overcoming mental health challenges and finding hope.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">🎙️ 32 episodes</div>
+                                <div class="meta-item">⭐ 5.0</div>
+                            </div>
+                            <button class="resource-action">Listen Now</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openPodcast('podcast4')">
+                        <div class="resource-image">💭</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Weekly</span>
+                            <h3 class="resource-title">The Anxious Truth</h3>
+                            <p class="resource-description">
+                                Expert advice on anxiety, panic attacks, and OCD management.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">🎙️ 85 episodes</div>
+                                <div class="meta-item">⭐ 4.7</div>
+                            </div>
+                            <button class="resource-action">Listen Now</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openPodcast('podcast5')">
+                        <div class="resource-image">🌈</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Weekly</span>
+                            <h3 class="resource-title">Self-Love Society</h3>
+                            <p class="resource-description">
+                                Building self-esteem, confidence, and authentic self-worth.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">🎙️ 65 episodes</div>
+                                <div class="meta-item">⭐ 4.9</div>
+                            </div>
+                            <button class="resource-action">Listen Now</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openPodcast('podcast6')">
+                        <div class="resource-image">💤</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Daily</span>
+                            <h3 class="resource-title">Sleep Stories for Adults</h3>
+                            <p class="resource-description">
+                                Calming bedtime stories to help you fall asleep peacefully.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">🎙️ 200 episodes</div>
+                                <div class="meta-item">⭐ 4.8</div>
+                            </div>
+                            <button class="resource-action">Listen Now</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openPodcast('podcast7')">
+                        <div class="resource-image">🎯</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Biweekly</span>
+                            <h3 class="resource-title">Mental Health Matters</h3>
+                            <p class="resource-description">
+                                Breaking stigma with real conversations about mental health.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">🎙️ 42 episodes</div>
+                                <div class="meta-item">⭐ 4.6</div>
+                            </div>
+                            <button class="resource-action">Listen Now</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openPodcast('podcast8')">
+                        <div class="resource-image">💪</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Weekly</span>
+                            <h3 class="resource-title">The Growth Mindset</h3>
+                            <p class="resource-description">
+                                Personal development and building resilience in life.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">🎙️ 78 episodes</div>
+                                <div class="meta-item">⭐ 4.8</div>
+                            </div>
+                            <button class="resource-action">Listen Now</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="openPodcast('podcast9')">
+                        <div class="resource-image">🧠</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Weekly</span>
+                            <h3 class="resource-title">The Psychology Podcast</h3>
+                            <p class="resource-description">
+                                Deep dives into psychological research and human behavior.
+                            </p>
+                            <div class="resource-meta">
+                                <div class="meta-item">🎙️ 156 episodes</div>
+                                <div class="meta-item">⭐ 4.9</div>
+                            </div>
+                            <button class="resource-action">Listen Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function switchResourceTab(tabName) {
+            // Check if user is signed in for restricted content
+            const restrictedTabs = ['articles', 'videos', 'exercises', 'tools', 'podcasts'];
+            const isSignedIn = localStorage.getItem('therapyConnectUser');
+            
+            if (restrictedTabs.includes(tabName) && !isSignedIn) {
+                alert('Please sign in to access this content. Click "Sign In" at the top of the page.');
+                return;
+            }
+            
+            // Update tab buttons
+            document.querySelectorAll('.resource-tab').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName + '-content').classList.add('active');
+        }
+
+        function openResource(resourceId) {
+            // Real article URLs - these can be updated with actual blog/article pages
+            const articles = {
+                'article1': 'https://www.healthline.com/health/breathing-exercises-for-anxiety',
+                'article2': 'https://www.psychologytoday.com/us/basics/self-care',
+                'article3': 'https://www.sleepfoundation.org/mental-health',
+                'article4': 'https://www.psychologytoday.com/us/basics/communication',
+                'article5': 'https://www.verywellmind.com/how-to-set-mental-health-goals-5220919',
+                'article6': 'https://www.psychologytoday.com/us/basics/stress'
+            };
+            
+            if (articles[resourceId]) {
+                window.open(articles[resourceId], '_blank');
+            }
+        }
+
+        function playVideo(videoId) {
+            // Redirect to actual video content
+            const videoUrls = {
+                'video1': 'https://www.youtube.com/watch?v=inpok4MKVLM', // Guided Meditation
+                'video2': 'https://www.youtube.com/watch?v=O-6f5wQXSu8', // Anxiety Relief
+                'video3': 'https://www.youtube.com/watch?v=z6X5oEIg6Ak', // Mental Resilience
+                'video4': 'https://www.youtube.com/watch?v=ZToicYcHIOU', // Morning Mindfulness
+                'video5': 'https://www.youtube.com/watch?v=aEqlQvczMJQ', // Sleep Meditation
+                'video6': 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'  // Communication Skills
+            };
+            
+            if (videoUrls[videoId]) {
+                window.open(videoUrls[videoId], '_blank');
+            }
+        }
+
+        function startExercise(exerciseId) {
+            // Start exercises through AI chat
+            const exercises = {
+                'bodyscan': 'Guide me through a body scan meditation for relaxation',
+                'breathing': 'Guide me through a breathing exercise to reduce stress',
+                'gratitude': 'Help me practice gratitude journaling',
+                'grounding': 'Guide me through the 5-4-3-2-1 grounding technique',
+                'reframing': 'Help me reframe negative thoughts into positive ones',
+                'visualization': 'Guide me through a calming visualization exercise'
+            };
+            
+            // Check if it's a predefined exercise ID or a direct message
+            const message = exercises[exerciseId] || exerciseId;
+            
+            // Track the activity
+            trackActivity(`Started exercise: ${exercises[exerciseId] ? exerciseId : 'relationship exercise'}`);
+            
+            if (window.therapistChat) {
+                window.therapistChat.quickMessage(message);
+            } else {
+                alert('Chat widget is loading. Please try again in a moment.');
+            }
+        }
+
+        function openTool(toolId) {
+            // Open tools through AI chat
+            const tools = {
+                'mood-tracker': 'Help me track my mood and emotions',
+                'moodtracker': 'Help me track my mood and emotions',
+                'journal': 'Help me with therapeutic journaling',
+                'sleep': 'Help me improve my sleep habits',
+                'sleeptracker': 'Help me improve my sleep habits',
+                'goals': 'Help me set and plan my mental health goals',
+                'goalplanner': 'Help me set and plan my mental health goals',
+                'meditation': 'Guide me through a meditation session',
+                'anxiety-log': 'Help me assess my anxiety levels',
+                'anxietycalculator': 'Help me assess my anxiety levels',
+                'self-care': 'Help me create a self-care routine'
+            };
+            
+            if (tools[toolId]) {
+                // Track the activity
+                trackActivity(`Used tool: ${toolId}`);
+                
+                if (window.therapistChat) {
+                    window.therapistChat.quickMessage(tools[toolId]);
+                } else {
+                    alert('Chat widget is loading. Please try again in a moment.');
+                }
+            }
+        }
+
+        function openPodcast(podcastId) {
+            // Real podcast URLs
+            const podcasts = {
+                'podcast1': 'https://open.spotify.com/show/5qSUyCrk9KR69lEiXbjwXM', // The Mindful Moment
+                'podcast2': 'https://podcasts.apple.com/us/podcast/therapy-for-black-girls/id1095068867', // Therapy Unplugged
+                'podcast3': 'https://podcasts.apple.com/us/podcast/the-mental-illness-happy-hour/id427564613', // Stories of Resilience
+                'podcast4': 'https://podcasts.apple.com/us/podcast/the-anxious-truth/id1321916420', // The Anxious Truth
+                'podcast5': 'https://open.spotify.com/show/3f7tBVh9hCqwq0C2VyEh5f', // Self-Love Society
+                'podcast6': 'https://podcasts.apple.com/us/podcast/sleep-with-me/id740675898', // Sleep Stories
+                'podcast7': 'https://open.spotify.com/show/5EQG0TdiLs9uPLOCTDKz8c', // Additional podcast
+                'podcast8': 'https://podcasts.apple.com/us/podcast/10-happier-with-dan-harris/id1087147821' // Additional podcast
+            };
+            
+            if (podcasts[podcastId]) {
+                window.open(podcasts[podcastId], '_blank');
+                trackActivity(`Listened to podcast: ${podcastId}`);
+            } else {
+                alert('🎧 Opening podcast player...\n\nThis feature connects to popular podcast platforms like Spotify and Apple Podcasts!');
+            }
+        }
+
+        function readArticle(articleId) {
+            // Track the activity
+            trackActivity(`Read article: ${articleId}`);
+            
+            // Article content database
+            const articles = {
+                'communication': {
+                    title: 'Effective Communication in Relationships',
+                    author: 'Dr. Sarah Chen',
+                    content: `
+                        <h2>Effective Communication in Relationships</h2>
+                        <p><strong>By Dr. Sarah Chen | 10 min read</strong></p>
+                        
+                        <h3>Why Communication Matters</h3>
+                        <p>Communication is the foundation of any healthy relationship. Whether you're dating, married, or in a long-term partnership, the way you communicate with your partner can make or break your connection.</p>
+                        
+                        <h3>5 Key Communication Skills</h3>
+                        <h4>1. Active Listening</h4>
+                        <p>Put down your phone, make eye contact, and truly hear what your partner is saying. Reflect back what you heard to ensure understanding.</p>
+                        
+                        <h4>2. Use "I" Statements</h4>
+                        <p>Instead of "You never listen to me," try "I feel unheard when I'm talking and you're on your phone." This reduces defensiveness.</p>
+                        
+                        <h4>3. Express Needs Clearly</h4>
+                        <p>Don't expect your partner to read your mind. Be specific about what you need: "I need 30 minutes to decompress after work before discussing our day."</p>
+                        
+                        <h4>4. Practice Non-Defensive Responses</h4>
+                        <p>When receiving feedback, resist the urge to defend yourself immediately. Take a breath and try to understand their perspective first.</p>
+                        
+                        <h4>5. Schedule Important Conversations</h4>
+                        <p>Don't ambush your partner with heavy topics. Schedule time to talk when you're both calm and can give full attention.</p>
+                        
+                        <h3>Common Communication Pitfalls</h3>
+                        <ul>
+                            <li><strong>Stonewalling:</strong> Shutting down and refusing to engage</li>
+                            <li><strong>Criticism:</strong> Attacking character instead of addressing behavior</li>
+                            <li><strong>Contempt:</strong> Showing disrespect through sarcasm or mockery</li>
+                            <li><strong>Defensiveness:</strong> Deflecting responsibility and counter-attacking</li>
+                        </ul>
+                        
+                        <h3>Practice Exercise</h3>
+                        <p>Try the "Speaker-Listener Technique" tonight:</p>
+                        <ol>
+                            <li>One person talks for 5 minutes uninterrupted</li>
+                            <li>The listener summarizes what they heard</li>
+                            <li>Speaker confirms or clarifies</li>
+                            <li>Switch roles</li>
+                        </ol>
+                        
+                        <p><strong>Remember:</strong> Good communication is a skill that takes practice. Be patient with yourself and your partner as you learn together.</p>
+                    `
+                },
+                'intimacy': {
+                    title: 'Building Emotional Intimacy',
+                    content: `
+                        <h2>Building Emotional Intimacy</h2>
+                        <p><strong>By Dr. Michael Torres | 12 min read</strong></p>
+                        
+                        <h3>What is Emotional Intimacy?</h3>
+                        <p>Emotional intimacy is the deep sense of closeness and connection you feel when someone truly knows and accepts you. It's about vulnerability, trust, and feeling safe to be your authentic self.</p>
+                        
+                        <h3>Signs of Strong Emotional Intimacy</h3>
+                        <ul>
+                            <li>You can share your deepest fears without judgment</li>
+                            <li>You feel comfortable being vulnerable</li>
+                            <li>You know each other's dreams and goals</li>
+                            <li>You support each other through challenges</li>
+                            <li>You can sit in comfortable silence together</li>
+                        </ul>
+                        
+                        <h3>How to Deepen Your Connection</h3>
+                        <h4>1. Share Your Inner World</h4>
+                        <p>Talk about your hopes, fears, childhood memories, and dreams. The more you share, the closer you become.</p>
+                        
+                        <h4>2. Ask Deeper Questions</h4>
+                        <p>Move beyond "How was your day?" Try: "What made you feel most alive today?" or "What's been on your mind lately?"</p>
+                        
+                        <h4>3. Be Present</h4>
+                        <p>Quality time means undivided attention. Put away distractions and be fully present with your partner.</p>
+                        
+                        <h4>4. Practice Emotional Validation</h4>
+                        <p>When your partner shares feelings, acknowledge them: "That sounds really frustrating" or "I can understand why you'd feel that way."</p>
+                        
+                        <h3>36 Questions for Intimacy</h3>
+                        <p>Try these research-backed questions to deepen your bond:</p>
+                        <ol>
+                            <li>If you could wake up tomorrow with any quality, what would it be?</li>
+                            <li>What's your most treasured memory?</li>
+                            <li>How do you feel about your relationship with your mother?</li>
+                            <li>What's your biggest fear in our relationship?</li>
+                        </ol>
+                        
+                        <p><strong>Start tonight:</strong> Set aside 30 minutes for uninterrupted conversation about something meaningful to both of you.</p>
+                    `
+                },
+                'conflict': {
+                    title: 'Healthy Conflict Resolution',
+                    content: `
+                        <h2>Healthy Conflict Resolution</h2>
+                        <p><strong>By Dr. Lisa Anderson | 8 min read</strong></p>
+                        
+                        <h3>Conflict is Normal (and Healthy!)</h3>
+                        <p>Every couple argues. The difference between happy and unhappy couples isn't whether they fight—it's HOW they fight.</p>
+                        
+                        <h3>The Rules of Fair Fighting</h3>
+                        <h4>1. Take a Time-Out if Needed</h4>
+                        <p>If emotions are running too high, it's okay to pause: "I need 20 minutes to cool down, then let's talk."</p>
+                        
+                        <h4>2. Stick to One Issue</h4>
+                        <p>Don't bring up past grievances. Focus on the current problem only.</p>
+                        
+                        <h4>3. No Name-Calling or Insults</h4>
+                        <p>Attack the problem, never the person. "You're an idiot" is never acceptable.</p>
+                        
+                        <h4>4. Listen to Understand, Not to Win</h4>
+                        <p>The goal isn't to prove you're right—it's to find a solution together.</p>
+                        
+                        <h4>5. Take Responsibility</h4>
+                        <p>Own your part in the conflict. "I should have communicated better" goes a long way.</p>
+                        
+                        <h3>The Conflict Resolution Process</h3>
+                        <ol>
+                            <li><strong>Calm Down:</strong> Take space if needed (max 24 hours)</li>
+                            <li><strong>Listen First:</strong> Each person gets 5 minutes uninterrupted</li>
+                            <li><strong>Find Common Ground:</strong> What do you both want?</li>
+                            <li><strong>Brainstorm Solutions:</strong> Get creative together</li>
+                            <li><strong>Agree on Action:</strong> What will each person do differently?</li>
+                            <li><strong>Follow Up:</strong> Check in a week later</li>
+                        </ol>
+                        
+                        <h3>Red Flags in Arguments</h3>
+                        <p>⚠️ Seek help if your conflicts involve:</p>
+                        <ul>
+                            <li>Physical violence or threats</li>
+                            <li>Emotional abuse or manipulation</li>
+                            <li>Complete shutdown for days</li>
+                            <li>Feeling unsafe to express yourself</li>
+                        </ul>
+                        
+                        <p><strong>Remember:</strong> You're on the same team. It's you and your partner vs. the problem, not you vs. your partner.</p>
+                    `
+                },
+                'boundaries': {
+                    title: 'Setting Healthy Boundaries',
+                    content: `
+                        <h2>Setting Healthy Boundaries</h2>
+                        <p><strong>By Dr. James Wilson | 15 min read</strong></p>
+                        
+                        <h3>What Are Boundaries?</h3>
+                        <p>Boundaries are guidelines for how you want to be treated and what you're comfortable with in relationships. They're not walls—they're bridges to healthier connections.</p>
+                        
+                        <h3>Types of Boundaries</h3>
+                        <ul>
+                            <li><strong>Physical:</strong> Personal space, touch, privacy</li>
+                            <li><strong>Emotional:</strong> What feelings you share, emotional energy</li>
+                            <li><strong>Time:</strong> How you spend your time, availability</li>
+                            <li><strong>Sexual:</strong> Consent, preferences, comfort levels</li>
+                            <li><strong>Material:</strong> Money, possessions, resources</li>
+                        </ul>
+                        
+                        <h3>Signs You Need Better Boundaries</h3>
+                        <ul>
+                            <li>Feeling resentful or taken advantage of</li>
+                            <li>Saying yes when you want to say no</li>
+                            <li>Feeling responsible for others' emotions</li>
+                            <li>Exhausted from over-giving</li>
+                            <li>Difficulty making decisions</li>
+                        </ul>
+                        
+                        <h3>How to Set Boundaries</h3>
+                        <h4>1. Get Clear on Your Needs</h4>
+                        <p>What do YOU need to feel respected, safe, and valued?</p>
+                        
+                        <h4>2. Communicate Directly</h4>
+                        <p>"I need [X]" or "I'm not comfortable with [Y]"</p>
+                        
+                        <h4>3. Be Consistent</h4>
+                        <p>Don't set a boundary one day and ignore it the next.</p>
+                        
+                        <h4>4. Prepare for Pushback</h4>
+                        <p>Some people won't like your boundaries. That's okay—they're not negotiable.</p>
+                        
+                        <h3>Boundary Scripts</h3>
+                        <p><strong>For time:</strong> "I need Thursday nights for myself to recharge."</p>
+                        <p><strong>For emotional space:</strong> "I care about you, but I can't be your therapist right now."</p>
+                        <p><strong>For physical touch:</strong> "I need more personal space when we sleep."</p>
+                        <p><strong>For money:</strong> "I'm not comfortable lending money, but I support you finding other solutions."</p>
+                        
+                        <h3>Respecting Your Partner's Boundaries</h3>
+                        <p>Boundaries go both ways! When your partner sets a boundary:</p>
+                        <ul>
+                            <li>Listen without getting defensive</li>
+                            <li>Ask clarifying questions</li>
+                            <li>Honor it consistently</li>
+                            <li>Thank them for communicating</li>
+                        </ul>
+                        
+                        <p><strong>Action step:</strong> Identify one boundary you need to set this week and communicate it clearly.</p>
+                    `
+                },
+                'heartbreak': {
+                    title: 'Recovering from Heartbreak',
+                    content: `
+                        <h2>Recovering from Heartbreak</h2>
+                        <p><strong>By Dr. Emma Rodriguez | 20 min read</strong></p>
+                        
+                        <h3>The Pain is Real</h3>
+                        <p>Heartbreak activates the same pain centers in your brain as physical injury. What you're feeling is real, valid, and completely normal.</p>
+                        
+                        <h3>Stages of Heartbreak</h3>
+                        <p>There's no linear path, but you might experience:</p>
+                        <ul>
+                            <li><strong>Shock & Denial:</strong> "This can't be happening"</li>
+                            <li><strong>Anger:</strong> At them, yourself, the situation</li>
+                            <li><strong>Bargaining:</strong> "What if I had..." or "Maybe if we..."</li>
+                            <li><strong>Depression:</strong> Deep sadness, loss of interest</li>
+                            <li><strong>Acceptance:</strong> Finding peace and moving forward</li>
+                        </ul>
+                        
+                        <h3>Immediate Survival Tips (First 2 Weeks)</h3>
+                        <h4>1. Feel Your Feelings</h4>
+                        <p>Cry, scream into a pillow, journal. Don't suppress the pain.</p>
+                        
+                        <h4>2. Cut Contact (for now)</h4>
+                        <p>Delete their number, unfollow on social media. You need space to heal.</p>
+                        
+                        <h4>3. Lean on Your Support System</h4>
+                        <p>Call friends, talk to family, consider therapy. Don't isolate.</p>
+                        
+                        <h4>4. Maintain Basic Self-Care</h4>
+                        <p>Eat something, shower, get outside for 10 minutes. Baby steps count.</p>
+                        
+                        <h3>Healing Over Time (Weeks 3-12)</h3>
+                        <h4>1. Rediscover Yourself</h4>
+                        <p>Who are you outside of that relationship? Try new hobbies, reconnect with old interests.</p>
+                        
+                        <h4>2. Process the Lessons</h4>
+                        <p>What did you learn? What do you want differently next time?</p>
+                        
+                        <h4>3. Create New Routines</h4>
+                        <p>Replace couple rituals with solo or friend activities.</p>
+                        
+                        <h4>4. Practice Gratitude</h4>
+                        <p>Write 3 things you're grateful for daily—even tiny things.</p>
+                        
+                        <h3>Things NOT to Do</h3>
+                        <ul>
+                            <li>❌ Drunk texting your ex</li>
+                            <li>❌ Stalking their social media</li>
+                            <li>❌ Jumping into a rebound relationship</li>
+                            <li>❌ Isolating yourself completely</li>
+                            <li>❌ Trash-talking them constantly (process, then let go)</li>
+                        </ul>
+                        
+                        <h3>When to Seek Professional Help</h3>
+                        <p>Consider therapy if:</p>
+                        <ul>
+                            <li>You can't function after several months</li>
+                            <li>You have thoughts of self-harm</li>
+                            <li>You're abusing substances to cope</li>
+                            <li>Depression is overwhelming</li>
+                        </ul>
+                        
+                        <h3>You Will Get Through This</h3>
+                        <p>It doesn't feel like it now, but one day you'll wake up and realize you went a full hour without thinking about them. Then half a day. Then you'll be okay again.</p>
+                        
+                        <p><strong>Remember:</strong> Healing isn't linear. Some days will be harder than others. Be patient and compassionate with yourself.</p>
+                        
+                        <p>💙 <em>You are worthy of love. This ending is making room for your next beginning.</em></p>
+                    `
+                },
+                'dating': {
+                    title: 'Modern Dating & Connection',
+                    content: `
+                        <h2>Modern Dating & Connection</h2>
+                        <p><strong>By Dr. Alex Kim | 14 min read</strong></p>
+                        
+                        <h3>Dating in 2025</h3>
+                        <p>Apps, ghosting, situationships—modern dating can feel overwhelming. Here's how to navigate it with authenticity and confidence.</p>
+                        
+                        <h3>Creating an Authentic Profile</h3>
+                        <h4>Photos That Work:</h4>
+                        <ul>
+                            <li>Clear face shot (smile!)</li>
+                            <li>Full body photo</li>
+                            <li>Doing something you love</li>
+                            <li>With friends (but make clear which one is you)</li>
+                            <li>Travel or adventure shot</li>
+                        </ul>
+                        
+                        <h4>Bio Tips:</h4>
+                        <ul>
+                            <li>Be specific about interests ("I'm obsessed with Korean BBQ" > "I like food")</li>
+                            <li>Show personality and humor</li>
+                            <li>Include conversation starters</li>
+                            <li>Be honest about what you're looking for</li>
+                        </ul>
+                        
+                        <h3>First Message Strategy</h3>
+                        <p><strong>Don't say:</strong> "Hey" or "You're beautiful"</p>
+                        <p><strong>Do say:</strong> Comment on something specific in their profile with a question</p>
+                        <p><em>Example: "I saw you're into rock climbing! How long have you been climbing? I've been wanting to try it."</em></p>
+                        
+                        <h3>From Match to First Date</h3>
+                        <h4>1. Move Off the App Quickly (3-7 days)</h4>
+                        <p>After some good conversation, suggest a video call or coffee date.</p>
+                        
+                        <h4>2. Plan a Low-Pressure First Date</h4>
+                        <p>Coffee, walk in the park, museum—something where you can talk and leave easily if needed.</p>
+                        
+                        <h4>3. Be Present</h4>
+                        <p>Put your phone away, make eye contact, ask questions, listen actively.</p>
+                        
+                        <h3>Red Flags to Watch For</h3>
+                        <ul>
+                            <li>🚩 Love bombing (too much too soon)</li>
+                            <li>🚩 Inconsistent communication</li>
+                            <li>🚩 Won't video chat before meeting</li>
+                            <li>🚩 Pushes for intimacy immediately</li>
+                            <li>🚩 Talks negatively about all exes</li>
+                            <li>🚩 Refuses to define the relationship</li>
+                        </ul>
+                        
+                        <h3>Green Flags to Look For</h3>
+                        <ul>
+                            <li>✅ Consistent communication</li>
+                            <li>✅ Asks about your life and remembers details</li>
+                            <li>✅ Respects boundaries</li>
+                            <li>✅ Makes plans and follows through</li>
+                            <li>✅ Introduces you to friends</li>
+                            <li>✅ Communicates clearly about intentions</li>
+                        </ul>
+                        
+                        <h3>Dealing with Rejection</h3>
+                        <p>Not everyone will be a match, and that's okay!</p>
+                        <ul>
+                            <li>Don't take it personally—it's about compatibility</li>
+                            <li>Learn from each experience</li>
+                            <li>Take breaks when you need them</li>
+                            <li>Focus on self-improvement between dates</li>
+                        </ul>
+                        
+                        <h3>The "Define the Relationship" Talk</h3>
+                        <p>After 4-8 weeks of consistent dating, it's fair to ask: "I really enjoy our time together. Where do you see this going?"</p>
+                        
+                        <h3>Safety First</h3>
+                        <ul>
+                            <li>Meet in public places initially</li>
+                            <li>Tell a friend where you're going</li>
+                            <li>Trust your gut—leave if something feels off</li>
+                            <li>Don't share personal info (address, workplace) too soon</li>
+                        </ul>
+                        
+                        <p><strong>Remember:</strong> The right person won't make you guess. They'll communicate, show up consistently, and make their interest clear.</p>
+                        
+                        <p>🌟 <em>You deserve someone who's excited about you!</em></p>
+                    `
+                }
+            };
+            
+            if (articles[articleId]) {
+                // Create modal overlay
+                const modal = document.createElement('div');
+                modal.id = 'articleModal';
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0,0,0,0.9);
+                    z-index: 999;
+                    overflow-y: auto;
+                    padding: 2rem;
+                    animation: fadeIn 0.3s ease;
+                `;
+                
+                modal.innerHTML = `
+                    <div style="max-width: 800px; margin: 0 auto; background: rgba(26,26,46,0.98); border-radius: 20px; padding: 3rem; position: relative;">
+                        <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s;">×</button>
+                        <div class="article-content" style="color: white; line-height: 1.8;">
+                            ${articles[articleId].content}
+                        </div>
+                        <style>
+                            .article-content h2 {
+                                color: #66c2a5;
+                                font-size: 2rem;
+                                margin-bottom: 1rem;
+                                border-bottom: 2px solid rgba(102, 194, 165, 0.3);
+                                padding-bottom: 1rem;
+                            }
+                            .article-content h3 {
+                                color: white;
+                                font-size: 1.5rem;
+                                margin-top: 2rem;
+                                margin-bottom: 1rem;
+                            }
+                            .article-content h4 {
+                                color: rgba(255,255,255,0.9);
+                                font-size: 1.2rem;
+                                margin-top: 1.5rem;
+                                margin-bottom: 0.75rem;
+                            }
+                            .article-content p {
+                                color: rgba(255,255,255,0.85);
+                                margin-bottom: 1.25rem;
+                                line-height: 1.8;
+                            }
+                            .article-content ul, .article-content ol {
+                                margin: 1.5rem 0;
+                                padding-left: 2rem;
+                                color: rgba(255,255,255,0.85);
+                            }
+                            .article-content li {
+                                margin-bottom: 0.75rem;
+                                line-height: 1.6;
+                            }
+                            .article-content strong {
+                                color: #66c2a5;
+                                font-weight: 600;
+                            }
+                            .article-content em {
+                                color: #8fc5e5;
+                                font-style: italic;
+                            }
+                        </style>
+                        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                            <p style="color: rgba(255,255,255,0.6); margin-bottom: 1rem;">Was this article helpful?</p>
+                            <button onclick="alert('Thank you for your feedback!'); this.closest('div').parentElement.remove();" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; margin: 0 0.5rem; cursor: pointer; font-weight: 600;">👍 Yes, helpful!</button>
+                            <button onclick="const modal = document.getElementById('articleModal'); if(modal) modal.remove(); setTimeout(() => { const chatBtn = document.getElementById('chatBubbleBtn'); if(chatBtn) chatBtn.click(); }, 100);" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 1rem 2rem; border-radius: 10px; margin: 0 0.5rem; cursor: pointer; font-weight: 600;">💬 Chat with AI Therapist</button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+            }
+        }
+
+        // Progress Tracking Functions
+        function trackActivity(activityType) {
+            const user = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+            if (!user.email) return;
+            
+            const progressKey = `progress_${user.email}`;
+            let progress = JSON.parse(localStorage.getItem(progressKey) || '{}');
+            
+            if (!progress.activities) {
+                progress.activities = [];
+                progress.stats = {
+                    sessionsCompleted: 0,
+                    exercisesCompleted: 0,
+                    articlesRead: 0,
+                    toolsUsed: 0,
+                    totalMinutes: 0,
+                    streak: 0,
+                    lastActivity: null
+                };
+            }
+            
+            // Add activity
+            progress.activities.push({
+                type: activityType,
+                timestamp: new Date().toISOString(),
+                date: new Date().toLocaleDateString()
+            });
+            
+            // Update stats
+            if (activityType.includes('exercise')) progress.stats.exercisesCompleted++;
+            if (activityType.includes('session')) progress.stats.sessionsCompleted++;
+            if (activityType.includes('article')) progress.stats.articlesRead++;
+            if (activityType.includes('tool')) progress.stats.toolsUsed++;
+            
+            // Update streak
+            const today = new Date().toDateString();
+            const lastDate = progress.stats.lastActivity ? new Date(progress.stats.lastActivity).toDateString() : null;
+            
+            if (lastDate !== today) {
+                const yesterday = new Date(Date.now() - 86400000).toDateString();
+                if (lastDate === yesterday) {
+                    progress.stats.streak++;
+                } else if (lastDate !== today) {
+                    progress.stats.streak = 1;
+                }
+                progress.stats.lastActivity = new Date().toISOString();
+            }
+            
+            localStorage.setItem(progressKey, JSON.stringify(progress));
+        }
+
+        function openProgressTracker() {
+            const user = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+            if (!user.email) {
+                alert('Please sign in to view your progress');
+                return;
+            }
+            
+            const progressKey = `progress_${user.email}`;
+            const progress = JSON.parse(localStorage.getItem(progressKey) || '{}');
+            const stats = progress.stats || {
+                sessionsCompleted: 0,
+                exercisesCompleted: 0,
+                articlesRead: 0,
+                toolsUsed: 0,
+                streak: 0,
+                lastActivity: null
+            };
+            
+            const activities = progress.activities || [];
+            const recentActivities = activities.slice(-10).reverse();
+            
+            // Calculate total wellness score
+            const totalActivities = stats.sessionsCompleted + stats.exercisesCompleted + stats.articlesRead + stats.toolsUsed;
+            const wellnessScore = Math.min(100, Math.round((totalActivities / 50) * 100));
+            
+            // Get activities by day for the last 7 days
+            const last7Days = [];
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date(Date.now() - (i * 86400000));
+                const dateStr = date.toLocaleDateString();
+                const count = activities.filter(a => a.date === dateStr).length;
+                last7Days.push({ date: date.toLocaleDateString('en-US', { weekday: 'short' }), count });
+            }
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.95);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10002;
+                overflow-y: auto;
+                padding: 2rem;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            modal.innerHTML = `
+                <div style="max-width: 900px; width: 100%; margin: 0 auto; background: linear-gradient(135deg, rgba(26,26,46,0.98), rgba(50,50,80,0.98)); border-radius: 20px; padding: 3rem; position: relative; border: 1px solid rgba(255,255,255,0.1);">
+                    <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s;">×</button>
+                    
+                    <div style="text-align: center; margin-bottom: 3rem;">
+                        <h2 style="color: white; font-size: 2rem; margin-bottom: 0.5rem;">📊 Your Progress Dashboard</h2>
+                        <p style="color: rgba(255,255,255,0.6);">Real-time tracking of your wellness journey</p>
+                    </div>
+                    
+                    <!-- Wellness Score -->
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 2rem; border-radius: 15px; margin-bottom: 2rem; text-align: center;">
+                        <div style="font-size: 3rem; font-weight: bold; color: white; margin-bottom: 0.5rem;">${wellnessScore}%</div>
+                        <div style="color: white; font-size: 1.2rem;">Overall Wellness Score</div>
+                        <div style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-top: 0.5rem;">Based on ${totalActivities} completed activities</div>
+                    </div>
+                    
+                    <!-- Stats Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                        <div style="background: rgba(102,126,234,0.2); padding: 1.5rem; border-radius: 15px; text-align: center; border: 1px solid rgba(102,126,234,0.3);">
+                            <div style="font-size: 2rem; color: #667eea;">🔥</div>
+                            <div style="font-size: 2rem; font-weight: bold; color: white; margin: 0.5rem 0;">${stats.streak}</div>
+                            <div style="color: rgba(255,255,255,0.8);">Day Streak</div>
+                        </div>
+                        
+                        <div style="background: rgba(118,75,162,0.2); padding: 1.5rem; border-radius: 15px; text-align: center; border: 1px solid rgba(118,75,162,0.3);">
+                            <div style="font-size: 2rem; color: #764ba2;">💬</div>
+                            <div style="font-size: 2rem; font-weight: bold; color: white; margin: 0.5rem 0;">${stats.sessionsCompleted}</div>
+                            <div style="color: rgba(255,255,255,0.8);">Chat Sessions</div>
+                        </div>
+                        
+                        <div style="background: rgba(102,126,234,0.2); padding: 1.5rem; border-radius: 15px; text-align: center; border: 1px solid rgba(102,126,234,0.3);">
+                            <div style="font-size: 2rem; color: #667eea;">🧘</div>
+                            <div style="font-size: 2rem; font-weight: bold; color: white; margin: 0.5rem 0;">${stats.exercisesCompleted}</div>
+                            <div style="color: rgba(255,255,255,0.8);">Exercises Done</div>
+                        </div>
+                        
+                        <div style="background: rgba(118,75,162,0.2); padding: 1.5rem; border-radius: 15px; text-align: center; border: 1px solid rgba(118,75,162,0.3);">
+                            <div style="font-size: 2rem; color: #764ba2;">📚</div>
+                            <div style="font-size: 2rem; font-weight: bold; color: white; margin: 0.5rem 0;">${stats.articlesRead}</div>
+                            <div style="color: rgba(255,255,255,0.8);">Articles Read</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Activity Chart -->
+                    <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                        <h3 style="color: white; margin-bottom: 1.5rem;">📈 Last 7 Days Activity</h3>
+                        <div style="display: flex; align-items: flex-end; justify-content: space-around; height: 150px; gap: 0.5rem;">
+                            ${last7Days.map(day => `
+                                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                    <div style="background: linear-gradient(to top, #667eea, #764ba2); width: 100%; height: ${Math.max(20, day.count * 20)}%; border-radius: 8px 8px 0 0; min-height: 10px; position: relative;">
+                                        ${day.count > 0 ? `<span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); color: white; font-size: 0.8rem; font-weight: bold;">${day.count}</span>` : ''}
+                                    </div>
+                                    <div style="color: rgba(255,255,255,0.7); font-size: 0.8rem;">${day.date}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Activities -->
+                    <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px;">
+                        <h3 style="color: white; margin-bottom: 1.5rem;">🕒 Recent Activities</h3>
+                        ${recentActivities.length > 0 ? `
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                ${recentActivities.map(activity => `
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 10px;">
+                                        <div style="color: white;">${activity.type}</div>
+                                        <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">${new Date(activity.timestamp).toLocaleString()}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : `
+                            <p style="color: rgba(255,255,255,0.6); text-align: center; padding: 2rem;">No activities yet. Start your wellness journey today!</p>
+                        `}
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button onclick="this.closest('div').parentElement.remove()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 1rem 3rem; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 1rem;">Close</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('therapyConnectUser');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function openGame(gameType) {
+            const modal = document.createElement('div');
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 2rem;';
+            
+            const content = document.createElement('div');
+            content.style.cssText = 'background: white; border-radius: 20px; padding: 3rem; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;';
+            
+            let gameHTML = '';
+            
+            if (gameType === 'breathing') {
+                gameHTML = `
+                    <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #66c2a5; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
+                    <h2 style="text-align: center; color: #66c2a5; margin-bottom: 2rem;">🌊 Deep Breathing Exercise</h2>
+                    <div style="text-align: center; margin-bottom: 1rem;">
+                        <span style="font-size: 1.2rem; color: #333;">Completed Cycles: <strong id="breathCount">0</strong></span>
+                    </div>
+                    <p style="text-align: center; margin-bottom: 2rem; color: #666;">Follow the circle. Breathe in for 4 seconds, hold for 4, breathe out for 6.</p>
+                    <div id="breathCircle" style="width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, #66c2a5, #8dd3c7); margin: 2rem auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem; font-weight: bold; box-shadow: 0 10px 40px rgba(102, 194, 165, 0.4); transition: all 4s ease-in-out;">🌸</div>
+                    <p id="breathText" style="text-align: center; font-size: 1.8rem; color: #66c2a5; font-weight: 600; min-height: 40px;">Ready to begin...</p>
+                    <button id="breathBtn" onclick="startBreathing()" style="display: block; margin: 2rem auto; padding: 1.2rem 3rem; background: linear-gradient(135deg, #66c2a5, #8dd3c7); color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 1.1rem; font-weight: bold; box-shadow: 0 5px 15px rgba(102, 194, 165, 0.3);">Start Session</button>
+                `;
+            } else if (gameType === 'mood') {
+                gameHTML = `
+                    <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #66c2a5; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
+                    <h2 style="text-align: center; color: #66c2a5; margin-bottom: 1rem;">😊 Mood Check-In</h2>
+                    <p style="text-align: center; color: #666; margin-bottom: 2rem;">Track how you're feeling right now</p>
+                    <div id="moodHistory" style="text-align: center; margin-bottom: 2rem; min-height: 30px; font-size: 1.1rem; color: #66c2a5;"></div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                        ${['😊 Happy', '😌 Calm', '😢 Sad', '😰 Anxious', '😠 Angry', '🤩 Excited', '😴 Tired', '🙏 Grateful'].map(m => 
+                            `<button onclick="logMood('${m}')" style="padding: 2rem 1rem; border: 3px solid #e0e0e0; border-radius: 15px; background: linear-gradient(135deg, white, #f9f9f9); cursor: pointer; font-size: 1.2rem; transition: all 0.3s; font-weight: 600;" onmouseover="this.style.borderColor='#66c2a5'; this.style.transform='scale(1.05)'" onmouseout="this.style.borderColor='#e0e0e0'; this.style.transform='scale(1)'">${m}</button>`
+                        ).join('')}
+                    </div>
+                    <div id="moodInsight" style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #f0f9f7, #e8f5f1); border-radius: 15px; border: 2px solid #66c2a5; display: none;">
+                        <h3 style="color: #66c2a5; margin-bottom: 1rem;">💭 Insight</h3>
+                        <p id="insightText" style="color: #333; line-height: 1.6;"></p>
+                    </div>
+                `;
+            } else if (gameType === 'gratitude') {
+                const savedGratitude = JSON.parse(localStorage.getItem('gratitudeLog') || '[]');
+                gameHTML = `
+                    <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #66c2a5; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
+                    <h2 style="text-align: center; color: #66c2a5; margin-bottom: 1rem;">🙏 Gratitude Journal</h2>
+                    <p style="text-align: center; color: #666; margin-bottom: 2rem;">Daily gratitude improves mental health by 25%</p>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 2rem;">
+                        <input id="gratInput" type="text" placeholder="I'm grateful for..." style="flex: 1; padding: 1.2rem; border: 3px solid #e0e0e0; border-radius: 12px; font-size: 1.05rem;" onkeypress="if(event.key==='Enter') addGratitudeItem()">
+                        <button onclick="addGratitudeItem()" style="padding: 1.2rem 2.5rem; background: linear-gradient(135deg, #66c2a5, #8dd3c7); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(102, 194, 165, 0.3);">Add ✨</button>
+                    </div>
+                    <div style="margin-bottom: 1rem; text-align: center; color: #66c2a5; font-size: 1.1rem;">
+                        <strong>Total Entries: ${savedGratitude.length}</strong>
+                    </div>
+                    <ul id="gratList" style="list-style: none; padding: 0; margin-top: 1rem; max-height: 300px; overflow-y: auto;">
+                        ${savedGratitude.slice(-10).reverse().map(item => 
+                            `<li style="background: linear-gradient(135deg, #f0f9f7, #e8f5f1); padding: 1.2rem; border-radius: 12px; margin-bottom: 1rem; border-left: 4px solid #66c2a5; font-size: 1.1rem; color: #333; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"><strong style="color: #66c2a5;">✨</strong> ${item.text}</li>`
+                        ).join('')}
+                    </ul>
+                `;
+            } else if (gameType === 'memory') {
+                gameHTML = `
+                    <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #66c2a5; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
+                    <h2 style="text-align: center; color: #66c2a5; margin-bottom: 1rem;">🧩 Memory Match Challenge</h2>
+                    <p style="text-align: center; margin-bottom: 1rem; color: #666;">Find matching pairs - improves cognitive function!</p>
+                    <div style="text-align: center; margin-bottom: 1.5rem; font-size: 1.1rem; color: #66c2a5;">
+                        <strong id="moveCount">Moves: 0</strong> | <strong id="matchCount">Matches: 0/8</strong>
+                    </div>
+                    <div id="memoryGrid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 450px; margin: 0 auto;"></div>
+                    <button onclick="startMemoryGame()" style="display: block; margin: 2rem auto; padding: 1.2rem 3rem; background: linear-gradient(135deg, #66c2a5, #8dd3c7); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(102, 194, 165, 0.3);">New Game 🎮</button>
+                `;
+            } else if (gameType === 'affirmations') {
+                const affirmations = [
+                    {text: 'You are enough', tip: 'Your worth is inherent, not earned.'},
+                    {text: 'You are loved', tip: 'Love surrounds you, even in difficult times.'},
+                    {text: 'You are capable', tip: 'You have overcome challenges before.'},
+                    {text: 'You are strong', tip: 'Strength comes from within.'},
+                    {text: 'You are worthy', tip: 'You deserve good things.'},
+                    {text: 'You deserve happiness', tip: 'Joy is your birthright.'},
+                    {text: 'You can do this', tip: 'One step at a time leads to success.'},
+                    {text: 'You matter', tip: 'Your presence makes a difference.'},
+                    {text: 'You are growing', tip: 'Every experience helps you evolve.'},
+                    {text: 'You are resilient', tip: 'You bend but never break.'}
+                ];
+                const randomAffirmation = affirmations[Math.floor(Math.random() * affirmations.length)];
+                gameHTML = `
+                    <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #66c2a5; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
+                    <h2 style="text-align: center; color: #66c2a5; margin-bottom: 2rem;">✨ Daily Affirmation</h2>
+                    <div style="background: linear-gradient(135deg, #66c2a5, #8dd3c7); padding: 4rem 2rem; border-radius: 20px; text-align: center; color: white; font-size: 2.2rem; font-weight: bold; margin-bottom: 1.5rem; box-shadow: 0 10px 40px rgba(102, 194, 165, 0.4);">"${randomAffirmation.text}"</div>
+                    <div style="background: #f0f9f7; padding: 1.5rem; border-radius: 15px; border-left: 4px solid #66c2a5; margin-bottom: 2rem;">
+                        <p style="color: #333; font-size: 1.1rem; line-height: 1.6;"><strong style="color: #66c2a5;">💡 Reminder:</strong> ${randomAffirmation.tip}</p>
+                    </div>
+                    <p style="text-align: center; color: #666; font-size: 1.1rem;">Repeat out loud 3 times for maximum effect! 💜</p>
+                    <button onclick="openGame('affirmations')" style="display: block; margin: 2rem auto; padding: 1.2rem 3rem; background: linear-gradient(135deg, #66c2a5, #8dd3c7); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(102, 194, 165, 0.3);">Get Another ✨</button>
+                `;
+            } else if (gameType === 'worry') {
+                gameHTML = `
+                    <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #66c2a5; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
+                    <h2 style="text-align: center; color: #66c2a5; margin-bottom: 1rem;">📦 Worry Release Box</h2>
+                    <p style="text-align: center; margin-bottom: 2rem; color: #666;">Studies show that writing worries down reduces anxiety by 30%</p>
+                    <textarea id="worryInput" placeholder="What's on your mind? Write it all out..." style="width: 100%; height: 180px; padding: 1.5rem; border: 3px solid #e0e0e0; border-radius: 15px; margin-bottom: 1rem; resize: none; font-size: 1.05rem; font-family: inherit;"></textarea>
+                    <button onclick="releaseWorry()" style="width: 100%; padding: 1.5rem; background: linear-gradient(135deg, #66c2a5, #8dd3c7); color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 1.2rem; box-shadow: 0 5px 15px rgba(102, 194, 165, 0.3);">Release Worry 🎈</button>
+                    <div id="worryMessage" style="text-align: center; margin-top: 2rem; padding: 1.5rem; border-radius: 12px; display: none;"></div>
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: #f0f9f7; border-radius: 12px; border-left: 4px solid #66c2a5;">
+                        <p style="color: #333; line-height: 1.6;"><strong style="color: #66c2a5;">💡 Tip:</strong> After releasing, try 3 deep breaths or a short walk to reset your mind.</p>
+                    </div>
+                `;
+            } else if (gameType === 'quiz') {
+                gameHTML = `
+                    <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #66c2a5; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
+                    <h2 style="text-align: center; color: #66c2a5; margin-bottom: 2rem;">🧠 Mindfulness Quiz</h2>
+                    <div id="quizContent"></div>
+                    <button onclick="startQuiz()" style="display: block; margin: 2rem auto; padding: 1rem 2rem; background: #66c2a5; color: white; border: none; border-radius: 10px; cursor: pointer;">Start Quiz</button>
+                `;
+            } else if (gameType === 'emotion') {
+                gameHTML = `
+                    <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #66c2a5; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
+                    <h2 style="text-align: center; color: #66c2a5; margin-bottom: 2rem;">🎨 Emotion Wheel</h2>
+                    <p style="text-align: center; margin-bottom: 2rem;">Click on an emotion to explore it deeper</p>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        ${['😊 Joy', '😢 Sadness', '😠 Anger', '😨 Fear', '🤢 Disgust', '😲 Surprise', '❤️ Love', '😌 Peace', '😰 Anxiety'].map(e => 
+                            `<button onclick="exploreEmotion('${e}')" style="padding: 1.5rem 1rem; border: 2px solid #e0e0e0; border-radius: 15px; background: white; cursor: pointer; font-size: 1.1rem;">${e}</button>`
+                        ).join('')}
+                    </div>
+                `;
+            } else if (gameType === 'puzzle') {
+                gameHTML = `
+                    <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #66c2a5; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
+                    <h2 style="text-align: center; color: #66c2a5; margin-bottom: 2rem;">🎯 Zen Puzzle</h2>
+                    <p style="text-align: center; margin-bottom: 2rem;">Click symbols to create peaceful patterns</p>
+                    <div id="zenCanvas" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; max-width: 400px; margin: 0 auto;"></div>
+                    <button onclick="startZenPuzzle()" style="display: block; margin: 2rem auto; padding: 1rem 2rem; background: #66c2a5; color: white; border: none; border-radius: 10px; cursor: pointer;">New Pattern</button>
+                `;
+            }
+            
+            content.innerHTML = gameHTML;
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+        }
+
+        function startBreathing() {
+            const circle = document.getElementById('breathCircle');
+            const text = document.getElementById('breathText');
+            const countEl = document.getElementById('breathCount');
+            const btn = document.getElementById('breathBtn');
+            let count = 0;
+            let phase = 0; // 0: inhale, 1: hold, 2: exhale
+            
+            btn.style.display = 'none';
+            
+            function breathCycle() {
+                if (phase === 0) {
+                    circle.style.transform = 'scale(1.8)';
+                    circle.style.boxShadow = '0 20px 60px rgba(102, 194, 165, 0.8)';
+                    text.textContent = '🌬️ Breathe In (4s)';
+                    text.style.color = '#66c2a5';
+                    setTimeout(() => { phase = 1; breathCycle(); }, 4000);
+                } else if (phase === 1) {
+                    text.textContent = '⏸️ Hold (4s)';
+                    text.style.color = '#8dd3c7';
+                    setTimeout(() => { phase = 2; breathCycle(); }, 4000);
+                } else {
+                    circle.style.transform = 'scale(1)';
+                    circle.style.boxShadow = '0 10px 40px rgba(102, 194, 165, 0.4)';
+                    text.textContent = '💨 Breathe Out (6s)';
+                    text.style.color = '#5ab89c';
+                    count++;
+                    countEl.textContent = count;
+                    setTimeout(() => { phase = 0; breathCycle(); }, 6000);
+                }
+            }
+            
+            breathCycle();
+        }
+
+        function logMood(mood) {
+            const insights = {
+                '😊 Happy': 'Wonderful! Happiness boosts your immune system and helps you live longer. Savor this feeling!',
+                '😌 Calm': 'Perfect! Calmness reduces stress hormones and improves decision-making. You\'re in a great state.',
+                '😢 Sad': 'It\'s okay to feel sad. This emotion helps you process loss and change. Be gentle with yourself.',
+                '😰 Anxious': 'Anxiety is your body\'s alarm system. Try deep breathing or talk to someone you trust.',
+                '😠 Angry': 'Anger shows you care about something. Channel it constructively - exercise or journaling can help.',
+                '🤩 Excited': 'Excitement fuels creativity and motivation! Use this energy to pursue what matters to you.',
+                '😴 Tired': 'Rest is productive. Your body and mind need recovery time. Consider a short break or nap.',
+                '🙏 Grateful': 'Gratitude rewires your brain for positivity! Studies show it improves mental health significantly.'
+            };
+            
+            const historyEl = document.getElementById('moodHistory');
+            const insightEl = document.getElementById('moodInsight');
+            const insightText = document.getElementById('insightText');
+            
+            const now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            historyEl.innerHTML = `<strong>Logged at ${now}:</strong> ${mood}`;
+            
+            insightText.textContent = insights[mood];
+            insightEl.style.display = 'block';
+            
+            // Save to localStorage
+            const moodLog = JSON.parse(localStorage.getItem('moodLog') || '[]');
+            moodLog.push({mood, time: now, date: new Date().toLocaleDateString()});
+            localStorage.setItem('moodLog', JSON.stringify(moodLog.slice(-20))); // Keep last 20
+        }
+
+        function addGratitudeItem() {
+            const input = document.getElementById('gratInput');
+            const list = document.getElementById('gratList');
+            if (input.value.trim()) {
+                const li = document.createElement('li');
+                li.style.cssText = 'background: linear-gradient(135deg, #f0f9f7, #e8f5f1); padding: 1.2rem; border-radius: 12px; margin-bottom: 1rem; border-left: 4px solid #66c2a5; font-size: 1.1rem; color: #333; box-shadow: 0 2px 8px rgba(0,0,0,0.08);';
+                li.innerHTML = `<strong style="color: #66c2a5;">✨</strong> ${input.value}`;
+                list.appendChild(li);
+                input.value = '';
+                
+                // Save to localStorage
+                const gratLog = JSON.parse(localStorage.getItem('gratitudeLog') || '[]');
+                gratLog.push({text: input.value, date: new Date().toLocaleDateString()});
+                localStorage.setItem('gratitudeLog', JSON.stringify(gratLog));
+            }
+        }
+
+        function startMemoryGame() {
+            const symbols = ['🌸', '🌺', '🌻', '🌼', '🍀', '🌿', '🦋', '🐝'];
+            const cards = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            let flipped = [];
+            let matched = 0;
+            let moves = 0;
+            const startTime = Date.now();
+            
+            cards.forEach((symbol, i) => {
+                const card = document.createElement('div');
+                card.style.cssText = 'aspect-ratio: 1; background: linear-gradient(135deg, #66c2a5, #8dd3c7); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; cursor: pointer; color: transparent; border: 3px solid transparent; box-shadow: 0 4px 12px rgba(102, 194, 165, 0.3); transition: all 0.3s;';
+                card.dataset.symbol = symbol;
+                card.dataset.index = i;
+                card.onclick = function() {
+                    if (flipped.length < 2 && this.style.color === 'transparent') {
+                        this.style.color = 'white';
+                        this.textContent = symbol;
+                        this.style.borderColor = '#fff';
+                        this.style.transform = 'scale(1.1)';
+                        flipped.push(this);
+                        
+                        if (flipped.length === 2) {
+                            moves++;
+                            setTimeout(() => {
+                                if (flipped[0].dataset.symbol === flipped[1].dataset.symbol) {
+                                    flipped.forEach(c => { 
+                                        c.style.background = 'linear-gradient(135deg, #4db89a, #66c2a5)';
+                                        c.style.borderColor = '#4db89a';
+                                    });
+                                    matched += 2;
+                                    if (matched === cards.length) {
+                                        const time = Math.floor((Date.now() - startTime) / 1000);
+                                        alert(\`🎉 Excellent! You won in \${moves} moves and \${time} seconds! Memory training improves cognitive function.\`);
+                                    }
+                                } else {
+                                    flipped.forEach(c => { 
+                                        c.style.color = 'transparent'; 
+                                        c.textContent = ''; 
+                                        c.style.borderColor = 'transparent';
+                                        c.style.transform = 'scale(1)';
+                                    });
+                                }
+                                flipped = [];
+                            }, 800);
+                        }
+                    }
+                };
+                grid.appendChild(card);
+            });
+        }
+
+        function releaseWorry() {
+            const input = document.getElementById('worryInput');
+            const message = document.getElementById('worryMessage');
+            if (input.value.trim()) {
+                // Animate the worry floating away
+                input.style.transition = 'all 1.5s ease-out';
+                input.style.opacity = '0';
+                input.style.transform = 'translateY(-100px) scale(0.8)';
+                input.style.filter = 'blur(4px)';
+                
+                setTimeout(() => {
+                    input.value = '';
+                    input.style.opacity = '1';
+                    input.style.transform = 'translateY(0) scale(1)';
+                    input.style.filter = 'blur(0)';
+                    
+                    // Show success message
+                    message.style.display = 'block';
+                    message.style.background = 'linear-gradient(135deg, #f0f9f7, #e8f5f1)';
+                    message.style.color = '#66c2a5';
+                    message.style.border = '2px solid #66c2a5';
+                    message.innerHTML = '<strong style="font-size: 1.3rem;">🎈 Worry Released!</strong><p style="color: #333; margin-top: 0.5rem;">You\'ve let go. Now take 3 deep breaths and focus on what you can control.</p>';
+                    
+                    // Save release count
+                    const releaseCount = parseInt(localStorage.getItem('worryReleaseCount') || '0') + 1;
+                    localStorage.setItem('worryReleaseCount', releaseCount);
+                }, 1500);
+            } else {
+                message.style.display = 'block';
+                message.style.background = '#fff3cd';
+                message.style.color = '#856404';
+                message.style.border = '2px solid #ffc107';
+                message.textContent = 'Please write down your worry first.';
+            }
+        }
+
+        function startQuiz() {
+            const questions = [
+                {q: 'What is mindfulness?', a: ['Being aware of the present moment', 'Thinking about the past', 'Planning the future'], correct: 0},
+                {q: 'How long should you meditate daily?', a: ['At least 5-10 minutes', '2 hours', 'All day'], correct: 0},
+                {q: 'Deep breathing helps with:', a: ['Anxiety and stress', 'Nothing', 'Making you dizzy'], correct: 0}
+            ];
+            
+            let currentQ = 0;
+            let score = 0;
+            const content = document.getElementById('quizContent');
+            
+            function showQuestion() {
+                if (currentQ < questions.length) {
+                    const q = questions[currentQ];
+                    content.innerHTML = `
+                        <h3 style="margin-bottom: 1rem;">Question ${currentQ + 1}: ${q.q}</h3>
+                        ${q.a.map((ans, i) => `<button onclick="checkAnswer(${i})" style="display: block; width: 100%; padding: 1rem; margin-bottom: 0.5rem; border: 2px solid #e0e0e0; border-radius: 10px; background: white; cursor: pointer;">${ans}</button>`).join('')}
+                    `;
+                } else {
+                    content.innerHTML = `<h3 style="text-align: center; color: #66c2a5;">You scored ${score}/${questions.length}! 🎉</h3>`;
+                }
+            }
+            
+            window.checkAnswer = function(ans) {
+                if (ans === questions[currentQ].correct) score++;
+                currentQ++;
+                showQuestion();
+            };
+            
+            showQuestion();
+        }
+
+        function exploreEmotion(emotion) {
+            const messages = {
+                '😊 Joy': 'Joy is a beautiful feeling! Savor this moment.',
+                '😢 Sadness': 'It\'s okay to feel sad. This too shall pass.',
+                '😠 Anger': 'Anger is valid. Take deep breaths and find healthy outlets.',
+                '😨 Fear': 'Fear protects us. Acknowledge it, then choose courage.',
+                '🤢 Disgust': 'This feeling helps us set boundaries.',
+                '😲 Surprise': 'Surprise keeps life interesting!',
+                '❤️ Love': 'Love is the most powerful emotion. Cherish it.',
+                '😌 Peace': 'Peace is found within. You\'re exactly where you need to be.',
+                '😰 Anxiety': 'Anxiety shows you care. Ground yourself in the present moment.'
+            };
+            alert(messages[emotion] || 'Exploring this emotion...');
+        }
+
+        function startZenPuzzle() {
+            const symbols = ['🌸', '🌺', '🌻', '🍀', '☯️', '🕉️', '✨', '💫'];
+            const canvas = document.getElementById('zenCanvas');
+            canvas.innerHTML = '';
+            
+            for (let i = 0; i < 25; i++) {
+                const cell = document.createElement('div');
+                cell.style.cssText = 'aspect-ratio: 1; background: #f0f0f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer;';
+                cell.onclick = function() {
+                    this.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                    this.style.background = '#66c2a5';
+                };
+                canvas.appendChild(cell);
+            }
+        }
+    </script>
+    <script src="chat-widget.js"></script>
+</body>
+</html>

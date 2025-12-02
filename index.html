@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TherapyConnect - Mental Health Care Reimagined for 2025</title>
+    <link rel="stylesheet" href="styles-2025.css">
+    <link rel="stylesheet" href="chat-widget.css">
+    <style>
+        /* Hero Section - 2025 Design */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.625rem 1.25rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #667eea 50%, #38ef7d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.125rem, 2vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Floating Elements */
+        .float-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .float-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary-gradient);
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .float-2 {
+            width: 200px;
+            height: 200px;
+            background: var(--success-gradient);
+            bottom: 20%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .float-3 {
+            width: 150px;
+            height: 150px;
+            background: var(--calm-gradient);
+            top: 50%;
+            right: 15%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 6rem 0;
+            background: rgba(26, 26, 46, 0.3);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .step h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 0;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .testimonial {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+        }
+
+        .testimonial-stars {
+            color: #ffd93d;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .author-info h4 {
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(56, 239, 125, 0.1) 100%);
+            border-radius: var(--radius-xl);
+            margin: 4rem 0;
+        }
+
+        .cta-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 0 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-to-main">Skip to main content</a>
+    
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">TherapyConnect</span>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                ☰
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="#features">Features</a>
+                <a href="therapists.html">Find Therapist</a>
+                <a href="resources.html">Resources</a>
+                <a href="resources.html">Wellness Games</a>
+                <a href="sign-in.html">Sign In</a>
+                <button class="btn btn-primary" onclick="window.location.href='signup.html'">Start Free Trial</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main id="main">
+        <section class="hero">
+            <div class="float-element float-1"></div>
+            <div class="float-element float-2"></div>
+            <div class="float-element float-3"></div>
+            
+            <div class="hero-content fade-in">
+                <div class="hero-badge">
+                    <span>✨</span>
+                    <span>Mental Health Care Reimagined for 2025</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    Your Mental Wellness<br>Journey Starts Here
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Connect with licensed therapists, track your progress, and access wellness tools
+                    designed for modern life. Start your 7-day free trial today.
+                </p>
+                
+                <div class="hero-cta">
+                    <button class="btn btn-primary btn-lg" onclick="window.location.href='signup.html'">
+                        Start Free Trial →
+                    </button>
+                    <button class="btn btn-secondary btn-lg" onclick="window.location.href='games.html'">
+                        Try Wellness Games
+                    </button>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">AI Support Available</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Private & Secure</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$9.99</div>
+                        <div class="stat-label">Per Month</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Everything You Need to Thrive</h2>
+                    <p class="section-subtitle">
+                        Comprehensive mental health support designed for all ages and lifestyles
+                    </p>
+                </div>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h3>Video & Phone Sessions</h3>
+                        <p>Connect with licensed therapists from anywhere. Choose video, phone, or secure messaging based on your comfort level.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Progress Tracking</h3>
+                        <p>Monitor your mental wellness journey with mood trackers, goal setting, and personalized insights powered by AI.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🎮</div>
+                        <h3>Wellness Games</h3>
+                        <p>Reduce stress and build mindfulness with interactive therapy games designed by mental health professionals.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>Resource Library</h3>
+                        <p>Access thousands of articles, videos, and worksheets on anxiety, depression, relationships, and more.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🤝</div>
+                        <h3>Community Support</h3>
+                        <p>Join support groups and connect with others who understand your journey in a safe, moderated space.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>HIPAA Compliant</h3>
+                        <p>Your privacy is our priority. All sessions and data are encrypted and fully HIPAA compliant.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="how-it-works">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Get Started in Minutes</h2>
+                    <p class="section-subtitle">
+                        Your mental wellness journey is just four simple steps away
+                    </p>
+                </div>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Create Your Profile</h3>
+                        <p>Tell us about yourself and your mental health goals. Takes less than 2 minutes.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Find Your Therapist</h3>
+                        <p>Browse licensed therapists and filter by specialty, availability, and insurance.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Book a Session</h3>
+                        <p>Schedule your first session at a time that works for you. Video, phone, or messaging.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Start Your Journey</h3>
+                        <p>Meet with your therapist and access all our wellness tools and resources.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What You Get Section -->
+        <section id="benefits" class="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">What You Get with TherapyConnect</h2>
+                    <p class="section-subtitle">
+                        Real tools and support for your mental wellness journey
+                    </p>
+                </div>
+                
+                <div class="testimonial-grid">
+                    <div class="testimonial">
+                        <div class="testimonial-stars">🤖</div>
+                        <p class="testimonial-text">
+                            <strong>AI Therapist Chat Widget</strong><br>
+                            Get instant support 24/7 with our Claude-powered AI therapist. Available on every page to provide guidance, advice, and a listening ear whenever you need it.
+                        </p>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <div class="testimonial-stars">📚</div>
+                        <p class="testimonial-text">
+                            <strong>Expert Resources & Articles</strong><br>
+                            Access 6 comprehensive articles on relationship advice, communication skills, emotional wellness, and healing from licensed therapists.
+                        </p>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <div class="testimonial-stars">🔐</div>
+                        <p class="testimonial-text">
+                            <strong>Private & Secure</strong><br>
+                            Your conversations are completely private. We use industry-standard encryption and never share your data. HIPAA compliant and secure.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2 class="section-title">Ready to Prioritize Your Mental Health?</h2>
+                    <p class="section-subtitle">
+                        Start your journey to better mental wellness today. 
+                        Begin your 30-day free trial. No credit card required.
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
+                        <button class="btn btn-primary btn-lg" onclick="window.location.href='signup.html'">
+                            Start Free Trial →
+                        </button>
+                        <button class="btn btn-secondary btn-lg" onclick="window.location.href='help.html'">
+                            Learn More
+                        </button>
+                    </div>
+                    <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.9rem;">
+                        ✓ Cancel anytime &nbsp; ✓ Private & secure &nbsp; ✓ 24/7 AI support
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="therapists.html">Find Therapist</a></li>
+                        <li><a href="resources.html">Wellness Games</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                        <li><a href="billing.html">Pricing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="help.html">Help Center</a></li>
+                        <li><a href="crisis.html">Crisis Resources</a></li>
+                        <li><a href="accessibility.html">Accessibility</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="hipaa-notice.html">HIPAA Notice</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">For Therapists</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 TherapyConnect. All rights reserved. Made with 💜 for mental wellness.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Add scroll effect to navbar
+        let lastScroll = 0;
+        const navbar = document.querySelector('.navbar');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.style.background = 'rgba(15, 15, 35, 0.95)';
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+            } else {
+                navbar.style.background = 'rgba(26, 26, 46, 0.8)';
+                navbar.style.boxShadow = 'none';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+    <script src="chat-widget.js"></script>
+</body>
+</html>

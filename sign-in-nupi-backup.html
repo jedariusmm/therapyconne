@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - TherapyConnect</title>
+    <link rel="stylesheet" href="styles-2025.css">
+    <style>
+        body {
+            background: #000;
+        }
+        
+        .gradient-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, #000000, #1a0033, #000000, #003311);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .free-trial-badge {
+            background: linear-gradient(135deg, #00ff88, #00d4ff);
+            color: #000;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 6px 20px rgba(0, 255, 136, 0.6);
+            }
+        }
+
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .auth-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 255, 136, 0.3);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-logo {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .auth-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .auth-subtitle {
+            color: #8b92b0;
+            font-size: 1rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            border-radius: 10px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: transparent;
+            color: #8b92b0;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: white;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #8b92b0;
+            font-size: 0.9rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: #f093fb;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: #8b92b0;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .social-auth {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn-social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-social:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .back-home {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+        }
+
+        .btn-back {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(-5px);
+        }
+
+        .plan-selection {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .plan-selection h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .plan-option {
+            flex: 1;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .plan-option.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .plan-option .plan-name {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .plan-option .plan-price {
+            font-size: 0.875rem;
+            color: #8b92b0;
+        }
+
+        @media (max-width: 640px) {
+            .auth-box {
+                padding: 2rem;
+            }
+
+            .back-home {
+                top: 1rem;
+                left: 1rem;
+            }
+
+            .plan-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <!-- Back to Home -->
+    <div class="back-home">
+        <a href="index.html" class="btn-back">
+            <span>←</span>
+            <span>Back to Home</span>
+        </a>
+    </div>
+
+    <!-- Background -->
+    <div class="gradient-bg"></div>
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <div class="free-trial-badge">🎉 FREE 30-DAY TRIAL - NO CREDIT CARD!</div>
+                <div class="auth-logo">�</div>
+                <h1 class="auth-title">NUPI AI Store</h1>
+                <p class="auth-subtitle">Get instant access to your AI assistant - FREE for 30 days!</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('signin')">Sign In</button>
+                <button class="auth-tab" onclick="switchTab('signup')">Sign Up</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <form id="signin-form" class="auth-form active" onsubmit="handleSignIn(event)">
+                <div class="form-group">
+                    <label for="signin-email" class="form-label">Email</label>
+                    <input 
+                        type="email" 
+                        id="signin-email" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="your@email.com"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="signin-password" class="form-label">Password</label>
+                    <input 
+                        type="password" 
+                        id="signin-password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="Enter your password"
+                        required
+                    />
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember" />
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-submit">Sign In</button>
+
+                <div class="divider">or continue with</div>
+
+                <div class="social-auth">
+                    <button type="button" class="btn-social" onclick="socialAuth('google')">
+                        <span>🔍</span>
+                        <span>Continue with Google</span>
+                    </button>
+                    <button type="button" class="btn-social" onclick="socialAuth('apple')">
+                        <span>🍎</span>
+                        <span>Continue with Apple</span>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signup-form" class="auth-form" onsubmit="handleSignUp(event)">
+                <div class="plan-selection" id="plan-selection">
+                    <h4>Select Your Plan</h4>
+                    <div class="plan-options">
+                        <div class="plan-option selected" onclick="selectPlan('trial')" data-plan="trial">
+                            <div class="plan-name">Free Trial</div>
+                            <div class="plan-price">$0 for 30 days</div>
+                        </div>
+                        <div class="plan-option" onclick="selectPlan('monthly')" data-plan="monthly">
+                            <div class="plan-name">Monthly</div>
+                            <div class="plan-price">$9.99/mo</div>
+                        </div>
+                        <div class="plan-option" onclick="selectPlan('yearly')" data-plan="yearly">
+                            <div class="plan-name">Yearly</div>
+                            <div class="plan-price">$99/year</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-name" class="form-label">Full Name</label>
+                    <input 
+                        type="text" 
+                        id="signup-name" 
+                        name="name" 
+                        class="form-input" 
+                        placeholder="John Doe"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-email" class="form-label">Email</label>
+                    <input 
+                        type="email" 
+                        id="signup-email" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="your@email.com"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-password" class="form-label">Password</label>
+                    <input 
+                        type="password" 
+                        id="signup-password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="Create a password"
+                        required
+                        minlength="8"
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-confirm" class="form-label">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        id="signup-confirm" 
+                        name="confirm" 
+                        class="form-input" 
+                        placeholder="Confirm your password"
+                        required
+                    />
+                </div>
+
+                <button type="submit" class="btn-submit">Create Account</button>
+
+                <div class="divider">or sign up with</div>
+
+                <div class="social-auth">
+                    <button type="button" class="btn-social" onclick="socialAuth('google')">
+                        <span>🔍</span>
+                        <span>Sign up with Google</span>
+                    </button>
+                    <button type="button" class="btn-social" onclick="socialAuth('apple')">
+                        <span>🍎</span>
+                        <span>Sign up with Apple</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="stripe-config.js"></script>
+    <script>
+        let selectedPlan = 'trial'; // Default to free trial
+
+        // Initialize Stripe on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeStripe();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const tab = urlParams.get('tab');
+            const plan = urlParams.get('plan');
+            
+            if (tab === 'signup') {
+                switchTab('signup');
+            }
+            
+            if (plan) {
+                selectedPlan = plan;
+                selectPlan(plan);
+            }
+        });
+
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.auth-tab');
+            const forms = document.querySelectorAll('.auth-form');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'signin') {
+                tabs[0].classList.add('active');
+                document.getElementById('signin-form').classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('signup-form').classList.add('active');
+            }
+        }
+
+        function selectPlan(plan) {
+            selectedPlan = plan;
+            const options = document.querySelectorAll('.plan-option');
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+                if (opt.dataset.plan === plan) {
+                    opt.classList.add('selected');
+                }
+            });
+        }
+
+        function handleSignIn(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('signin-email').value;
+            const password = document.getElementById('signin-password').value;
+            const remember = document.querySelector('input[name="remember"]').checked;
+            
+            console.log('Signing in:', email);
+            
+            // Check if user exists in localStorage
+            const storedUser = localStorage.getItem('therapyConnectUser');
+            
+            if (storedUser) {
+                const userData = JSON.parse(storedUser);
+                
+                if (remember) {
+                    localStorage.setItem('therapyConnectRemember', 'true');
+                }
+                
+                // Launch celebration!
+                celebrate(`🎉 Welcome back to NUPI AI!`);
+                
+                // Redirect after celebration
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 3500);
+            } else {
+                // For demo purposes, allow sign in
+                const userData = {
+                    email: email,
+                    plan: 'trial',
+                    subscriptionStatus: 'trial'
+                };
+                
+                localStorage.setItem('therapyConnectUser', JSON.stringify(userData));
+                
+                if (remember) {
+                    localStorage.setItem('therapyConnectRemember', 'true');
+                }
+                
+                // Launch celebration!
+                celebrate('🎉 Welcome to NUPI AI Store!');
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 3500);
+            }
+            
+            return false;
+        }
+
+        function handleSignUp(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+            
+            if (password !== confirm) {
+                alert('❌ Passwords do not match!');
+                return false;
+            }
+            
+            if (password.length < 8) {
+                alert('❌ Password must be at least 8 characters long!');
+                return false;
+            }
+            
+            console.log('Creating account:', { name, email, plan: selectedPlan });
+            
+            // Store user data in localStorage (in production, use secure backend)
+            const userData = {
+                name: name,
+                email: email,
+                plan: selectedPlan,
+                createdAt: new Date().toISOString(),
+                subscriptionStatus: 'pending'
+            };
+            
+            localStorage.setItem('therapyConnectUser', JSON.stringify(userData));
+            
+            // Free trial - no payment required
+            if (selectedPlan === 'trial') {
+                // Launch celebration!
+                celebrate(`🎉 Welcome ${name}! Your FREE 30-day trial starts now!`);
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 3500);
+            }
+            // If using Stripe for paid plans, redirect to checkout
+            else if (selectedPlan !== 'enterprise' && typeof stripe !== 'undefined') {
+                // Launch celebration!
+                celebrate(`🎉 Welcome ${name}! Redirecting to secure payment...`);
+                
+                setTimeout(() => {
+                    // Create Stripe checkout session
+                    createCheckoutSession(selectedPlan, email)
+                        .then(() => {
+                            console.log('Redirecting to Stripe Checkout...');
+                        })
+                        .catch(error => {
+                            console.error('Checkout error:', error);
+                            alert('Error processing payment. Please try again or contact support.');
+                        });
+                }, 3500);
+            } else if (selectedPlan === 'enterprise') {
+                // Launch celebration!
+                celebrate(`🎉 Welcome ${name}! Our team will contact you shortly!`);
+                
+                setTimeout(() => {
+                    window.location.href = 'contact.html?plan=enterprise&email=' + encodeURIComponent(email);
+                }, 3500);
+            } else {
+                // Fallback if Stripe is not configured
+                celebrate(`🎉 Welcome ${name}! Your account is ready!`);
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 3500);
+            }
+            
+            return false;
+        }
+
+        function socialAuth(provider) {
+            const providerName = provider.charAt(0).toUpperCase() + provider.slice(1);
+            
+            // Launch celebration for social auth!
+            celebrate(`🎉 Signing in with ${providerName}...`);
+            
+            // In production, this would trigger actual OAuth flow
+            setTimeout(() => {
+                alert(`${providerName} authentication will be available soon!\n\nFor now, please use email sign-in or sign-up.`);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Session - TherapyConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .booking-container {
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .booking-header {
+            text-align: center;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .booking-steps {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        .step.active {
+            color: var(--therapeutic-green);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(102, 194, 165, 0.2);
+            border: 2px solid rgba(102, 194, 165, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step.active .step-number {
+            background: var(--therapeutic-green);
+            border-color: var(--therapeutic-green);
+            color: white;
+        }
+
+        .step.completed .step-number {
+            background: var(--therapeutic-green);
+            border-color: var(--therapeutic-green);
+        }
+
+        .booking-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .booking-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .booking-section.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            color: white;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .therapist-selection {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .therapist-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(102, 194, 165, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .therapist-option:hover {
+            border-color: var(--therapeutic-green);
+            background: rgba(102, 194, 165, 0.1);
+        }
+
+        .therapist-option.selected {
+            border-color: var(--therapeutic-green);
+            background: rgba(102, 194, 165, 0.15);
+        }
+
+        .therapist-avatar-small {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .session-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .session-type {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(102, 194, 165, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .session-type:hover {
+            border-color: var(--therapeutic-green);
+            transform: translateY(-5px);
+        }
+
+        .session-type.selected {
+            border-color: var(--therapeutic-green);
+            background: rgba(102, 194, 165, 0.15);
+        }
+
+        .session-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .session-type h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .session-type p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .calendar-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .calendar {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-month {
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .calendar-nav {
+            background: transparent;
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            color: var(--therapeutic-green);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--gray);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .calendar-day:hover {
+            background: rgba(102, 194, 165, 0.2);
+            color: white;
+        }
+
+        .calendar-day.selected {
+            background: var(--therapeutic-green);
+            color: white;
+        }
+
+        .calendar-day.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .time-slot {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            border-radius: 10px;
+            padding: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .time-slot:hover {
+            border-color: var(--therapeutic-green);
+            background: rgba(102, 194, 165, 0.1);
+        }
+
+        .time-slot.selected {
+            background: var(--therapeutic-green);
+            border-color: var(--therapeutic-green);
+        }
+
+        .time-slot.unavailable {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .booking-summary {
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.2), rgba(141, 211, 199, 0.1));
+            border: 1px solid var(--therapeutic-green);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(102, 194, 165, 0.2);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: var(--gray);
+        }
+
+        .summary-value {
+            color: white;
+            font-weight: 600;
+        }
+
+        .booking-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+
+        .btn-back {
+            background: transparent;
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            color: var(--therapeutic-green);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background: rgba(102, 194, 165, 0.1);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 194, 165, 0.4);
+        }
+
+        .notes-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            border-radius: 10px;
+            color: white;
+            resize: vertical;
+        }
+
+        .notes-textarea:focus {
+            outline: none;
+            border-color: var(--therapeutic-green);
+        }
+
+        @media (max-width: 768px) {
+            .calendar-container {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-steps {
+                gap: 1rem;
+            }
+
+            .step-text {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">TherapyConnect</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="sessions.html">Sessions</a>
+                <a href="therapists.html">Therapists</a>
+                <a href="resources.html">Resources</a>
+                <a href="profile.html">Profile</a>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="booking-container">
+        <div class="container">
+            <!-- Header -->
+            <div class="booking-header">
+                <h1 style="color: white; margin-bottom: 0.5rem;">Book Your Session 📅</h1>
+                <p style="color: var(--gray);">Follow the simple steps below to schedule your therapy session</p>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="booking-steps">
+                <div class="step active" id="step1">
+                    <div class="step-number">1</div>
+                    <span class="step-text">Choose Therapist</span>
+                </div>
+                <div class="step" id="step2">
+                    <div class="step-number">2</div>
+                    <span class="step-text">Session Type</span>
+                </div>
+                <div class="step" id="step3">
+                    <div class="step-number">3</div>
+                    <span class="step-text">Date & Time</span>
+                </div>
+                <div class="step" id="step4">
+                    <div class="step-number">4</div>
+                    <span class="step-text">Confirm</span>
+                </div>
+            </div>
+
+            <div class="booking-content">
+                <!-- Step 1: Choose Therapist -->
+                <div class="booking-section active" id="section1">
+                    <h2 class="section-title">👥 Select Your Therapist</h2>
+                    <p style="color: var(--gray); margin-bottom: 1.5rem;">Choose the therapist you'd like to work with</p>
+
+                    <div class="therapist-selection">
+                        <div class="therapist-option" onclick="selectTherapist(this, 'Dr. Sarah Chen')">
+                            <div class="therapist-avatar-small">👩‍⚕️</div>
+                            <div>
+                                <h4 style="color: white; margin-bottom: 0.25rem;">Dr. Sarah Chen</h4>
+                                <p style="color: var(--therapeutic-green); font-size: 0.9rem; margin-bottom: 0.25rem;">Licensed Clinical Psychologist</p>
+                                <p style="color: var(--gray); font-size: 0.85rem;">Anxiety, Depression, CBT</p>
+                            </div>
+                        </div>
+
+                        <div class="therapist-option" onclick="selectTherapist(this, 'Dr. Michael Torres')">
+                            <div class="therapist-avatar-small">👨‍⚕️</div>
+                            <div>
+                                <h4 style="color: white; margin-bottom: 0.25rem;">Dr. Michael Torres</h4>
+                                <p style="color: var(--therapeutic-green); font-size: 0.9rem; margin-bottom: 0.25rem;">Trauma Specialist, LMFT</p>
+                                <p style="color: var(--gray); font-size: 0.85rem;">Trauma, PTSD, EMDR</p>
+                            </div>
+                        </div>
+
+                        <div class="therapist-option" onclick="selectTherapist(this, 'Dr. Emily Rodriguez')">
+                            <div class="therapist-avatar-small">👩‍⚕️</div>
+                            <div>
+                                <h4 style="color: white; margin-bottom: 0.25rem;">Dr. Emily Rodriguez</h4>
+                                <p style="color: var(--therapeutic-green); font-size: 0.9rem; margin-bottom: 0.25rem;">Couples & Family Therapist</p>
+                                <p style="color: var(--gray); font-size: 0.85rem;">Couples, Relationships, Family</p>
+                            </div>
+                        </div>
+
+                        <div class="therapist-option" onclick="selectTherapist(this, 'Dr. James Anderson')">
+                            <div class="therapist-avatar-small">👨‍⚕️</div>
+                            <div>
+                                <h4 style="color: white; margin-bottom: 0.25rem;">Dr. James Anderson</h4>
+                                <p style="color: var(--therapeutic-green); font-size: 0.9rem; margin-bottom: 0.25rem;">Anxiety & Stress Specialist</p>
+                                <p style="color: var(--gray); font-size: 0.85rem;">Anxiety, Stress, Mindfulness</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="booking-actions" style="margin-top: 2rem;">
+                        <button class="btn-back" onclick="window.location.href='therapists.html'">← Back to Therapists</button>
+                        <button class="btn-next" onclick="nextStep(2)">Next: Session Type →</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Session Type -->
+                <div class="booking-section" id="section2">
+                    <h2 class="section-title">💬 Choose Session Type</h2>
+                    <p style="color: var(--gray); margin-bottom: 1.5rem;">Select how you'd like to connect with your therapist</p>
+
+                    <div class="session-types">
+                        <div class="session-type" onclick="selectSessionType(this, 'Video Session')">
+                            <div class="session-icon">📹</div>
+                            <h4>Video Session</h4>
+                            <p>Face-to-face video call</p>
+                            <p style="color: var(--therapeutic-green); font-weight: 600; margin-top: 0.5rem;">60 min</p>
+                        </div>
+
+                        <div class="session-type" onclick="selectSessionType(this, 'Audio Call')">
+                            <div class="session-icon">📞</div>
+                            <h4>Audio Call</h4>
+                            <p>Voice call only</p>
+                            <p style="color: var(--therapeutic-green); font-weight: 600; margin-top: 0.5rem;">60 min</p>
+                        </div>
+
+                        <div class="session-type" onclick="selectSessionType(this, 'Chat Session')">
+                            <div class="session-icon">💬</div>
+                            <h4>Chat Session</h4>
+                            <p>Text-based messaging</p>
+                            <p style="color: var(--therapeutic-green); font-weight: 600; margin-top: 0.5rem;">45 min</p>
+                        </div>
+                    </div>
+
+                    <div class="booking-actions" style="margin-top: 2rem;">
+                        <button class="btn-back" onclick="prevStep(1)">← Previous</button>
+                        <button class="btn-next" onclick="nextStep(3)">Next: Date & Time →</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Date & Time -->
+                <div class="booking-section" id="section3">
+                    <h2 class="section-title">📅 Select Date & Time</h2>
+                    <p style="color: var(--gray); margin-bottom: 1.5rem;">Choose your preferred date and time slot</p>
+
+                    <div class="calendar-container">
+                        <div class="calendar">
+                            <div class="calendar-header">
+                                <button class="calendar-nav">←</button>
+                                <div class="calendar-month">November 2025</div>
+                                <button class="calendar-nav">→</button>
+                            </div>
+                            <div class="calendar-grid">
+                                <div style="color: var(--gray); font-weight: 600;">S</div>
+                                <div style="color: var(--gray); font-weight: 600;">M</div>
+                                <div style="color: var(--gray); font-weight: 600;">T</div>
+                                <div style="color: var(--gray); font-weight: 600;">W</div>
+                                <div style="color: var(--gray); font-weight: 600;">T</div>
+                                <div style="color: var(--gray); font-weight: 600;">F</div>
+                                <div style="color: var(--gray); font-weight: 600;">S</div>
+                                
+                                <div class="calendar-day disabled">1</div>
+                                <div class="calendar-day disabled">2</div>
+                                <div class="calendar-day disabled">3</div>
+                                <div class="calendar-day disabled">4</div>
+                                <div class="calendar-day disabled">5</div>
+                                <div class="calendar-day disabled">6</div>
+                                <div class="calendar-day disabled">7</div>
+                                <div class="calendar-day disabled">8</div>
+                                <div class="calendar-day disabled">9</div>
+                                <div class="calendar-day disabled">10</div>
+                                <div class="calendar-day disabled">11</div>
+                                <div class="calendar-day" onclick="selectDate(this, '12')">12</div>
+                                <div class="calendar-day" onclick="selectDate(this, '13')">13</div>
+                                <div class="calendar-day selected" onclick="selectDate(this, '14')">14</div>
+                                <div class="calendar-day" onclick="selectDate(this, '15')">15</div>
+                                <div class="calendar-day" onclick="selectDate(this, '16')">16</div>
+                                <div class="calendar-day" onclick="selectDate(this, '17')">17</div>
+                                <div class="calendar-day" onclick="selectDate(this, '18')">18</div>
+                                <div class="calendar-day" onclick="selectDate(this, '19')">19</div>
+                                <div class="calendar-day" onclick="selectDate(this, '20')">20</div>
+                                <div class="calendar-day" onclick="selectDate(this, '21')">21</div>
+                                <div class="calendar-day" onclick="selectDate(this, '22')">22</div>
+                                <div class="calendar-day" onclick="selectDate(this, '23')">23</div>
+                                <div class="calendar-day" onclick="selectDate(this, '24')">24</div>
+                                <div class="calendar-day" onclick="selectDate(this, '25')">25</div>
+                                <div class="calendar-day" onclick="selectDate(this, '26')">26</div>
+                                <div class="calendar-day" onclick="selectDate(this, '27')">27</div>
+                                <div class="calendar-day" onclick="selectDate(this, '28')">28</div>
+                                <div class="calendar-day" onclick="selectDate(this, '29')">29</div>
+                                <div class="calendar-day" onclick="selectDate(this, '30')">30</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 style="color: white; margin-bottom: 1rem;">Available Time Slots</h4>
+                            <div class="time-slots">
+                                <div class="time-slot" onclick="selectTime(this, '9:00 AM')">9:00 AM</div>
+                                <div class="time-slot" onclick="selectTime(this, '10:00 AM')">10:00 AM</div>
+                                <div class="time-slot unavailable">11:00 AM</div>
+                                <div class="time-slot" onclick="selectTime(this, '12:00 PM')">12:00 PM</div>
+                                <div class="time-slot" onclick="selectTime(this, '1:00 PM')">1:00 PM</div>
+                                <div class="time-slot selected" onclick="selectTime(this, '2:00 PM')">2:00 PM</div>
+                                <div class="time-slot" onclick="selectTime(this, '3:00 PM')">3:00 PM</div>
+                                <div class="time-slot unavailable">4:00 PM</div>
+                                <div class="time-slot" onclick="selectTime(this, '5:00 PM')">5:00 PM</div>
+                                <div class="time-slot" onclick="selectTime(this, '6:00 PM')">6:00 PM</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="booking-actions" style="margin-top: 2rem;">
+                        <button class="btn-back" onclick="prevStep(2)">← Previous</button>
+                        <button class="btn-next" onclick="nextStep(4)">Next: Confirm →</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Confirmation -->
+                <div class="booking-section" id="section4">
+                    <h2 class="section-title">✓ Confirm Your Booking</h2>
+                    <p style="color: var(--gray); margin-bottom: 1.5rem;">Please review your session details</p>
+
+                    <div class="booking-summary">
+                        <h3 style="color: white; margin-bottom: 1.5rem;">Booking Summary</h3>
+                        <div class="summary-item">
+                            <span class="summary-label">Therapist</span>
+                            <span class="summary-value" id="confirmTherapist">Dr. Sarah Chen</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Session Type</span>
+                            <span class="summary-value" id="confirmSessionType">Video Session</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Date</span>
+                            <span class="summary-value" id="confirmDate">November 14, 2025</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Time</span>
+                            <span class="summary-value" id="confirmTime">2:00 PM EST</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Duration</span>
+                            <span class="summary-value">60 minutes</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="color: white; display: block; margin-bottom: 0.5rem;">Notes for your therapist (optional)</label>
+                        <textarea class="notes-textarea" id="sessionNotes" placeholder="Share anything you'd like your therapist to know before the session..."></textarea>
+                    </div>
+
+                    <div style="background: rgba(102, 194, 165, 0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+                        <p style="color: var(--gray); font-size: 0.9rem;">
+                            📧 You'll receive a confirmation email with a link to join your session 15 minutes before the scheduled time.
+                        </p>
+                    </div>
+
+                    <div class="booking-actions">
+                        <button class="btn-back" onclick="prevStep(3)">← Previous</button>
+                        <button class="btn-next" onclick="confirmBooking()">✓ Confirm Booking</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let currentStep = 1;
+        let bookingData = {
+            therapist: '',
+            sessionType: '',
+            date: '',
+            time: '',
+            notes: ''
+        };
+
+        // Load pre-selected therapist if coming from therapist page
+        window.addEventListener('DOMContentLoaded', () => {
+            const selected = localStorage.getItem('selectedTherapist');
+            if (selected) {
+                bookingData.therapist = selected;
+                document.getElementById('confirmTherapist').textContent = selected;
+            }
+        });
+
+        function selectTherapist(element, therapist) {
+            document.querySelectorAll('.therapist-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            bookingData.therapist = therapist;
+            document.getElementById('confirmTherapist').textContent = therapist;
+        }
+
+        function selectSessionType(element, type) {
+            document.querySelectorAll('.session-type').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            bookingData.sessionType = type;
+            document.getElementById('confirmSessionType').textContent = type;
+        }
+
+        function selectDate(element, date) {
+            if (element.classList.contains('disabled')) return;
+            document.querySelectorAll('.calendar-day').forEach(day => day.classList.remove('selected'));
+            element.classList.add('selected');
+            bookingData.date = `November ${date}, 2025`;
+            document.getElementById('confirmDate').textContent = bookingData.date;
+        }
+
+        function selectTime(element, time) {
+            if (element.classList.contains('unavailable')) return;
+            document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
+            element.classList.add('selected');
+            bookingData.time = time;
+            document.getElementById('confirmTime').textContent = time + ' EST';
+        }
+
+        function nextStep(step) {
+            // Validate current step
+            if (step === 2 && !bookingData.therapist) {
+                alert('Please select a therapist');
+                return;
+            }
+            if (step === 3 && !bookingData.sessionType) {
+                alert('Please select a session type');
+                return;
+            }
+            if (step === 4 && (!bookingData.date || !bookingData.time)) {
+                alert('Please select a date and time');
+                return;
+            }
+
+            // Update UI
+            document.querySelectorAll('.booking-section').forEach(section => section.classList.remove('active'));
+            document.getElementById('section' + step).classList.add('active');
+            
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+            
+            // Mark previous steps as completed
+            for (let i = 1; i < step; i++) {
+                document.getElementById('step' + i).classList.add('completed');
+            }
+            
+            currentStep = step;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevStep(step) {
+            document.querySelectorAll('.booking-section').forEach(section => section.classList.remove('active'));
+            document.getElementById('section' + step).classList.add('active');
+            
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+            
+            currentStep = step;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function confirmBooking() {
+            bookingData.notes = document.getElementById('sessionNotes').value;
+            
+            // Save booking
+            const bookings = JSON.parse(localStorage.getItem('therapyConnectBookings') || '[]');
+            bookings.push({
+                ...bookingData,
+                id: Date.now(),
+                status: 'confirmed',
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('therapyConnectBookings', JSON.stringify(bookings));
+            
+            // Show success and redirect
+            alert('✓ Booking Confirmed!\n\nYour session has been booked successfully. Check your email for confirmation details.');
+            window.location.href = 'dashboard.html';
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('therapyConnectUser');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - TherapyConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .legal-container {
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .legal-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.1), rgba(141, 211, 199, 0.05));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .legal-header h1 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .last-updated {
+            color: var(--therapeutic-green);
+            font-weight: 600;
+        }
+
+        .legal-content {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .legal-section {
+            margin-bottom: 3rem;
+        }
+
+        .legal-section h2 {
+            color: var(--therapeutic-green);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .legal-section h3 {
+            color: white;
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .legal-section p {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .legal-section ul,
+        .legal-section ol {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .legal-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box {
+            background: rgba(102, 194, 165, 0.1);
+            border-left: 4px solid var(--therapeutic-green);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box strong {
+            color: var(--therapeutic-green);
+        }
+
+        .warning-box {
+            background: rgba(255, 59, 48, 0.1);
+            border-left: 4px solid #ff6b6b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box strong {
+            color: #ff6b6b;
+        }
+
+        .toc {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .toc h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--therapeutic-green);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .toc a:hover {
+            color: var(--peaceful-teal);
+        }
+
+        @media (max-width: 768px) {
+            .legal-content {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">TherapyConnect</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="sessions.html">Sessions</a>
+                <a href="therapists.html">Therapists</a>
+                <a href="resources.html">Resources</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="legal-container">
+        <div class="container">
+            <div class="legal-header">
+                <h1>Terms of Service</h1>
+                <p class="last-updated">Last Updated: November 11, 2025</p>
+                <p style="color: var(--gray); margin-top: 1rem;">Please read these terms carefully before using TherapyConnect.</p>
+            </div>
+
+            <div class="legal-content">
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h3>📋 Table of Contents</h3>
+                    <ul>
+                        <li><a href="#acceptance">1. Acceptance of Terms</a></li>
+                        <li><a href="#eligibility">2. Eligibility</a></li>
+                        <li><a href="#services">3. Description of Services</a></li>
+                        <li><a href="#account">4. Account Registration</a></li>
+                        <li><a href="#fees">5. Fees and Payment</a></li>
+                        <li><a href="#telehealth">6. Telehealth Services</a></li>
+                        <li><a href="#limitations">7. Limitations of Service</a></li>
+                        <li><a href="#conduct">8. User Conduct</a></li>
+                        <li><a href="#intellectual">9. Intellectual Property</a></li>
+                        <li><a href="#privacy">10. Privacy & Confidentiality</a></li>
+                        <li><a href="#disclaimer">11. Disclaimer of Warranties</a></li>
+                        <li><a href="#liability">12. Limitation of Liability</a></li>
+                        <li><a href="#termination">13. Termination</a></li>
+                        <li><a href="#dispute">14. Dispute Resolution</a></li>
+                        <li><a href="#general">15. General Provisions</a></li>
+                    </ul>
+                </div>
+
+                <!-- Acceptance -->
+                <div class="legal-section" id="acceptance">
+                    <h2>1. Acceptance of Terms</h2>
+                    <p>
+                        Welcome to TherapyConnect! These Terms of Service ("Terms") constitute a legally binding agreement between you and TherapyConnect, Inc. ("TherapyConnect," "we," "us," or "our") governing your access to and use of our platform, website, mobile applications, and services (collectively, the "Services").
+                    </p>
+                    <div class="highlight-box">
+                        <strong>By accessing or using TherapyConnect, you agree to be bound by these Terms.</strong> If you do not agree to these Terms, you may not access or use our Services.
+                    </div>
+                </div>
+
+                <!-- Eligibility -->
+                <div class="legal-section" id="eligibility">
+                    <h2>2. Eligibility</h2>
+                    <p>You must meet the following requirements to use TherapyConnect:</p>
+                    <ul>
+                        <li>You are at least 18 years old, or have parental/guardian consent if under 18</li>
+                        <li>You are capable of forming a binding contract</li>
+                        <li>You are not prohibited from using the Services under applicable law</li>
+                        <li>You have not been previously suspended or removed from TherapyConnect</li>
+                        <li>You are a resident of the United States or its territories</li>
+                    </ul>
+
+                    <h3>2.1 Minors</h3>
+                    <p>
+                        If you are under 18, your parent or legal guardian must review and agree to these Terms on your behalf and maintain supervision of your use of the Services.
+                    </p>
+                </div>
+
+                <!-- Services -->
+                <div class="legal-section" id="services">
+                    <h2>3. Description of Services</h2>
+                    <p>TherapyConnect provides an online platform connecting users with licensed mental health professionals, including:</p>
+
+                    <h3>3.1 Therapy Services</h3>
+                    <ul>
+                        <li>Video, phone, and text-based therapy sessions</li>
+                        <li>Individual, couples, and group therapy</li>
+                        <li>Specialized treatment for anxiety, depression, trauma, and other conditions</li>
+                    </ul>
+
+                    <h3>3.2 Platform Features</h3>
+                    <ul>
+                        <li>Therapist matching and discovery</li>
+                        <li>Appointment scheduling and reminders</li>
+                        <li>Secure messaging with therapists</li>
+                        <li>Wellness tracking tools (mood, sleep, medication, goals)</li>
+                        <li>Educational resources and exercises</li>
+                        <li>Community support features</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <strong>Important:</strong> TherapyConnect is a platform that connects you with licensed therapists. We do not provide medical advice or mental health treatment directly. All clinical services are provided by independent licensed professionals.
+                    </div>
+                </div>
+
+                <!-- Account -->
+                <div class="legal-section" id="account">
+                    <h2>4. Account Registration</h2>
+                    
+                    <h3>4.1 Account Creation</h3>
+                    <p>To access certain features, you must create an account by providing accurate, complete, and current information.</p>
+
+                    <h3>4.2 Account Security</h3>
+                    <ul>
+                        <li>You are responsible for maintaining the confidentiality of your password</li>
+                        <li>You are responsible for all activities under your account</li>
+                        <li>You must notify us immediately of any unauthorized access</li>
+                        <li>We recommend enabling two-factor authentication</li>
+                    </ul>
+
+                    <h3>4.3 Account Accuracy</h3>
+                    <p>You agree to provide truthful information and keep your account information up to date. Misrepresentation may result in termination of your account.</p>
+                </div>
+
+                <!-- Fees -->
+                <div class="legal-section" id="fees">
+                    <h2>5. Fees and Payment</h2>
+
+                    <h3>5.1 Session Fees</h3>
+                    <p>
+                        Therapy sessions are charged at rates set by individual therapists. Fees will be clearly displayed before booking. Standard session fees range from $80-$200 per session depending on the therapist and session type.
+                    </p>
+
+                    <h3>5.2 Subscription Plans</h3>
+                    <p>We offer optional subscription plans:</p>
+                    <ul>
+                        <li><strong>Free Trial:</strong> 7-day trial with limited features</li>
+                        <li><strong>Basic Plan:</strong> $29/month - Unlimited messaging, basic tools</li>
+                        <li><strong>Premium Plan:</strong> $79/month - Priority matching, all features, discounted sessions</li>
+                    </ul>
+
+                    <h3>5.3 Payment Terms</h3>
+                    <ul>
+                        <li>Payment is required at time of booking unless using insurance</li>
+                        <li>Subscriptions auto-renew monthly unless cancelled</li>
+                        <li>Refunds are provided in accordance with our cancellation policy</li>
+                        <li>You authorize us to charge your payment method on file</li>
+                    </ul>
+
+                    <h3>5.4 Cancellation Policy</h3>
+                    <ul>
+                        <li>Cancel sessions at least 24 hours in advance for full refund</li>
+                        <li>Late cancellations (less than 24 hours) are charged 50%</li>
+                        <li>No-shows are charged 100%</li>
+                        <li>Cancel subscriptions anytime; no refunds for partial months</li>
+                    </ul>
+
+                    <h3>5.5 Insurance</h3>
+                    <p>
+                        Some therapists accept insurance. We provide superbills for out-of-network reimbursement. Insurance coverage is between you and your provider.
+                    </p>
+                </div>
+
+                <!-- Telehealth -->
+                <div class="legal-section" id="telehealth">
+                    <h2>6. Telehealth Services</h2>
+
+                    <h3>6.1 Informed Consent</h3>
+                    <p>By using telehealth services, you acknowledge and consent to:</p>
+                    <ul>
+                        <li>Receiving therapy via secure video, phone, or text</li>
+                        <li>Potential technical difficulties and interruptions</li>
+                        <li>The therapist's inability to provide emergency services remotely</li>
+                        <li>The importance of being in a private, safe location during sessions</li>
+                    </ul>
+
+                    <h3>6.2 Technology Requirements</h3>
+                    <p>You are responsible for:</p>
+                    <ul>
+                        <li>Ensuring you have reliable internet connection</li>
+                        <li>Using compatible devices and browsers</li>
+                        <li>Maintaining privacy during video sessions</li>
+                        <li>Being in a location where your therapist is licensed to practice</li>
+                    </ul>
+
+                    <h3>6.3 Recording</h3>
+                    <p>
+                        Sessions may be recorded only with explicit written consent from both parties. Unauthorized recording is strictly prohibited and may be illegal.
+                    </p>
+                </div>
+
+                <!-- Limitations -->
+                <div class="legal-section" id="limitations">
+                    <h2>7. Limitations of Service</h2>
+
+                    <div class="warning-box">
+                        <strong>⚠️ Important Limitations:</strong>
+                        <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                            TherapyConnect is NOT designed for emergency situations. If you are experiencing a mental health emergency, suicidal thoughts, or thoughts of harming yourself or others, please:
+                        </p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Call 911 immediately</li>
+                            <li>Call or text 988 (Suicide & Crisis Lifeline)</li>
+                            <li>Go to your nearest emergency room</li>
+                            <li>Contact the Crisis Text Line: Text HOME to 741741</li>
+                        </ul>
+                    </div>
+
+                    <h3>7.1 Not Emergency Services</h3>
+                    <p>
+                        Our Services do not provide emergency mental health services, crisis intervention, or immediate medical care. We cannot guarantee immediate response times.
+                    </p>
+
+                    <h3>7.2 Not a Substitute</h3>
+                    <p>
+                        TherapyConnect is not a substitute for in-person therapy when clinically necessary. Your therapist may recommend in-person care if appropriate.
+                    </p>
+
+                    <h3>7.3 Licensing Restrictions</h3>
+                    <p>
+                        Therapists can only provide services to clients located in states where they are licensed. You must be physically located in your therapist's licensed state during sessions.
+                    </p>
+                </div>
+
+                <!-- Conduct -->
+                <div class="legal-section" id="conduct">
+                    <h2>8. User Conduct</h2>
+                    <p>You agree NOT to:</p>
+                    <ul>
+                        <li>Violate any laws or regulations</li>
+                        <li>Impersonate any person or entity</li>
+                        <li>Harass, threaten, or abuse therapists or other users</li>
+                        <li>Share explicit, violent, or illegal content</li>
+                        <li>Attempt to access accounts or data not belonging to you</li>
+                        <li>Reverse engineer, decompile, or modify our platform</li>
+                        <li>Use automated systems (bots, scrapers) without permission</li>
+                        <li>Share your account credentials with others</li>
+                        <li>Use the platform for any commercial purpose without authorization</li>
+                    </ul>
+
+                    <h3>8.1 Consequences</h3>
+                    <p>
+                        Violation of these conduct rules may result in immediate termination of your account, reporting to authorities, and legal action.
+                    </p>
+                </div>
+
+                <!-- Intellectual Property -->
+                <div class="legal-section" id="intellectual">
+                    <h2>9. Intellectual Property</h2>
+
+                    <h3>9.1 Our Content</h3>
+                    <p>
+                        All content on TherapyConnect, including text, graphics, logos, software, and design, is owned by TherapyConnect or our licensors and protected by copyright, trademark, and other intellectual property laws.
+                    </p>
+
+                    <h3>9.2 Limited License</h3>
+                    <p>
+                        We grant you a limited, non-exclusive, non-transferable license to access and use our Services for personal, non-commercial purposes.
+                    </p>
+
+                    <h3>9.3 User Content</h3>
+                    <p>
+                        You retain ownership of content you create (journal entries, goals, etc.). By using our Services, you grant us a license to use, store, and display this content to provide Services to you.
+                    </p>
+                </div>
+
+                <!-- Privacy -->
+                <div class="legal-section" id="privacy">
+                    <h2>10. Privacy & Confidentiality</h2>
+                    <p>
+                        Your privacy is important to us. Our use of your personal and health information is governed by our <a href="privacy.html" style="color: var(--therapeutic-green);">Privacy Policy</a> and Notice of Privacy Practices, which are incorporated into these Terms by reference.
+                    </p>
+
+                    <h3>10.1 HIPAA Compliance</h3>
+                    <p>
+                        We comply with HIPAA regulations to protect your Protected Health Information (PHI). Therapists maintain confidentiality as required by professional ethics and law.
+                    </p>
+
+                    <h3>10.2 Exceptions to Confidentiality</h3>
+                    <p>Therapists may be required to disclose information without your consent when:</p>
+                    <ul>
+                        <li>There is reasonable suspicion of child, elder, or dependent adult abuse</li>
+                        <li>You present a serious danger to yourself or others</li>
+                        <li>Required by court order or law</li>
+                        <li>You provide written authorization for disclosure</li>
+                    </ul>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="legal-section" id="disclaimer">
+                    <h2>11. Disclaimer of Warranties</h2>
+                    <div class="warning-box">
+                        <strong>THE SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND.</strong>
+                    </div>
+                    <p>
+                        To the fullest extent permitted by law, TherapyConnect disclaims all warranties, express or implied, including warranties of merchantability, fitness for a particular purpose, and non-infringement.
+                    </p>
+                    <p>We do not warrant that:</p>
+                    <ul>
+                        <li>The Services will be uninterrupted, secure, or error-free</li>
+                        <li>Results obtained through the Services will be accurate or reliable</li>
+                        <li>The quality of services will meet your expectations</li>
+                        <li>Any errors or defects will be corrected</li>
+                    </ul>
+                </div>
+
+                <!-- Liability -->
+                <div class="legal-section" id="liability">
+                    <h2>12. Limitation of Liability</h2>
+                    <p>
+                        TO THE MAXIMUM EXTENT PERMITTED BY LAW, THERAPYCONNECT SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES.
+                    </p>
+                    <p>
+                        Our total liability for any claim arising out of these Terms or the Services shall not exceed the amount you paid us in the 12 months preceding the claim, or $100, whichever is greater.
+                    </p>
+
+                    <h3>12.1 Therapist Responsibility</h3>
+                    <p>
+                        Licensed therapists on our platform are independent professionals responsible for their own clinical decisions and care. TherapyConnect is not liable for therapist malpractice or professional errors.
+                    </p>
+                </div>
+
+                <!-- Termination -->
+                <div class="legal-section" id="termination">
+                    <h2>13. Termination</h2>
+
+                    <h3>13.1 By You</h3>
+                    <p>
+                        You may terminate your account at any time through your account settings or by contacting support@therapyconnect.com.
+                    </p>
+
+                    <h3>13.2 By Us</h3>
+                    <p>We may suspend or terminate your account if you:</p>
+                    <ul>
+                        <li>Violate these Terms</li>
+                        <li>Engage in fraudulent or illegal activity</li>
+                        <li>Provide false information</li>
+                        <li>Have not logged in for 12 consecutive months</li>
+                        <li>Fail to pay fees owed</li>
+                    </ul>
+
+                    <h3>13.3 Effect of Termination</h3>
+                    <p>
+                        Upon termination, your right to use the Services ceases immediately. We will retain your information as required by law and professional standards (typically 7 years for health records).
+                    </p>
+                </div>
+
+                <!-- Dispute Resolution -->
+                <div class="legal-section" id="dispute">
+                    <h2>14. Dispute Resolution</h2>
+
+                    <h3>14.1 Informal Resolution</h3>
+                    <p>
+                        Before filing a claim, you agree to contact us at legal@therapyconnect.com to attempt to resolve the dispute informally.
+                    </p>
+
+                    <h3>14.2 Arbitration Agreement</h3>
+                    <p>
+                        Any dispute arising from these Terms will be resolved through binding arbitration in accordance with the American Arbitration Association rules, rather than in court, except you may assert claims in small claims court if they qualify.
+                    </p>
+
+                    <h3>14.3 Class Action Waiver</h3>
+                    <p>
+                        You agree to bring claims only in your individual capacity, not as a class member or representative in any class or representative action.
+                    </p>
+
+                    <h3>14.4 Governing Law</h3>
+                    <p>
+                        These Terms are governed by the laws of the State of California, without regard to conflict of law principles.
+                    </p>
+                </div>
+
+                <!-- General -->
+                <div class="legal-section" id="general">
+                    <h2>15. General Provisions</h2>
+
+                    <h3>15.1 Changes to Terms</h3>
+                    <p>
+                        We may modify these Terms at any time. We will notify you of material changes via email or platform notification. Continued use after changes constitutes acceptance.
+                    </p>
+
+                    <h3>15.2 Severability</h3>
+                    <p>
+                        If any provision of these Terms is found unenforceable, the remaining provisions will continue in full effect.
+                    </p>
+
+                    <h3>15.3 Entire Agreement</h3>
+                    <p>
+                        These Terms, along with our Privacy Policy and any other policies referenced, constitute the entire agreement between you and TherapyConnect.
+                    </p>
+
+                    <h3>15.4 Contact Information</h3>
+                    <p>
+                        Questions about these Terms? Contact us at:<br>
+                        Email: legal@therapyconnect.com<br>
+                        Phone: 1-800-THERAPY (1-800-843-7279)<br>
+                        Mail: TherapyConnect, Inc., 123 Wellness Way, Suite 100, San Francisco, CA 94102
+                    </p>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 3rem;">
+                    <p style="margin: 0;">
+                        <strong>Acknowledgment:</strong> By clicking "I Accept" or using our Services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

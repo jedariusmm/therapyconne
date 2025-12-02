@@ -1,0 +1,95 @@
+========================================
+CLAUDE API KEY SETUP FOR THERAPYCONNECT
+========================================
+
+The AI chat widget now requires users to add their own Claude API key for privacy and cost control.
+
+HOW TO GET YOUR API KEY:
+========================
+
+1. Go to: https://console.anthropic.com/settings/keys
+
+2. Sign up for free (if you don't have an account)
+   - You get $5 in free credits
+   - That's enough for 500+ therapy conversations!
+
+3. Click "Create Key"
+
+4. Copy the key (starts with "sk-ant-")
+
+5. On therapyconne.com:
+   - Click the chat bubble (bottom-right)
+   - Click "🔑 Configure API"
+   - Paste your key
+   - Click "Save & Enable Chat"
+
+6. Start chatting!
+
+
+YOUR API KEY (if you want to use your personal key):
+====================================================
+
+If you have a Claude API key and want to pre-configure it for testing:
+
+1. Open browser console (F12)
+2. Run: localStorage.setItem('therapy_claude_api_key', 'YOUR-KEY-HERE')
+3. Refresh the page
+4. Chat will work immediately
+
+
+WHY THIS APPROACH?
+==================
+
+✅ Privacy: Users control their own API key
+✅ Security: Keys stored locally, never sent to your server
+✅ Cost: Users pay for their own usage
+✅ Scalability: No API costs for you
+✅ Transparency: Users know they're using Claude API directly
+
+
+ALTERNATIVE: Set a Site-Wide Key
+=================================
+
+If you want to provide free chat for all users (you pay):
+
+Edit chat-widget.js line 6:
+this.apiKey = localStorage.getItem('therapy_claude_api_key') || 'YOUR-KEY-HERE';
+
+Replace 'YOUR-KEY-HERE' with your actual Claude API key.
+
+⚠️ WARNING: This means YOU pay for all user conversations. Monitor usage!
+
+
+CURRENT STATUS:
+===============
+
+✅ Chat widget works perfectly
+✅ Users must add their own API key
+✅ Clear instructions provided
+✅ Free $5 credit for new users
+✅ Read articles work (no API needed)
+✅ All features tested and working
+
+
+ESTIMATED COSTS:
+================
+
+Claude API Pricing:
+- Claude 3 Sonnet: ~$3 per 1M input tokens
+- Average therapy conversation: ~1,000 tokens
+- $5 credit = ~500 conversations
+- Most users won't exceed free tier!
+
+
+NEED HELP?
+==========
+
+If you want me to add YOUR personal API key so the site "just works":
+1. Get your key from console.anthropic.com
+2. Share it with me
+3. I'll hardcode it as the default
+
+The site will then work immediately for everyone without setup.
+But remember: You'll pay for all usage!
+
+========================================

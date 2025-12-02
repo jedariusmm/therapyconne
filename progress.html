@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracker - TherapyConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .progress-container {
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .progress-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.1), rgba(141, 211, 199, 0.05));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--therapeutic-green);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--therapeutic-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .stat-change {
+            color: #22c55e;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .chart-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .chart-header h2 {
+            color: white;
+        }
+
+        .time-filter {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            color: var(--gray);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: var(--therapeutic-green);
+            color: white;
+            border-color: var(--therapeutic-green);
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 2rem;
+            height: 300px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            gap: 1rem;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--therapeutic-green), var(--peaceful-teal));
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .chart-bar:hover {
+            opacity: 0.8;
+            transform: translateY(-5px);
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gray);
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .chart-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--therapeutic-green);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .goals-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .goal-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--therapeutic-green);
+        }
+
+        .goal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .goal-title {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .goal-percentage {
+            background: rgba(102, 194, 165, 0.2);
+            color: var(--therapeutic-green);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .goal-description {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--therapeutic-green), var(--peaceful-teal));
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .milestone-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .milestone {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .milestone.completed {
+            color: var(--therapeutic-green);
+        }
+
+        .milestone-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(102, 194, 165, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        .milestone.completed .milestone-check {
+            background: var(--therapeutic-green);
+            border-color: var(--therapeutic-green);
+        }
+
+        .mood-tracker {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .mood-day {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mood-day:hover {
+            border-color: var(--therapeutic-green);
+            transform: scale(1.05);
+        }
+
+        .mood-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .mood-date {
+            color: var(--gray);
+            font-size: 0.75rem;
+        }
+
+        .insights-card {
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.15), rgba(141, 211, 199, 0.1));
+            border: 1px solid var(--therapeutic-green);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .insight-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .insight-item h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .insight-item p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .mood-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .chart-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">TherapyConnect</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="sessions.html">Sessions</a>
+                <a href="therapists.html">Therapists</a>
+                <a href="resources.html">Resources</a>
+                <a href="profile.html">Profile</a>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="progress-container">
+        <div class="container">
+            <div class="progress-header">
+                <h1 style="color: white; margin-bottom: 1rem;">Progress Tracker 📊</h1>
+                <p style="color: var(--gray);">Track your wellness journey and celebrate your achievements</p>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-value">78%</div>
+                    <div class="stat-label">Overall Wellness</div>
+                    <div class="stat-change">↑ 12% from last month</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value">5/8</div>
+                    <div class="stat-label">Goals Completed</div>
+                    <div class="stat-change">↑ 2 this week</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">😊</div>
+                    <div class="stat-value">8.2</div>
+                    <div class="stat-label">Avg Mood Score</div>
+                    <div class="stat-change">↑ 1.5 points</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value">45</div>
+                    <div class="stat-label">Day Streak</div>
+                    <div class="stat-change">Keep it up!</div>
+                </div>
+            </div>
+
+            <!-- Mood Trend Chart -->
+            <div class="chart-section">
+                <div class="chart-header">
+                    <h2>Mood Trends 📊</h2>
+                    <div class="time-filter">
+                        <button class="filter-btn" onclick="filterChart('week')">Week</button>
+                        <button class="filter-btn active" onclick="filterChart('month')">Month</button>
+                        <button class="filter-btn" onclick="filterChart('year')">Year</button>
+                    </div>
+                </div>
+                <div class="chart-container" style="margin-bottom: 3rem;">
+                    <div class="chart-bar" style="height: 65%;">
+                        <span class="chart-value">6.5</span>
+                        <span class="chart-label">Week 1</span>
+                    </div>
+                    <div class="chart-bar" style="height: 70%;">
+                        <span class="chart-value">7.0</span>
+                        <span class="chart-label">Week 2</span>
+                    </div>
+                    <div class="chart-bar" style="height: 80%;">
+                        <span class="chart-value">8.0</span>
+                        <span class="chart-label">Week 3</span>
+                    </div>
+                    <div class="chart-bar" style="height: 90%;">
+                        <span class="chart-value">9.0</span>
+                        <span class="chart-label">Week 4</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Mood Tracker -->
+            <div class="mood-tracker">
+                <h2 style="color: white; margin-bottom: 0.5rem;">This Week's Mood 😊</h2>
+                <p style="color: var(--gray); margin-bottom: 1.5rem;">Track how you're feeling each day</p>
+                
+                <div class="mood-grid">
+                    <div class="mood-day">
+                        <div class="mood-emoji">😊</div>
+                        <div class="mood-date">Mon</div>
+                    </div>
+                    <div class="mood-day">
+                        <div class="mood-emoji">😌</div>
+                        <div class="mood-date">Tue</div>
+                    </div>
+                    <div class="mood-day">
+                        <div class="mood-emoji">😃</div>
+                        <div class="mood-date">Wed</div>
+                    </div>
+                    <div class="mood-day">
+                        <div class="mood-emoji">😐</div>
+                        <div class="mood-date">Thu</div>
+                    </div>
+                    <div class="mood-day">
+                        <div class="mood-emoji">😊</div>
+                        <div class="mood-date">Fri</div>
+                    </div>
+                    <div class="mood-day" style="border: 2px solid var(--therapeutic-green);">
+                        <div class="mood-emoji">😄</div>
+                        <div class="mood-date">Today</div>
+                    </div>
+                    <div class="mood-day" style="opacity: 0.5;">
+                        <div class="mood-emoji">?</div>
+                        <div class="mood-date">Sun</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goals Progress -->
+            <div class="goals-section">
+                <h2 style="color: white; margin-bottom: 1.5rem;">My Goals 🎯</h2>
+
+                <div class="goal-item">
+                    <div class="goal-header">
+                        <div class="goal-title">Practice Daily Meditation</div>
+                        <div class="goal-percentage">85%</div>
+                    </div>
+                    <p class="goal-description">Meditate for at least 10 minutes every morning to reduce anxiety</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%;"></div>
+                    </div>
+                    <div class="milestone-list">
+                        <div class="milestone completed">
+                            <div class="milestone-check">✓</div>
+                            <span>Complete 7 consecutive days</span>
+                        </div>
+                        <div class="milestone completed">
+                            <div class="milestone-check">✓</div>
+                            <span>Complete 30 consecutive days</span>
+                        </div>
+                        <div class="milestone">
+                            <div class="milestone-check"></div>
+                            <span>Complete 90 consecutive days</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-item">
+                    <div class="goal-header">
+                        <div class="goal-title">Improve Sleep Schedule</div>
+                        <div class="goal-percentage">62%</div>
+                    </div>
+                    <p class="goal-description">Go to bed by 10:30 PM and wake up at 6:30 AM consistently</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 62%;"></div>
+                    </div>
+                    <div class="milestone-list">
+                        <div class="milestone completed">
+                            <div class="milestone-check">✓</div>
+                            <span>Establish bedtime routine</span>
+                        </div>
+                        <div class="milestone">
+                            <div class="milestone-check"></div>
+                            <span>7 nights of quality sleep</span>
+                        </div>
+                        <div class="milestone">
+                            <div class="milestone-check"></div>
+                            <span>30 days consistent schedule</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal-item">
+                    <div class="goal-header">
+                        <div class="goal-title">Set Healthy Boundaries</div>
+                        <div class="goal-percentage">100%</div>
+                    </div>
+                    <p class="goal-description">Learn to say no to work requests outside business hours</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;"></div>
+                    </div>
+                    <div class="milestone-list">
+                        <div class="milestone completed">
+                            <div class="milestone-check">✓</div>
+                            <span>Identify boundary violations</span>
+                        </div>
+                        <div class="milestone completed">
+                            <div class="milestone-check">✓</div>
+                            <span>Practice saying no</span>
+                        </div>
+                        <div class="milestone completed">
+                            <div class="milestone-check">✓</div>
+                            <span>Maintain boundaries for 30 days</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="post-btn" onclick="addGoal()" style="margin-top: 1rem;">➕ Add New Goal</button>
+            </div>
+
+            <!-- AI Insights -->
+            <div class="insights-card">
+                <h2 style="color: white; margin-bottom: 1.5rem;">💡 Personalized Insights</h2>
+                
+                <div class="insight-item">
+                    <h4>🌟 Positive Trend Detected</h4>
+                    <p>Your mood scores have improved by 18% over the past month! The meditation practice you've maintained seems to be having a positive impact. Keep it up!</p>
+                </div>
+
+                <div class="insight-item">
+                    <h4>📅 Best Days Pattern</h4>
+                    <p>You tend to feel best on Fridays and weekends. Consider what you're doing differently on those days and try to incorporate those activities into your weekday routine.</p>
+                </div>
+
+                <div class="insight-item">
+                    <h4>💪 Strength Identified</h4>
+                    <p>You've successfully maintained your meditation streak for 45 days! This shows great consistency and commitment to your wellbeing.</p>
+                </div>
+
+                <div class="insight-item">
+                    <h4>🎯 Suggested Focus Area</h4>
+                    <p>Your sleep quality goal is at 62%. Consider discussing sleep hygiene strategies with your therapist in your next session.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function filterChart(period) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            console.log('Filtering chart by:', period);
+        }
+
+        function addGoal() {
+            const goalName = prompt('What goal would you like to set?');
+            if (goalName) {
+                alert('New goal "' + goalName + '" added! Let\'s work towards it together.');
+            }
+        }
+
+        // Animate progress bars on load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.progress-fill').forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        });
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('therapyConnectUser');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

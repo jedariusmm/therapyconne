@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Exercises - TherapyConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .exercises-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 3rem;
+        }
+
+        .exercises-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .exercises-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .exercise-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .exercise-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .exercise-card h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .exercise-card .duration {
+            color: var(--purple);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .exercise-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(123, 97, 255, 0.4);
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo">TherapyConnect</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="resources.html">Resources</a>
+                <a href="games.html">Games</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="exercises-container">
+        <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+        
+        <div class="exercises-header">
+            <h1 style="color: white; margin-bottom: 1rem;">🧘 Wellness Exercises</h1>
+            <p style="color: var(--gray);">Practice these guided exercises with NUPI to reduce stress and improve mental wellness</p>
+        </div>
+
+        <div class="exercises-grid">
+            <div class="exercise-card">
+                <div class="exercise-icon">🫁</div>
+                <h3>Deep Breathing</h3>
+                <div class="duration">5-10 minutes</div>
+                <p>Calm your mind and reduce anxiety with guided breathing techniques. Perfect for stress relief.</p>
+                <button class="start-btn" onclick="startExercise('breathing')">Start Exercise</button>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-icon">🧘‍♀️</div>
+                <h3>Body Scan Meditation</h3>
+                <div class="duration">10-15 minutes</div>
+                <p>Release tension by mindfully scanning through your body. Great for relaxation and sleep.</p>
+                <button class="start-btn" onclick="startExercise('bodyscan')">Start Exercise</button>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-icon">🌅</div>
+                <h3>Mindfulness Practice</h3>
+                <div class="duration">5-10 minutes</div>
+                <p>Stay present in the moment with guided mindfulness exercises. Reduce worry and anxiety.</p>
+                <button class="start-btn" onclick="startExercise('mindfulness')">Start Exercise</button>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-icon">💭</div>
+                <h3>Thought Journaling</h3>
+                <div class="duration">10-15 minutes</div>
+                <p>Process difficult emotions through guided cognitive reflection. Build emotional awareness.</p>
+                <button class="start-btn" onclick="startExercise('journaling')">Start Exercise</button>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-icon">💪</div>
+                <h3>Progressive Muscle Relaxation</h3>
+                <div class="duration">15-20 minutes</div>
+                <p>Release physical tension through systematic muscle relaxation. Perfect for stress and pain.</p>
+                <button class="start-btn" onclick="startExercise('pmr')">Start Exercise</button>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-icon">🙏</div>
+                <h3>Gratitude Practice</h3>
+                <div class="duration">5-10 minutes</div>
+                <p>Shift your mindset and boost mood with guided gratitude reflection. Build positivity.</p>
+                <button class="start-btn" onclick="startExercise('gratitude')">Start Exercise</button>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-icon">🎯</div>
+                <h3>Goal Setting</h3>
+                <div class="duration">10-15 minutes</div>
+                <p>Set meaningful goals and create an action plan. Build motivation and clarity.</p>
+                <button class="start-btn" onclick="startExercise('goals')">Start Exercise</button>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-icon">😌</div>
+                <h3>Visualization</h3>
+                <div class="duration">10-15 minutes</div>
+                <p>Use guided imagery to reduce stress and build confidence. Mental rehearsal for success.</p>
+                <button class="start-btn" onclick="startExercise('visualization')">Start Exercise</button>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-icon">❤️</div>
+                <h3>Self-Compassion</h3>
+                <div class="duration">5-10 minutes</div>
+                <p>Practice kindness toward yourself. Reduce self-criticism and build self-acceptance.</p>
+                <button class="start-btn" onclick="startExercise('compassion')">Start Exercise</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Widget -->
+    <link rel="stylesheet" href="chat-widget.css">
+    <script src="chat-widget.js"></script>
+
+    <script>
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('therapyConnectUser');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function startExercise(type) {
+            const exercises = {
+                'breathing': 'Guide me through a deep breathing exercise for anxiety relief. Use a calm, slow pace.',
+                'bodyscan': 'Lead me through a body scan meditation to release tension. Go slowly through each body part.',
+                'mindfulness': 'Help me practice mindfulness. Guide me to focus on the present moment.',
+                'journaling': 'Help me journal my thoughts and feelings. Ask me reflective questions.',
+                'pmr': 'Guide me through progressive muscle relaxation. Instruct me to tense and release each muscle group.',
+                'gratitude': 'Help me practice gratitude. Ask me what I\'m grateful for and help me reflect.',
+                'goals': 'Help me set meaningful goals. Ask about my aspirations and help me create an action plan.',
+                'visualization': 'Guide me through a calming visualization exercise. Help me imagine a peaceful scene.',
+                'compassion': 'Help me practice self-compassion. Guide me to be kinder to myself.'
+            };
+
+            // Open chat widget
+            const chatBtn = document.getElementById('chatBubbleBtn');
+            if (chatBtn) {
+                chatBtn.click();
+                
+                // Send the exercise prompt after a brief delay
+                setTimeout(() => {
+                    if (window.therapistChat) {
+                        window.therapistChat.quickMessage(exercises[type]);
+                    }
+                }, 500);
+            } else {
+                alert('Please wait for the chat to load, then try again.');
+            }
+        }
+
+        // Check authentication
+        const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+        if (!userData.email) {
+            window.location.href = 'sign-in.html';
+        }
+    </script>
+</body>
+</html>

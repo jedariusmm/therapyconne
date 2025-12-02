@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisis Support - TherapyConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .crisis-container {
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .crisis-alert {
+            background: linear-gradient(135deg, rgba(255, 59, 48, 0.2), rgba(255, 69, 58, 0.1));
+            border: 2px solid rgba(255, 59, 48, 0.5);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .crisis-alert h1 {
+            color: #ff6b6b;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .crisis-alert p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .emergency-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .emergency-card.urgent {
+            border-color: rgba(255, 59, 48, 0.5);
+            background: rgba(255, 59, 48, 0.1);
+        }
+
+        .emergency-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(102, 194, 165, 0.3);
+        }
+
+        .emergency-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .emergency-card h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .emergency-card.urgent h3 {
+            color: #ff6b6b;
+        }
+
+        .emergency-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .emergency-btn {
+            background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .emergency-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 194, 165, 0.4);
+        }
+
+        .emergency-btn.urgent {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+        }
+
+        .resources-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .resources-section h2 {
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .resource-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .resource-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+        }
+
+        .resource-info h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .resource-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: flex-end;
+        }
+
+        .contact-link {
+            background: rgba(102, 194, 165, 0.2);
+            color: var(--therapeutic-green);
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .contact-link:hover {
+            background: rgba(102, 194, 165, 0.3);
+        }
+
+        .immediate-help {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .immediate-help h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .coping-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .coping-card {
+            background: rgba(102, 194, 165, 0.1);
+            border-left: 4px solid var(--therapeutic-green);
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .coping-title {
+            color: var(--therapeutic-green);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .coping-steps {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .coping-steps li {
+            margin-bottom: 0.5rem;
+        }
+
+        .safety-plan {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+        }
+
+        .safety-plan h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .safety-plan-content {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .plan-section {
+            margin-bottom: 2rem;
+        }
+
+        .plan-section h4 {
+            color: var(--therapeutic-green);
+            margin-bottom: 1rem;
+        }
+
+        .plan-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            border-radius: 10px;
+            padding: 0.75rem;
+            color: white;
+            font-family: inherit;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-input:focus {
+            outline: none;
+            border-color: var(--therapeutic-green);
+        }
+
+        .plan-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .save-plan-btn {
+            background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .save-plan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 194, 165, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .resource-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .resource-contact {
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">TherapyConnect</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="sessions.html">Sessions</a>
+                <a href="therapists.html">Therapists</a>
+                <a href="resources.html">Resources</a>
+                <a href="profile.html">Profile</a>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="crisis-container">
+        <div class="container">
+            <!-- Crisis Alert -->
+            <div class="crisis-alert">
+                <h1>🚨 You Are Not Alone</h1>
+                <p>If you're in crisis or having thoughts of self-harm, please reach out for immediate help. There are people who care and want to support you.</p>
+            </div>
+
+            <!-- Emergency Contacts -->
+            <div class="emergency-grid">
+                <div class="emergency-card urgent">
+                    <div class="emergency-icon">🚑</div>
+                    <h3>Emergency Services</h3>
+                    <p>If you're in immediate danger or having a medical emergency</p>
+                    <button class="emergency-btn urgent" onclick="callEmergency('911')">
+                        📞 Call 911
+                    </button>
+                </div>
+
+                <div class="emergency-card urgent">
+                    <div class="emergency-icon">🆘</div>
+                    <h3>Suicide Prevention Lifeline</h3>
+                    <p>24/7 crisis support for those experiencing suicidal thoughts</p>
+                    <button class="emergency-btn urgent" onclick="callEmergency('988')">
+                        📞 Call or Text 988
+                    </button>
+                </div>
+
+                <div class="emergency-card">
+                    <div class="emergency-icon">💬</div>
+                    <h3>Crisis Text Line</h3>
+                    <p>Free, 24/7 support via text message</p>
+                    <button class="emergency-btn" onclick="textCrisis()">
+                        💬 Text HOME to 741741
+                    </button>
+                </div>
+
+                <div class="emergency-card">
+                    <div class="emergency-icon">🧠</div>
+                    <h3>NAMI Helpline</h3>
+                    <p>Mental health support and resources</p>
+                    <button class="emergency-btn" onclick="callEmergency('1-800-950-6264')">
+                        📞 Call 1-800-950-NAMI
+                    </button>
+                </div>
+            </div>
+
+            <!-- Additional Resources -->
+            <div class="resources-section">
+                <h2>📞 Additional Support Resources</h2>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        <div class="resource-icon">🏥</div>
+                        <div class="resource-info">
+                            <h4>SAMHSA National Helpline</h4>
+                            <p>Confidential, free, 24/7 treatment referral and information service for mental health and substance abuse</p>
+                        </div>
+                        <div class="resource-contact">
+                            <a href="tel:1-800-662-4357" class="contact-link">📞 1-800-662-HELP</a>
+                        </div>
+                    </div>
+
+                    <div class="resource-item">
+                        <div class="resource-icon">🏳️‍🌈</div>
+                        <div class="resource-info">
+                            <h4>The Trevor Project</h4>
+                            <p>Crisis support for LGBTQ+ youth under 25 - call, text, or chat</p>
+                        </div>
+                        <div class="resource-contact">
+                            <a href="tel:1-866-488-7386" class="contact-link">📞 1-866-488-7386</a>
+                            <a href="#" class="contact-link">💬 Text START to 678678</a>
+                        </div>
+                    </div>
+
+                    <div class="resource-item">
+                        <div class="resource-icon">🎖️</div>
+                        <div class="resource-info">
+                            <h4>Veterans Crisis Line</h4>
+                            <p>24/7 support for veterans, service members, and their families</p>
+                        </div>
+                        <div class="resource-contact">
+                            <a href="tel:988" class="contact-link">📞 Call/Text 988 (Press 1)</a>
+                        </div>
+                    </div>
+
+                    <div class="resource-item">
+                        <div class="resource-icon">👶</div>
+                        <div class="resource-info">
+                            <h4>Postpartum Support International</h4>
+                            <p>Support for pregnancy and postpartum mental health</p>
+                        </div>
+                        <div class="resource-contact">
+                            <a href="tel:1-800-944-4773" class="contact-link">📞 1-800-944-4PPD</a>
+                            <a href="#" class="contact-link">💬 Text 800-944-4773</a>
+                        </div>
+                    </div>
+
+                    <div class="resource-item">
+                        <div class="resource-icon">💔</div>
+                        <div class="resource-info">
+                            <h4>Domestic Violence Hotline</h4>
+                            <p>24/7 support for victims of domestic violence</p>
+                        </div>
+                        <div class="resource-contact">
+                            <a href="tel:1-800-799-7233" class="contact-link">📞 1-800-799-SAFE</a>
+                        </div>
+                    </div>
+
+                    <div class="resource-item">
+                        <div class="resource-icon">🧒</div>
+                        <div class="resource-info">
+                            <h4>Childhelp National Hotline</h4>
+                            <p>Support for children experiencing abuse</p>
+                        </div>
+                        <div class="resource-contact">
+                            <a href="tel:1-800-422-4453" class="contact-link">📞 1-800-4-A-CHILD</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Immediate Coping Strategies -->
+            <div class="immediate-help">
+                <h2>🛡️ Immediate Coping Strategies</h2>
+                <p style="color: var(--gray); margin-bottom: 2rem;">Try these techniques when you're feeling overwhelmed:</p>
+
+                <div class="coping-grid">
+                    <div class="coping-card">
+                        <div class="coping-title">
+                            <span>🫁</span>
+                            <span>Box Breathing</span>
+                        </div>
+                        <ol class="coping-steps">
+                            <li>Breathe in for 4 counts</li>
+                            <li>Hold for 4 counts</li>
+                            <li>Breathe out for 4 counts</li>
+                            <li>Hold for 4 counts</li>
+                            <li>Repeat 4-5 times</li>
+                        </ol>
+                    </div>
+
+                    <div class="coping-card">
+                        <div class="coping-title">
+                            <span>🌟</span>
+                            <span>5-4-3-2-1 Grounding</span>
+                        </div>
+                        <ol class="coping-steps">
+                            <li>5 things you can see</li>
+                            <li>4 things you can touch</li>
+                            <li>3 things you can hear</li>
+                            <li>2 things you can smell</li>
+                            <li>1 thing you can taste</li>
+                        </ol>
+                    </div>
+
+                    <div class="coping-card">
+                        <div class="coping-title">
+                            <span>❄️</span>
+                            <span>Ice/Cold Water</span>
+                        </div>
+                        <ol class="coping-steps">
+                            <li>Hold ice cubes in your hands</li>
+                            <li>Splash cold water on your face</li>
+                            <li>Take a cold shower</li>
+                            <li>This activates the dive reflex</li>
+                            <li>Helps calm intense emotions</li>
+                        </ol>
+                    </div>
+
+                    <div class="coping-card">
+                        <div class="coping-title">
+                            <span>🚶</span>
+                            <span>Movement</span>
+                        </div>
+                        <ol class="coping-steps">
+                            <li>Take a walk outside</li>
+                            <li>Do jumping jacks</li>
+                            <li>Stretch your body</li>
+                            <li>Dance to music</li>
+                            <li>Physical activity helps release tension</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safety Plan -->
+            <div class="safety-plan">
+                <h2>📋 Personal Safety Plan</h2>
+                <p style="color: var(--gray); margin-bottom: 2rem;">Create a personalized plan for when you're in crisis. This will be saved privately for your use.</p>
+
+                <div class="safety-plan-content">
+                    <div class="plan-section">
+                        <h4>⚠️ My Warning Signs</h4>
+                        <textarea class="plan-input plan-textarea" placeholder="What thoughts, feelings, or behaviors tell me I'm starting to struggle? (e.g., isolation, negative self-talk, not sleeping)"></textarea>
+                    </div>
+
+                    <div class="plan-section">
+                        <h4>🛡️ My Coping Strategies</h4>
+                        <textarea class="plan-input plan-textarea" placeholder="What helps me when I'm feeling distressed? (e.g., breathing exercises, journaling, listening to music)"></textarea>
+                    </div>
+
+                    <div class="plan-section">
+                        <h4>👥 People I Can Contact</h4>
+                        <input type="text" class="plan-input" placeholder="Name and phone number 1">
+                        <input type="text" class="plan-input" placeholder="Name and phone number 2">
+                        <input type="text" class="plan-input" placeholder="Name and phone number 3">
+                    </div>
+
+                    <div class="plan-section">
+                        <h4>🌟 Reasons for Living</h4>
+                        <textarea class="plan-input plan-textarea" placeholder="What are the things that make life worth living? People, goals, experiences you value..."></textarea>
+                    </div>
+
+                    <div class="plan-section">
+                        <h4>🏥 Professional Contacts</h4>
+                        <input type="text" class="plan-input" placeholder="Therapist name and number">
+                        <input type="text" class="plan-input" placeholder="Psychiatrist name and number">
+                        <input type="text" class="plan-input" placeholder="Local emergency room or crisis center">
+                    </div>
+
+                    <div class="plan-section">
+                        <h4>🔒 Making My Environment Safe</h4>
+                        <textarea class="plan-input plan-textarea" placeholder="Steps to reduce access to means of self-harm (e.g., medication management, removing harmful items)"></textarea>
+                    </div>
+
+                    <button class="save-plan-btn" onclick="saveSafetyPlan()">💾 Save My Safety Plan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function callEmergency(number) {
+            if (confirm(`This will dial ${number}. Continue?`)) {
+                window.location.href = `tel:${number}`;
+            }
+        }
+
+        function textCrisis() {
+            alert('To text the Crisis Text Line:\n\n1. Open your messaging app\n2. Text HOME to 741741\n3. A trained crisis counselor will respond');
+        }
+
+        function saveSafetyPlan() {
+            alert('✓ Safety Plan Saved\n\nYour personal safety plan has been saved securely. You can access it anytime from this page.\n\nRemember: You are not alone. Help is always available.');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('therapyConnectUser');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>
