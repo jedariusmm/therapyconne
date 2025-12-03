@@ -382,7 +382,7 @@
             <div class="nav-links">
                 <a href="dashboard.html">Dashboard</a>
                 <a href="sessions.html">Sessions</a>
-                <a href="therapists.html">Therapists</a>
+                <a href="therapist-finder.html">Therapists</a>
                 <a href="resources.html">Resources</a>
                 <a href="profile.html">Profile</a>
                 <button class="btn btn-secondary" onclick="logout()">Logout</button>
@@ -395,10 +395,20 @@
             <!-- Header -->
             <div class="community-header">
                 <h1 style="color: white; margin-bottom: 1rem;">Community 🌟</h1>
-                <p style="color: var(--gray); max-width: 700px; margin: 0 auto;">
+                <p style="color: var(--gray); max-width: 700px; margin: 0 auto; margin-bottom: 1.5rem;">
                     Connect with others, share experiences, and find support in our safe and moderated community
                 </p>
+                <div id="topOnlineIndicator" style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.5rem 1rem; border-radius: 20px; margin-top: 1rem;">
+                    <div style="width: 10px; height: 10px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                    <span id="topOnlineCount" style="color: #10b981; font-weight: 600; font-size: 0.9rem;">Loading...</span>
+                </div>
             </div>
+            <style>
+                @keyframes pulse {
+                    0%, 100% { opacity: 1; transform: scale(1); }
+                    50% { opacity: 0.5; transform: scale(1.2); }
+                }
+            </style>
 
             <!-- Tabs -->
             <div class="community-tabs">
@@ -420,155 +430,13 @@
                             <button class="post-btn" onclick="createPost()">✍️ Share Post</button>
                         </div>
 
-                        <div class="posts-section">
-                            <!-- Post 1 -->
-                            <div class="post-card">
-                                <div class="post-header">
-                                    <div class="post-author">
-                                        <div class="author-avatar">😊</div>
-                                        <div class="author-info">
-                                            <h4>Sarah M.</h4>
-                                            <div class="post-time">2 hours ago</div>
-                                        </div>
-                                    </div>
-                                    <span class="post-badge">Anxiety Support</span>
-                                </div>
-                                <div class="post-content">
-                                    <h3>Small victories today!</h3>
-                                    <p class="post-text">
-                                        Just wanted to share that I successfully used the breathing techniques my therapist taught me during a panic attack today. It actually worked! I'm so grateful for this community and all the support. Remember, progress isn't always linear, and that's okay. 💚
-                                    </p>
-                                    <div class="post-tags">
-                                        <span class="tag">#anxiety</span>
-                                        <span class="tag">#progress</span>
-                                        <span class="tag">#breathing</span>
-                                    </div>
-                                    <div class="post-actions">
-                                        <button class="action-btn active" onclick="toggleLike(this)">
-                                            💚 <span>47 Likes</span>
-                                        </button>
-                                        <button class="action-btn" onclick="toggleComments(this)">
-                                            💬 <span>12 Comments</span>
-                                        </button>
-                                        <button class="action-btn" onclick="sharePost(this)">
-                                            🔗 Share
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Post 2 -->
-                            <div class="post-card">
-                                <div class="post-header">
-                                    <div class="post-author">
-                                        <div class="author-avatar">🌈</div>
-                                        <div class="author-info">
-                                            <h4>Marcus T.</h4>
-                                            <div class="post-time">5 hours ago</div>
-                                        </div>
-                                    </div>
-                                    <span class="post-badge">Depression Support</span>
-                                </div>
-                                <div class="post-content">
-                                    <h3>Three months of therapy - my journey</h3>
-                                    <p class="post-text">
-                                        I've been in therapy for three months now, and I wanted to share some reflections. It hasn't been easy - there were days I didn't want to continue. But looking back, I can see how far I've come. The fog is lifting, slowly but surely. To anyone just starting: give it time, be patient with yourself, and trust the process. You're worth it.
-                                    </p>
-                                    <div class="post-tags">
-                                        <span class="tag">#depression</span>
-                                        <span class="tag">#therapy-journey</span>
-                                        <span class="tag">#hope</span>
-                                    </div>
-                                    <div class="post-actions">
-                                        <button class="action-btn" onclick="toggleLike(this)">
-                                            💚 <span>89 Likes</span>
-                                        </button>
-                                        <button class="action-btn" onclick="toggleComments(this)">
-                                            💬 <span>23 Comments</span>
-                                        </button>
-                                        <button class="action-btn" onclick="sharePost(this)">
-                                            🔗 Share
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Post 3 -->
-                            <div class="post-card">
-                                <div class="post-header">
-                                    <div class="post-author">
-                                        <div class="author-avatar">✨</div>
-                                        <div class="author-info">
-                                            <h4>Jamie L.</h4>
-                                            <div class="post-time">1 day ago</div>
-                                        </div>
-                                    </div>
-                                    <span class="post-badge">Self-Care Tips</span>
-                                </div>
-                                <div class="post-content">
-                                    <h3>My evening routine for better mental health</h3>
-                                    <p class="post-text">
-                                        Sharing my evening routine that has really helped my mental health:<br>
-                                        🌙 No screens 1 hour before bed<br>
-                                        📝 Gratitude journaling (just 3 things)<br>
-                                        🧘 10-minute meditation<br>
-                                        📖 Reading something light<br>
-                                        💤 Consistent bedtime<br><br>
-                                        It took about 2 weeks to build the habit, but now I sleep better and wake up feeling more refreshed. What's your evening routine?
-                                    </p>
-                                    <div class="post-tags">
-                                        <span class="tag">#self-care</span>
-                                        <span class="tag">#sleep</span>
-                                        <span class="tag">#routine</span>
-                                    </div>
-                                    <div class="post-actions">
-                                        <button class="action-btn" onclick="toggleLike(this)">
-                                            💚 <span>124 Likes</span>
-                                        </button>
-                                        <button class="action-btn" onclick="toggleComments(this)">
-                                            💬 <span>34 Comments</span>
-                                        </button>
-                                        <button class="action-btn" onclick="sharePost(this)">
-                                            🔗 Share
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Post 4 -->
-                            <div class="post-card">
-                                <div class="post-header">
-                                    <div class="post-author">
-                                        <div class="author-avatar">🦋</div>
-                                        <div class="author-info">
-                                            <h4>Alex K.</h4>
-                                            <div class="post-time">2 days ago</div>
-                                        </div>
-                                    </div>
-                                    <span class="post-badge">Stress Management</span>
-                                </div>
-                                <div class="post-content">
-                                    <h3>How I learned to set boundaries at work</h3>
-                                    <p class="post-text">
-                                        Setting boundaries was the hardest thing I've learned in therapy, but also the most important. I used to say yes to everything, worked late every night, and burned out completely. My therapist helped me understand that boundaries aren't selfish - they're necessary. Now I actually leave work at 5pm most days. It's been life-changing.
-                                    </p>
-                                    <div class="post-tags">
-                                        <span class="tag">#boundaries</span>
-                                        <span class="tag">#work-life-balance</span>
-                                        <span class="tag">#burnout</span>
-                                    </div>
-                                    <div class="post-actions">
-                                        <button class="action-btn" onclick="toggleLike(this)">
-                                            💚 <span>156 Likes</span>
-                                        </button>
-                                        <button class="action-btn" onclick="toggleComments(this)">
-                                            💬 <span>45 Comments</span>
-                                        </button>
-                                        <button class="action-btn" onclick="sharePost(this)">
-                                            🔗 Share
-                                        </button>
-                                    </div>
-                                </div>
+                        <div class="posts-section" id="communityFeed">
+                            <!-- Real user posts will appear here -->
+                            <div style="text-align: center; padding: 4rem 2rem; color: rgba(255,255,255,0.6);">
+                                <div style="font-size: 4rem; margin-bottom: 1rem;">�</div>
+                                <h3 style="color: white; margin-bottom: 1rem;">No Posts Yet</h3>
+                                <p>Be the first to share something with the community!</p>
+                                <p style="margin-top: 1rem; font-size: 0.9rem;">Share your journey, ask questions, or offer support to others.</p>
                             </div>
                         </div>
                     </div>
@@ -576,52 +444,12 @@
                     <!-- Groups Tab -->
                     <div class="tab-content" id="groups-tab">
                         <div class="posts-section">
-                            <div class="post-card">
-                                <h3 style="color: white; margin-bottom: 1.5rem;">Join Support Groups</h3>
-                                <div class="group-list">
-                                    <div class="group-item" onclick="joinGroup('anxiety')">
-                                        <div class="group-icon">😰</div>
-                                        <div class="group-info">
-                                            <h4>Anxiety Support Group</h4>
-                                            <p class="group-members">1,234 members • 45 online now</p>
-                                        </div>
-                                    </div>
-                                    <div class="group-item" onclick="joinGroup('depression')">
-                                        <div class="group-icon">🌧️</div>
-                                        <div class="group-info">
-                                            <h4>Depression Recovery</h4>
-                                            <p class="group-members">987 members • 32 online now</p>
-                                        </div>
-                                    </div>
-                                    <div class="group-item" onclick="joinGroup('mindfulness')">
-                                        <div class="group-icon">🧘</div>
-                                        <div class="group-info">
-                                            <h4>Mindfulness & Meditation</h4>
-                                            <p class="group-members">756 members • 28 online now</p>
-                                        </div>
-                                    </div>
-                                    <div class="group-item" onclick="joinGroup('trauma')">
-                                        <div class="group-icon">💪</div>
-                                        <div class="group-info">
-                                            <h4>Trauma Survivors</h4>
-                                            <p class="group-members">543 members • 15 online now</p>
-                                        </div>
-                                    </div>
-                                    <div class="group-item" onclick="joinGroup('relationships')">
-                                        <div class="group-icon">💑</div>
-                                        <div class="group-info">
-                                            <h4>Relationship Support</h4>
-                                            <p class="group-members">1,098 members • 41 online now</p>
-                                        </div>
-                                    </div>
-                                    <div class="group-item" onclick="joinGroup('parents')">
-                                        <div class="group-icon">👨‍👩‍👧</div>
-                                        <div class="group-info">
-                                            <h4>Parents' Mental Health</h4>
-                                            <p class="group-members">678 members • 22 online now</p>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Real user-created groups will appear here -->
+                            <div style="text-align: center; padding: 4rem 2rem;">
+                                <div style="font-size: 4rem;">�</div>
+                                <h3>No Groups Yet</h3>
+                                <p>Start building the community by creating the first support group!</p>
+                                <button class="post-btn" onclick="createGroup()">➕ Create a Group</button>
                             </div>
                         </div>
                     </div>
@@ -629,33 +457,12 @@
                     <!-- Events Tab -->
                     <div class="tab-content" id="events-tab">
                         <div class="posts-section">
-                            <div class="post-card">
-                                <h3 style="color: white; margin-bottom: 1.5rem;">Upcoming Community Events</h3>
-                                <div class="event-item">
-                                    <div class="event-date">📅 Today, 7:00 PM EST</div>
-                                    <div class="event-title">Evening Meditation Session</div>
-                                    <p class="event-details">Join us for a guided meditation to unwind from the day</p>
-                                </div>
-                                <div class="event-item">
-                                    <div class="event-date">📅 Tomorrow, 12:00 PM EST</div>
-                                    <div class="event-title">Anxiety Management Workshop</div>
-                                    <p class="event-details">Learn practical techniques to manage anxiety in daily life</p>
-                                </div>
-                                <div class="event-item">
-                                    <div class="event-date">📅 Friday, 6:00 PM EST</div>
-                                    <div class="event-title">Support Group Check-in</div>
-                                    <p class="event-details">Weekly group session for sharing and mutual support</p>
-                                </div>
-                                <div class="event-item">
-                                    <div class="event-date">📅 Saturday, 10:00 AM EST</div>
-                                    <div class="event-title">Mindfulness for Beginners</div>
-                                    <p class="event-details">Introduction to mindfulness practices and techniques</p>
-                                </div>
-                                <div class="event-item">
-                                    <div class="event-date">📅 Next Week, 7:00 PM EST</div>
-                                    <div class="event-title">Q&A with Dr. Sarah Chen</div>
-                                    <p class="event-details">Ask questions about mental health and therapy</p>
-                                </div>
+                            <!-- Real community events will appear here -->
+                            <div style="text-align: center; padding: 4rem 2rem;">
+                                <div style="font-size: 4rem;">📅</div>
+                                <h3>No Events Yet</h3>
+                                <p>Be the first to host a community event or workshop!</p>
+                                <button class="post-btn" onclick="createEvent()">✨ Create an Event</button>
                             </div>
                         </div>
                     </div>
@@ -680,6 +487,17 @@
 
                 <!-- Sidebar -->
                 <div class="sidebar">
+                    <!-- Online Users Widget -->
+                    <div class="sidebar-card" style="background: linear-gradient(135deg, rgba(102, 194, 165, 0.15), rgba(141, 211, 199, 0.1)); border-color: var(--therapeutic-green);">
+                        <h3>🟢 Online Now</h3>
+                        <div id="onlineUsersCount" style="color: var(--therapeutic-green); font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0;">
+                            0 users online
+                        </div>
+                        <div id="onlineUsersList" style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; max-height: 300px; overflow-y: auto;">
+                            <!-- Online users will be populated here -->
+                        </div>
+                    </div>
+
                     <!-- Community Guidelines -->
                     <div class="support-banner">
                         <h4>Community Guidelines 📋</h4>
@@ -690,22 +508,9 @@
                     <!-- Trending Topics -->
                     <div class="sidebar-card">
                         <h3>🔥 Trending Topics</h3>
-                        <div class="trending-topic" onclick="searchTopic('self-care')">
-                            <h4>#self-care</h4>
-                            <p>523 posts this week</p>
-                        </div>
-                        <div class="trending-topic" onclick="searchTopic('anxiety-tips')">
-                            <h4>#anxiety-tips</h4>
-                            <p>412 posts this week</p>
-                        </div>
-                        <div class="trending-topic" onclick="searchTopic('therapy-wins')">
-                            <h4>#therapy-wins</h4>
-                            <p>298 posts this week</p>
-                        </div>
-                        <div class="trending-topic" onclick="searchTopic('mindfulness')">
-                            <h4>#mindfulness</h4>
-                            <p>267 posts this week</p>
-                        </div>
+                        <p style="color: var(--gray); font-size: 0.9rem;">
+                            Trending topics will appear here as the community grows and uses hashtags in posts.
+                        </p>
                     </div>
 
                     <!-- Crisis Support -->
@@ -723,22 +528,9 @@
                     <!-- Suggested Groups -->
                     <div class="sidebar-card">
                         <h3>💡 Suggested Groups</h3>
-                        <div class="group-list">
-                            <div class="group-item" onclick="joinGroup('stress')">
-                                <div class="group-icon">😓</div>
-                                <div class="group-info">
-                                    <h4>Stress Management</h4>
-                                    <p class="group-members">432 members</p>
-                                </div>
-                            </div>
-                            <div class="group-item" onclick="joinGroup('sleep')">
-                                <div class="group-icon">😴</div>
-                                <div class="group-info">
-                                    <h4>Better Sleep</h4>
-                                    <p class="group-members">567 members</p>
-                                </div>
-                            </div>
-                        </div>
+                        <p style="color: var(--gray); font-size: 0.9rem;">
+                            Group suggestions will appear here based on your interests and activity.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -751,17 +543,8 @@
         let communityPosts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
         let userGroups = JSON.parse(localStorage.getItem('userGroups') || '{}');
         
-        // Available support groups
-        const supportGroups = {
-            anxiety: { name: 'Anxiety Support', icon: '🧘', members: 1247, description: 'Safe space for anxiety and panic disorder support' },
-            depression: { name: 'Depression Support', icon: '💙', members: 2156, description: 'Understanding and overcoming depression together' },
-            trauma: { name: 'PTSD & Trauma', icon: '🛡️', members: 892, description: 'Healing from trauma and PTSD recovery' },
-            addiction: { name: 'Addiction Recovery', icon: '🌟', members: 1543, description: 'Support for substance abuse and addiction recovery' },
-            relationships: { name: 'Relationship Support', icon: '💑', members: 1876, description: 'Healthy relationships and couples support' },
-            grief: { name: 'Grief & Loss', icon: '🕊️', members: 734, description: 'Processing grief and bereavement together' },
-            stress: { name: 'Stress Management', icon: '😓', members: 432, description: 'Coping with daily stress and burnout' },
-            sleep: { name: 'Better Sleep', icon: '😴', members: 567, description: 'Improving sleep quality and overcoming insomnia' }
-        };
+        // User-created support groups (real data only)
+        const supportGroups = JSON.parse(localStorage.getItem('communityGroups') || '{}');
 
         // Load posts on page load
         window.addEventListener('DOMContentLoaded', () => {
@@ -771,9 +554,112 @@
                 return;
             }
             
+            // Track user as online
+            updateUserActivity();
+            
             loadPosts();
             loadGroups();
+            loadOnlineUsers();
+            
+            // Update online users every 30 seconds
+            setInterval(loadOnlineUsers, 30000);
+            
+            // Update user's lastActive every 2 minutes while on page
+            setInterval(updateUserActivity, 120000);
         });
+
+        // Update user's last active timestamp
+        function updateUserActivity() {
+            const user = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+            if (!user.email) return;
+            
+            // Get all users activity data
+            let usersActivity = JSON.parse(localStorage.getItem('communityUsersActivity') || '{}');
+            
+            // Update current user's activity
+            usersActivity[user.email] = {
+                name: user.fullName || user.name || 'Anonymous',
+                email: user.email,
+                profilePicture: user.profilePicture || null,
+                lastActive: Date.now()
+            };
+            
+            // Clean up old activity (remove users inactive for more than 10 minutes)
+            const tenMinutesAgo = Date.now() - (10 * 60 * 1000);
+            Object.keys(usersActivity).forEach(email => {
+                if (usersActivity[email].lastActive < tenMinutesAgo) {
+                    delete usersActivity[email];
+                }
+            });
+            
+            localStorage.setItem('communityUsersActivity', JSON.stringify(usersActivity));
+        }
+
+        // Load and display online users
+        function loadOnlineUsers() {
+            const currentUser = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+            const usersActivity = JSON.parse(localStorage.getItem('communityUsersActivity') || '{}');
+            const fiveMinutesAgo = Date.now() - (5 * 60 * 1000);
+            
+            // Filter users who were active in the last 5 minutes
+            const onlineUsers = Object.values(usersActivity).filter(user => {
+                return user.lastActive >= fiveMinutesAgo && user.email !== currentUser.email;
+            });
+            
+            // Update counters
+            const countElement = document.getElementById('onlineUsersCount');
+            const topCountElement = document.getElementById('topOnlineCount');
+            const onlineCount = onlineUsers.length;
+            
+            const sidebarText = onlineCount === 0 ? 'No one else online' : 
+                               onlineCount === 1 ? '1 user online' : 
+                               `${onlineCount} users online`;
+            const topText = onlineCount === 0 ? 'You\'re the only one here' : 
+                           onlineCount === 1 ? '1 other user online' : 
+                           `${onlineCount} users online`;
+            
+            countElement.textContent = sidebarText;
+            if (topCountElement) {
+                topCountElement.textContent = topText;
+            }
+            
+            // Update list
+            const listElement = document.getElementById('onlineUsersList');
+            
+            if (onlineUsers.length === 0) {
+                listElement.innerHTML = `
+                    <div style="text-align: center; padding: 1rem; color: var(--gray); font-size: 0.9rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">👤</div>
+                        You're the first one here! Others will join soon.
+                    </div>
+                `;
+                return;
+            }
+            
+            listElement.innerHTML = onlineUsers.map(user => {
+                // Generate avatar
+                let avatarHTML;
+                if (user.profilePicture) {
+                    avatarHTML = `<img src="${user.profilePicture}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                } else {
+                    const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                    avatarHTML = `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; font-weight: 700; color: white; font-size: 0.9rem;">${initials}</div>`;
+                }
+                
+                return `
+                    <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 12px; transition: all 0.3s;" onmouseover="this.style.background='rgba(102,194,165,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                        <div style="position: relative; width: 40px; height: 40px; flex-shrink: 0;">
+                            ${avatarHTML}
+                            <div style="position: absolute; bottom: 0; right: 0; width: 12px; height: 12px; background: #10b981; border: 2px solid #1a1a2e; border-radius: 50%;"></div>
+                        </div>
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="color: white; font-weight: 600; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${user.name}</div>
+                            <div style="color: var(--therapeutic-green); font-size: 0.75rem;">Active now</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
         function switchCommunityTab(tabName) {
             document.querySelectorAll('.community-tab').forEach(btn => btn.classList.remove('active'));
@@ -793,11 +679,21 @@
                 return;
             }
             
+            // Get user avatar (profile picture or initials)
+            let avatar = '😊';
+            if (user.profilePicture) {
+                avatar = user.profilePicture; // Base64 image
+            } else if (user.fullName || user.name) {
+                const name = user.fullName || user.name;
+                avatar = name.split(' ').map(n => n[0]).join('').toUpperCase();
+            }
+            
             const post = {
                 id: Date.now(),
-                author: user.fullName || 'Anonymous',
+                author: user.fullName || user.name || 'Anonymous',
                 authorEmail: user.email,
-                avatar: '😊',
+                avatar: avatar,
+                isImage: !!user.profilePicture, // Flag to know if avatar is an image
                 content: content,
                 badge: 'Community',
                 tags: extractTags(content),
@@ -840,11 +736,19 @@
                 const timeAgo = getTimeAgo(new Date(post.timestamp));
                 const isLiked = post.likedBy.includes(user.email);
                 
+                // Render avatar (image or text)
+                let avatarHTML;
+                if (post.isImage && post.avatar.startsWith('data:image')) {
+                    avatarHTML = `<img src="${post.avatar}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                } else {
+                    avatarHTML = post.avatar;
+                }
+                
                 return `
                     <div class="post-card">
                         <div class="post-header">
                             <div class="post-author">
-                                <div class="author-avatar">${post.avatar}</div>
+                                <div class="author-avatar">${avatarHTML}</div>
                                 <div class="author-info">
                                     <h4>${post.author}</h4>
                                     <div class="post-time">${timeAgo}</div>

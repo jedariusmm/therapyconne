@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Therapy - TherapyConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .art-container {
+            min-height: 100vh;
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+
+        .art-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.1), rgba(141, 211, 199, 0.05));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .art-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid rgba(102, 194, 165, 0.2);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .art-tab {
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .art-tab.active {
+            color: var(--therapeutic-green);
+        }
+
+        .art-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--therapeutic-green);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        /* Canvas Studio */
+        .canvas-studio {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(102, 194, 165, 0.2);
+        }
+
+        .canvas-container {
+            position: relative;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin: 2rem auto;
+            max-width: 900px;
+            padding: 1rem;
+        }
+
+        #paintCanvas {
+            display: block;
+            border-radius: 10px;
+            cursor: crosshair;
+            width: 100%;
+            max-width: 800px;
+            height: 600px;
+            margin: 0 auto;
+            background: white;
+            touch-action: none;
+        }
+
+        .canvas-tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tool-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(102, 194, 165, 0.2);
+        }
+
+        .tool-section h4 {
+            color: white;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.5rem;
+        }
+
+        .color-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .color-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .color-btn.active {
+            border-color: white;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .brush-sizes {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            background: rgba(102, 194, 165, 0.2);
+            border: 2px solid var(--therapeutic-green);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .size-btn:hover {
+            background: rgba(102, 194, 165, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .size-btn.active {
+            background: var(--therapeutic-green);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .action-btn.clear {
+            background: linear-gradient(135deg, #eb3349, #f45c43);
+        }
+
+        .action-btn.save {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        /* Coloring Pages */
+        .coloring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .coloring-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .coloring-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--therapeutic-green);
+            box-shadow: 0 10px 30px rgba(102, 194, 165, 0.3);
+        }
+
+        .coloring-preview {
+            width: 100%;
+            height: 200px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .coloring-preview svg {
+            width: 90%;
+            height: 90%;
+        }
+
+        .coloring-info h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .coloring-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            transition: all 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 194, 165, 0.3);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .gallery-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gallery-date {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            #paintCanvas {
+                height: 400px;
+            }
+
+            .canvas-tools {
+                grid-template-columns: 1fr;
+            }
+
+            .color-palette {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">TherapyConnect</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="sessions.html">Sessions</a>
+                <a href="resources.html">Resources</a>
+                <a href="community.html">Community</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="art-container">
+        <div class="container">
+            <!-- Header -->
+            <div class="art-header">
+                <h1 style="color: white; margin-bottom: 1rem;">🎨 Art Therapy Studio</h1>
+                <p style="color: var(--gray); max-width: 700px; margin: 0 auto;">
+                    Express yourself through creative art therapy. Paint, color, and create in a safe, judgment-free space.
+                </p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="art-tabs">
+                <button class="art-tab active" onclick="switchArtTab('paint')">🖌️ Free Paint</button>
+                <button class="art-tab" onclick="switchArtTab('coloring')">🎨 Coloring Pages</button>
+                <button class="art-tab" onclick="switchArtTab('gallery')">🖼️ My Gallery</button>
+            </div>
+
+            <!-- Free Paint Tab -->
+            <div class="tab-content active" id="paint-tab">
+                <div class="canvas-studio">
+                    <h2 style="color: white; margin-bottom: 1.5rem; text-align: center;">
+                        🖌️ Your Creative Canvas
+                    </h2>
+                    
+                    <div class="canvas-container">
+                        <canvas id="paintCanvas" width="800" height="600"></canvas>
+                    </div>
+
+                    <div class="canvas-tools">
+                        <!-- Color Palette with Rainbow & Custom -->
+                        <div class="tool-section">
+                            <h4>� Colors</h4>
+                            <div class="color-palette">
+                                <button class="color-btn active" style="background: #000000;" onclick="selectColor('#000000')" title="Black"></button>
+                                <button class="color-btn" style="background: #ef4444;" onclick="selectColor('#ef4444')" title="Red"></button>
+                                <button class="color-btn" style="background: #f59e0b;" onclick="selectColor('#f59e0b')" title="Orange"></button>
+                                <button class="color-btn" style="background: #eab308;" onclick="selectColor('#eab308')" title="Yellow"></button>
+                                <button class="color-btn" style="background: #22c55e;" onclick="selectColor('#22c55e')" title="Green"></button>
+                                <button class="color-btn" style="background: #3b82f6;" onclick="selectColor('#3b82f6')" title="Blue"></button>
+                                <button class="color-btn" style="background: #8b5cf6;" onclick="selectColor('#8b5cf6')" title="Purple"></button>
+                                <button class="color-btn" style="background: #ec4899;" onclick="selectColor('#ec4899')" title="Pink"></button>
+                                <button class="color-btn" style="background: #14b8a6;" onclick="selectColor('#14b8a6')" title="Teal"></button>
+                                <button class="color-btn" style="background: #f97316;" onclick="selectColor('#f97316')" title="Bright Orange"></button>
+                                <button class="color-btn" style="background: #a855f7;" onclick="selectColor('#a855f7')" title="Violet"></button>
+                                <button class="color-btn" style="background: #ffffff; border: 2px solid #333;" onclick="selectColor('#ffffff')" title="White"></button>
+                                <button class="color-btn" style="background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);" onclick="useRainbowMode()" title="🌈 Rainbow!">🌈</button>
+                                <input type="color" id="customColor" style="width: 50px; height: 50px; border-radius: 50%; border: 3px solid var(--therapeutic-green); cursor: pointer; background: none;" onchange="selectColor(this.value)" title="Custom Color">
+                            </div>
+                        </div>
+
+                        <!-- Tool Selection -->
+                        <div class="tool-section">
+                            <h4>🎨 Tools</h4>
+                            <div class="brush-sizes" style="grid-template-columns: repeat(5, 1fr);">
+                                <button class="size-btn active" onclick="useTool('brush')">
+                                    🖌️<br>Brush
+                                </button>
+                                <button class="size-btn" onclick="useTool('spray')">
+                                    💨<br>Spray
+                                </button>
+                                <button class="size-btn" onclick="useTool('glow')">
+                                    ✨<br>Glow
+                                </button>
+                                <button class="size-btn" onclick="useTool('stamp')">
+                                    🌟<br>Stamp
+                                </button>
+                                <button class="size-btn" onclick="useTool('eraser')">
+                                    🧹<br>Erase
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Brush Sizes -->
+                        <div class="tool-section">
+                            <h4>📏 Size</h4>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <input type="range" id="brushSizeSlider" min="1" max="50" value="5" 
+                                       style="flex: 1; height: 8px; border-radius: 10px; background: linear-gradient(90deg, var(--therapeutic-green), var(--peaceful-teal));" 
+                                       oninput="selectSize(this.value)">
+                                <span id="sizeDisplay" style="color: var(--therapeutic-green); font-weight: bold; font-size: 1.2rem; min-width: 40px;">5px</span>
+                            </div>
+                        </div>
+
+                        <!-- Stamps -->
+                        <div class="tool-section">
+                            <h4>🎭 Stamps & Emojis</h4>
+                            <div class="color-palette" style="grid-template-columns: repeat(8, 1fr);">
+                                <button class="size-btn" onclick="addStamp('❤️')" title="Heart">❤️</button>
+                                <button class="size-btn" onclick="addStamp('⭐')" title="Star">⭐</button>
+                                <button class="size-btn" onclick="addStamp('🌟')" title="Sparkle">🌟</button>
+                                <button class="size-btn" onclick="addStamp('💚')" title="Green Heart">💚</button>
+                                <button class="size-btn" onclick="addStamp('🌈')" title="Rainbow">🌈</button>
+                                <button class="size-btn" onclick="addStamp('🦋')" title="Butterfly">🦋</button>
+                                <button class="size-btn" onclick="addStamp('🌸')" title="Flower">🌸</button>
+                                <button class="size-btn" onclick="addStamp('✨')" title="Sparkles">✨</button>
+                                <button class="size-btn" onclick="addStamp('🎨')" title="Art">🎨</button>
+                                <button class="size-btn" onclick="addStamp('🌺')" title="Hibiscus">🌺</button>
+                                <button class="size-btn" onclick="addStamp('🍀')" title="Clover">🍀</button>
+                                <button class="size-btn" onclick="addStamp('🌙')" title="Moon">🌙</button>
+                                <button class="size-btn" onclick="addStamp('☀️')" title="Sun">☀️</button>
+                                <button class="size-btn" onclick="addStamp('🎭')" title="Masks">🎭</button>
+                                <button class="size-btn" onclick="addStamp('🎪')" title="Circus">🎪</button>
+                                <button class="size-btn" onclick="addStamp('🎉')" title="Party">🎉</button>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="tool-section">
+                            <h4>⚡ Actions</h4>
+                            <div class="action-btns" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem;">
+                                <button class="action-btn" onclick="undoLastAction()" style="background: rgba(59, 130, 246, 0.2); border-color: #3b82f6;">
+                                    ↶ Undo
+                                </button>
+                                <button class="action-btn" onclick="addBackground()" style="background: rgba(168, 85, 247, 0.2); border-color: #a855f7;">
+                                    �️ BG
+                                </button>
+                                <button class="action-btn" onclick="addFilter()" style="background: rgba(236, 72, 153, 0.2); border-color: #ec4899;">
+                                    🎭 Filter
+                                </button>
+                                <button class="action-btn clear" onclick="clearCanvas()">
+                                    🗑️ Clear
+                                </button>
+                                <button class="action-btn save" onclick="saveArtwork()">
+                                    💾 Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coloring Pages Tab -->
+            <div class="tab-content" id="coloring-tab">
+                <h2 style="color: white; margin-bottom: 2rem; text-align: center;">
+                    🎨 Therapeutic Coloring Pages
+                </h2>
+                <div class="coloring-grid" id="coloringGrid">
+                    <!-- Coloring pages will be populated here -->
+                </div>
+            </div>
+
+            <!-- Gallery Tab -->
+            <div class="tab-content" id="gallery-tab">
+                <h2 style="color: white; margin-bottom: 2rem; text-align: center;">
+                    🖼️ Your Art Gallery
+                </h2>
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- Saved artworks will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="nupi-avatar.js"></script>
+    <script src="chat-guide-system.js"></script>
+    <script src="chat-widget.js"></script>
+    <script>
+        // SUPREME CANVAS PAINTING SETUP
+        let canvas, ctx;
+        let painting = false;
+        let currentColor = '#000000';
+        let brushSize = 5;
+        let currentTool = 'brush';
+        let rainbowMode = false;
+        let rainbowHue = 0;
+        let canvasHistory = [];
+        let historyStep = -1;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            canvas = document.getElementById('paintCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Set canvas actual size
+            canvas.width = 800;
+            canvas.height = 600;
+            
+            // Fill with white background
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            saveHistory();
+            
+            // Setup canvas events
+            canvas.addEventListener('mousedown', startPainting);
+            canvas.addEventListener('mouseup', stopPainting);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseleave', stopPainting);
+            canvas.addEventListener('click', handleClick);
+            
+            // Touch events for mobile
+            canvas.addEventListener('touchstart', handleTouch);
+            canvas.addEventListener('touchmove', handleTouch);
+            canvas.addEventListener('touchend', stopPainting);
+            
+            // Load coloring pages and gallery
+            loadColoringPages();
+            loadGallery();
+        });
+
+        function startPainting(e) {
+            painting = true;
+            draw(e);
+        }
+
+        function stopPainting() {
+            painting = false;
+            ctx.beginPath();
+            if (painting) {
+                saveHistory();
+            }
+        }
+
+        function draw(e) {
+            if (!painting) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+            
+            // SUPREME DRAWING TOOLS
+            if (currentTool === 'eraser') {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.lineWidth = brushSize;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = 'rgba(0,0,0,1)';
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            } else if (currentTool === 'brush') {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.lineWidth = brushSize;
+                ctx.lineCap = 'round';
+                
+                if (rainbowMode) {
+                    rainbowHue = (rainbowHue + 2) % 360;
+                    ctx.strokeStyle = `hsl(${rainbowHue}, 100%, 50%)`;
+                } else {
+                    ctx.strokeStyle = currentColor;
+                }
+                
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            } else if (currentTool === 'spray') {
+                ctx.globalCompositeOperation = 'source-over';
+                
+                // Spray paint effect
+                for (let i = 0; i < brushSize; i++) {
+                    const offsetX = (Math.random() - 0.5) * brushSize * 2;
+                    const offsetY = (Math.random() - 0.5) * brushSize * 2;
+                    
+                    if (rainbowMode) {
+                        ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    } else {
+                        ctx.fillStyle = currentColor;
+                    }
+                    
+                    ctx.fillRect(x + offsetX, y + offsetY, 2, 2);
+                }
+            } else if (currentTool === 'glow') {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.shadowBlur = brushSize * 2;
+                ctx.shadowColor = currentColor;
+                ctx.lineWidth = brushSize;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = currentColor;
+                
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
+
+        function selectColor(color) {
+            currentColor = color;
+            rainbowMode = false;
+            document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+        }
+
+        function useRainbowMode() {
+            rainbowMode = true;
+            currentTool = 'brush';
+            document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+        }
+
+        function selectSize(size) {
+            brushSize = parseInt(size);
+            document.getElementById('sizeDisplay').textContent = size + 'px';
+            document.getElementById('brushSizeSlider').value = size;
+        }
+
+        function useTool(tool) {
+            currentTool = tool;
+            rainbowMode = false;
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function handleClick(e) {
+            if (currentTool === 'stamp') {
+                // Stamp mode handled separately
+            }
+        }
+
+        function addStamp(emoji) {
+            currentTool = 'stamp';
+            canvas.style.cursor = 'crosshair';
+            
+            const stampOnce = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const x = (e.clientX - rect.left) * scaleX;
+                const y = (e.clientY - rect.top) * scaleY;
+                
+                ctx.font = `${brushSize * 3}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(emoji, x, y);
+                
+                saveHistory();
+                canvas.removeEventListener('click', stampOnce);
+                canvas.style.cursor = 'crosshair';
+            };
+            
+            canvas.addEventListener('click', stampOnce);
+        }
+
+        function saveHistory() {
+            historyStep++;
+            if (historyStep < canvasHistory.length) {
+                canvasHistory.length = historyStep;
+            }
+            canvasHistory.push(canvas.toDataURL());
+        }
+
+        function undoLastAction() {
+            if (historyStep > 0) {
+                historyStep--;
+                const img = new Image();
+                img.src = canvasHistory[historyStep];
+                img.onload = function() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                };
+            }
+        }
+
+        function addBackground() {
+            const backgrounds = [
+                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                '#ffffff'
+            ];
+            
+            const choice = prompt('Choose background:\n1. Purple Dream\n2. Pink Sunset\n3. Ocean Blue\n4. Mint Fresh\n5. Tropical\n6. White\nEnter 1-6:');
+            
+            if (choice && choice >= 1 && choice <= 6) {
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = canvas.width;
+                tempCanvas.height = canvas.height;
+                const tempCtx = tempCanvas.getContext('2d');
+                
+                // Draw current content
+                tempCtx.drawImage(canvas, 0, 0);
+                
+                // Apply gradient background
+                const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                const bg = backgrounds[choice - 1];
+                
+                if (bg.includes('gradient')) {
+                    const colors = bg.match(/#[0-9a-f]{6}/gi);
+                    if (colors && colors.length >= 2) {
+                        gradient.addColorStop(0, colors[0]);
+                        gradient.addColorStop(1, colors[1]);
+                        ctx.fillStyle = gradient;
+                    }
+                } else {
+                    ctx.fillStyle = bg;
+                }
+                
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(tempCanvas, 0, 0);
+                saveHistory();
+            }
+        }
+
+        function addFilter() {
+            const filters = ['none', 'grayscale(100%)', 'sepia(100%)', 'invert(100%)', 'brightness(150%)', 'contrast(200%)'];
+            const names = ['Normal', 'Black & White', 'Vintage', 'Negative', 'Bright', 'High Contrast'];
+            
+            let choice = prompt(`Choose filter:\n1. ${names[0]}\n2. ${names[1]}\n3. ${names[2]}\n4. ${names[3]}\n5. ${names[4]}\n6. ${names[5]}\nEnter 1-6:`);
+            
+            if (choice && choice >= 1 && choice <= 6) {
+                canvas.style.filter = filters[choice - 1];
+            }
+        }
+
+        function clearCanvas() {
+            if (confirm('Clear your canvas? This cannot be undone.')) {
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                canvas.style.filter = 'none';
+                saveHistory();
+            }
+        }
+
+        function saveArtwork() {
+            const dataURL = canvas.toDataURL('image/png');
+            const artworks = JSON.parse(localStorage.getItem('artGallery') || '[]');
+            
+            artworks.push({
+                id: Date.now(),
+                image: dataURL,
+                date: new Date().toISOString(),
+                type: 'painting'
+            });
+            
+            localStorage.setItem('artGallery', JSON.stringify(artworks));
+            
+            alert('✅ Your artwork has been saved to your gallery!');
+            loadGallery();
+        }
+
+        function switchArtTab(tabName) {
+            document.querySelectorAll('.art-tab').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            if (tabName === 'gallery') {
+                loadGallery();
+            }
+        }
+
+        function loadColoringPages() {
+            const coloringPages = [
+                {
+                    id: 1,
+                    title: 'Peaceful Mandala',
+                    description: 'Relax with intricate mandala patterns',
+                    svg: `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="#333" stroke-width="2"/><circle cx="100" cy="100" r="60" fill="none" stroke="#333" stroke-width="2"/><circle cx="100" cy="100" r="40" fill="none" stroke="#333" stroke-width="2"/><circle cx="100" cy="100" r="20" fill="none" stroke="#333" stroke-width="2"/><path d="M100,20 L100,180 M20,100 L180,100" stroke="#333" stroke-width="2"/><path d="M45,45 L155,155 M155,45 L45,155" stroke="#333" stroke-width="2"/></svg>`
+                },
+                {
+                    id: 2,
+                    title: 'Happy Flower',
+                    description: 'Color a cheerful blooming flower',
+                    svg: `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="15" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="100" cy="60" rx="20" ry="30" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="140" cy="100" rx="30" ry="20" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="100" cy="140" rx="20" ry="30" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="60" cy="100" rx="30" ry="20" fill="none" stroke="#333" stroke-width="2"/><path d="M100,115 L100,180 M90,130 Q85,135 90,140 M110,130 Q115,135 110,140" stroke="#333" stroke-width="2" fill="none"/></svg>`
+                },
+                {
+                    id: 3,
+                    title: 'Calming Waves',
+                    description: 'Soothing ocean wave patterns',
+                    svg: `<svg viewBox="0 0 200 200"><path d="M0,100 Q50,80 100,100 T200,100" stroke="#333" stroke-width="2" fill="none"/><path d="M0,120 Q50,100 100,120 T200,120" stroke="#333" stroke-width="2" fill="none"/><path d="M0,140 Q50,120 100,140 T200,140" stroke="#333" stroke-width="2" fill="none"/><circle cx="50" cy="50" r="20" fill="none" stroke="#333" stroke-width="2"/><path d="M50,30 L50,20 M50,70 L50,80" stroke="#333" stroke-width="2"/></svg>`
+                },
+                {
+                    id: 4,
+                    title: 'Zen Garden',
+                    description: 'Tranquil garden scene',
+                    svg: `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="70" fill="none" stroke="#333" stroke-width="2"/><path d="M50,100 Q75,80 100,100 T150,100" stroke="#333" stroke-width="2" fill="none"/><rect x="90" y="60" width="20" height="40" fill="none" stroke="#333" stroke-width="2"/><circle cx="100" cy="55" r="25" fill="none" stroke="#333" stroke-width="2"/><path d="M80,45 Q100,35 120,45" stroke="#333" stroke-width="2" fill="none"/></svg>`
+                },
+                {
+                    id: 5,
+                    title: 'Butterfly Joy',
+                    description: 'Beautiful butterfly to color',
+                    svg: `<svg viewBox="0 0 200 200"><ellipse cx="70" cy="80" rx="30" ry="40" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="130" cy="80" rx="30" ry="40" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="70" cy="120" rx="25" ry="35" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="130" cy="120" rx="25" ry="35" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="100" cy="100" rx="8" ry="50" fill="none" stroke="#333" stroke-width="2"/><circle cx="100" cy="70" r="8" fill="none" stroke="#333" stroke-width="2"/><path d="M100,70 L90,50 M100,70 L110,50" stroke="#333" stroke-width="2"/></svg>`
+                },
+                {
+                    id: 6,
+                    title: 'Rainbow Heart',
+                    description: 'Spread love and color',
+                    svg: `<svg viewBox="0 0 200 200"><path d="M100,160 L40,100 Q40,60 70,60 Q100,60 100,90 Q100,60 130,60 Q160,60 160,100 Z" fill="none" stroke="#333" stroke-width="2"/><path d="M100,90 L100,140" stroke="#333" stroke-width="2"/><path d="M80,110 Q100,100 120,110" stroke="#333" stroke-width="2" fill="none"/></svg>`
+                }
+            ];
+
+            const grid = document.getElementById('coloringGrid');
+            grid.innerHTML = coloringPages.map(page => `
+                <div class="coloring-card" onclick="openColoringPage(${page.id})">
+                    <div class="coloring-preview">
+                        ${page.svg}
+                    </div>
+                    <div class="coloring-info">
+                        <h3>${page.title}</h3>
+                        <p>${page.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openColoringPage(pageId) {
+            // Load the coloring page onto the canvas
+            const coloringPages = [
+                {
+                    id: 1,
+                    title: 'Peaceful Mandala',
+                    svg: `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="#333" stroke-width="2"/><circle cx="100" cy="100" r="60" fill="none" stroke="#333" stroke-width="2"/><circle cx="100" cy="100" r="40" fill="none" stroke="#333" stroke-width="2"/><circle cx="100" cy="100" r="20" fill="none" stroke="#333" stroke-width="2"/><path d="M100,20 L100,180 M20,100 L180,100" stroke="#333" stroke-width="2"/><path d="M45,45 L155,155 M155,45 L45,155" stroke="#333" stroke-width="2"/></svg>`
+                },
+                {
+                    id: 2,
+                    title: 'Happy Flower',
+                    svg: `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="15" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="100" cy="60" rx="20" ry="30" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="140" cy="100" rx="30" ry="20" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="100" cy="140" rx="20" ry="30" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="60" cy="100" rx="30" ry="20" fill="none" stroke="#333" stroke-width="2"/><path d="M100,115 L100,180 M90,130 Q85,135 90,140 M110,130 Q115,135 110,140" stroke="#333" stroke-width="2" fill="none"/></svg>`
+                },
+                {
+                    id: 3,
+                    title: 'Calming Waves',
+                    svg: `<svg viewBox="0 0 200 200"><path d="M0,100 Q50,80 100,100 T200,100" stroke="#333" stroke-width="2" fill="none"/><path d="M0,120 Q50,100 100,120 T200,120" stroke="#333" stroke-width="2" fill="none"/><path d="M0,140 Q50,120 100,140 T200,140" stroke="#333" stroke-width="2" fill="none"/><circle cx="50" cy="50" r="20" fill="none" stroke="#333" stroke-width="2"/><path d="M50,30 L50,20 M50,70 L50,80" stroke="#333" stroke-width="2"/></svg>`
+                },
+                {
+                    id: 4,
+                    title: 'Zen Garden',
+                    svg: `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="70" fill="none" stroke="#333" stroke-width="2"/><path d="M50,100 Q75,80 100,100 T150,100" stroke="#333" stroke-width="2" fill="none"/><rect x="90" y="60" width="20" height="40" fill="none" stroke="#333" stroke-width="2"/><circle cx="100" cy="55" r="25" fill="none" stroke="#333" stroke-width="2"/><path d="M80,45 Q100,35 120,45" stroke="#333" stroke-width="2" fill="none"/></svg>`
+                },
+                {
+                    id: 5,
+                    title: 'Butterfly Joy',
+                    svg: `<svg viewBox="0 0 200 200"><ellipse cx="70" cy="80" rx="30" ry="40" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="130" cy="80" rx="30" ry="40" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="70" cy="120" rx="25" ry="35" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="130" cy="120" rx="25" ry="35" fill="none" stroke="#333" stroke-width="2"/><ellipse cx="100" cy="100" rx="8" ry="50" fill="none" stroke="#333" stroke-width="2"/><circle cx="100" cy="70" r="8" fill="none" stroke="#333" stroke-width="2"/><path d="M100,70 L90,50 M100,70 L110,50" stroke="#333" stroke-width="2"/></svg>`
+                },
+                {
+                    id: 6,
+                    title: 'Rainbow Heart',
+                    svg: `<svg viewBox="0 0 200 200"><path d="M100,160 L40,100 Q40,60 70,60 Q100,60 100,90 Q100,60 130,60 Q160,60 160,100 Z" fill="none" stroke="#333" stroke-width="2"/><path d="M100,90 L100,140" stroke="#333" stroke-width="2"/><path d="M80,110 Q100,100 120,110" stroke="#333" stroke-width="2" fill="none"/></svg>`
+                }
+            ];
+
+            const page = coloringPages.find(p => p.id === pageId);
+            if (!page) return;
+
+            // Switch to paint tab
+            document.querySelectorAll('.art-tab').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.art-tab')[0].classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('paint-tab').classList.add('active');
+
+            // Clear canvas and fill with white
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Convert SVG to image and draw on canvas
+            const svgBlob = new Blob([page.svg], {type: 'image/svg+xml;charset=utf-8'});
+            const url = URL.createObjectURL(svgBlob);
+            const img = new Image();
+            
+            img.onload = function() {
+                // Scale SVG to fit canvas (centered with padding)
+                const scale = Math.min(
+                    (canvas.width - 100) / 200,
+                    (canvas.height - 100) / 200
+                );
+                const x = (canvas.width - 200 * scale) / 2;
+                const y = (canvas.height - 200 * scale) / 2;
+                
+                ctx.drawImage(img, x, y, 200 * scale, 200 * scale);
+                URL.revokeObjectURL(url);
+                
+                alert(`🎨 ${page.title} loaded! Now color it in with your chosen colors and brush sizes.`);
+            };
+            
+            img.src = url;
+        }
+
+        function loadGallery() {
+            const artworks = JSON.parse(localStorage.getItem('artGallery') || '[]');
+            const grid = document.getElementById('galleryGrid');
+            
+            if (artworks.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-state-icon">🎨</div>
+                        <h3 style="color: white; margin-bottom: 1rem;">No Artworks Yet</h3>
+                        <p>Start creating! Your saved artworks will appear here.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = artworks.reverse().map(art => `
+                <div class="gallery-item">
+                    <div class="gallery-image">
+                        <img src="${art.image}" alt="Saved artwork">
+                    </div>
+                    <div class="gallery-info">
+                        <span class="gallery-date">${new Date(art.date).toLocaleDateString()}</span>
+                        <button class="delete-btn" onclick="deleteArtwork(${art.id})">🗑️ Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteArtwork(id) {
+            if (confirm('Delete this artwork?')) {
+                let artworks = JSON.parse(localStorage.getItem('artGallery') || '[]');
+                artworks = artworks.filter(art => art.id !== id);
+                localStorage.setItem('artGallery', JSON.stringify(artworks));
+                loadGallery();
+            }
+        }
+    </script>
+</body>
+</html>

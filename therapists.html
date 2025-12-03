@@ -336,9 +336,9 @@
             <div class="nav-links">
                 <a href="dashboard.html">Dashboard</a>
                 <a href="sessions.html">Sessions</a>
-                <a href="therapists.html" class="active">Therapists</a>
+                <a href="therapist-finder.html" class="active">Find Therapist</a>
                 <a href="resources.html">Resources</a>
-                <a href="profile.html">Profile</a>
+                <a href="community.html">Community</a>
                 <button class="btn btn-secondary" onclick="logout()">Logout</button>
             </div>
         </div>
@@ -439,300 +439,58 @@
 
             <!-- Therapist Grid -->
             <div class="therapist-grid" id="therapistGrid">
-                <!-- Therapist Card 1 -->
-                <div class="therapist-card" data-specialty="anxiety,depression" data-language="english" data-type="video">
-                    <div class="therapist-header">
-                        <div class="therapist-avatar">👩‍⚕️</div>
-                        <div class="therapist-info">
-                            <h3>Dr. Sarah Chen</h3>
-                            <div class="therapist-title">Licensed Clinical Psychologist</div>
-                            <div class="therapist-rating">
-                                ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">4.9 (127 reviews)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="specialties">
-                        <span class="specialty-badge">Anxiety</span>
-                        <span class="specialty-badge">Depression</span>
-                        <span class="specialty-badge">CBT</span>
-                    </div>
-
-                    <p class="therapist-bio">
-                        Specializing in anxiety and depression with over 12 years of experience. I use evidence-based approaches like CBT and mindfulness to help clients achieve lasting change.
+                <!-- Find Real Local Therapists -->
+                <div style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem; background: rgba(99, 102, 241, 0.1); border-radius: 1rem; border: 2px dashed var(--primary);">
+                    <div style="font-size: 5rem; margin-bottom: 1.5rem;">🗺️</div>
+                    <h2 style="color: white; margin-bottom: 1rem;">Find Licensed Therapists Near You</h2>
+                    <p style="color: var(--gray); max-width: 600px; margin: 0 auto 2rem; font-size: 1.1rem;">
+                        We're committed to connecting you with real, licensed mental health professionals in your area. 
+                        Use the resources below to find qualified therapists near you.
                     </p>
-
-                    <div class="therapist-stats">
-                        <div class="stat">
-                            <div class="stat-value">12+</div>
-                            <div class="stat-label">Years Exp</div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 2rem auto;">
+                        <div style="background: rgba(30, 30, 30, 0.6); padding: 1.5rem; border-radius: 0.75rem; text-align: left;">
+                            <h3 style="color: var(--primary); margin-bottom: 0.75rem;">🔍 Psychology Today</h3>
+                            <p style="color: var(--gray); font-size: 0.95rem; margin-bottom: 1rem;">
+                                Search thousands of licensed therapists by specialty, insurance, and location.
+                            </p>
+                            <a href="https://www.psychologytoday.com/us/therapists" target="_blank" rel="noopener" 
+                               style="display: inline-block; background: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
+                                Search Therapists →
+                            </a>
                         </div>
-                        <div class="stat">
-                            <div class="stat-value">500+</div>
-                            <div class="stat-label">Clients</div>
+                        
+                        <div style="background: rgba(30, 30, 30, 0.6); padding: 1.5rem; border-radius: 0.75rem; text-align: left;">
+                            <h3 style="color: var(--primary); margin-bottom: 0.75rem;">💬 BetterHelp</h3>
+                            <p style="color: var(--gray); font-size: 0.95rem; margin-bottom: 1rem;">
+                                Online therapy platform with licensed therapists available via video, phone, or messaging.
+                            </p>
+                            <a href="https://www.betterhelp.com" target="_blank" rel="noopener" 
+                               style="display: inline-block; background: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
+                                Get Matched →
+                            </a>
                         </div>
-                        <div class="stat">
-                            <div class="stat-value">95%</div>
-                            <div class="stat-label">Success Rate</div>
-                        </div>
-                    </div>
-
-                    <div class="availability-badge">
-                        <span class="status-dot"></span>
-                        Available today
-                    </div>
-
-                    <div class="therapist-actions" style="margin-top: 1rem;">
-                        <button class="btn-primary" onclick="bookTherapist('Dr. Sarah Chen')">Book Session</button>
-                        <button class="btn-secondary" onclick="viewProfile('Dr. Sarah Chen')">👁️</button>
-                    </div>
-                </div>
-
-                <!-- Therapist Card 2 -->
-                <div class="therapist-card" data-specialty="trauma,ptsd" data-language="english,spanish" data-type="video,chat">
-                    <div class="therapist-header">
-                        <div class="therapist-avatar">👨‍⚕️</div>
-                        <div class="therapist-info">
-                            <h3>Dr. Michael Torres</h3>
-                            <div class="therapist-title">Trauma Specialist, LMFT</div>
-                            <div class="therapist-rating">
-                                ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">5.0 (89 reviews)</span>
-                            </div>
+                        
+                        <div style="background: rgba(30, 30, 30, 0.6); padding: 1.5rem; border-radius: 0.75rem; text-align: left;">
+                            <h3 style="color: var(--primary); margin-bottom: 0.75rem;">🌟 SAMHSA</h3>
+                            <p style="color: var(--gray); font-size: 0.95rem; margin-bottom: 1rem;">
+                                National helpline for mental health and substance abuse treatment referrals.
+                            </p>
+                            <a href="https://www.samhsa.gov/find-help/national-helpline" target="_blank" rel="noopener" 
+                               style="display: inline-block; background: var(--primary); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
+                                Call 1-800-662-4357 →
+                            </a>
                         </div>
                     </div>
-
-                    <div class="specialties">
-                        <span class="specialty-badge">Trauma</span>
-                        <span class="specialty-badge">PTSD</span>
-                        <span class="specialty-badge">EMDR</span>
-                        <span class="specialty-badge">Veterans</span>
-                    </div>
-
-                    <p class="therapist-bio">
-                        Dedicated to helping individuals heal from trauma using EMDR and somatic therapies. Bilingual (English/Spanish). Special focus on veterans and first responders.
-                    </p>
-
-                    <div class="therapist-stats">
-                        <div class="stat">
-                            <div class="stat-value">15+</div>
-                            <div class="stat-label">Years Exp</div>
+                    
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(239, 68, 68, 0.1); border-radius: 0.75rem; border: 1px solid rgba(239, 68, 68, 0.3);">
+                        <h4 style="color: #ef4444; margin-bottom: 0.5rem;">🆘 In Crisis?</h4>
+                        <p style="color: var(--gray); margin-bottom: 0.75rem;">
+                            If you're experiencing a mental health crisis, help is available 24/7:
+                        </p>
+                        <div style="color: white; font-size: 1.1rem;">
+                            <strong>Call or Text 988</strong> - National Suicide & Crisis Lifeline
                         </div>
-                        <div class="stat">
-                            <div class="stat-value">400+</div>
-                            <div class="stat-label">Clients</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">98%</div>
-                            <div class="stat-label">Success Rate</div>
-                        </div>
-                    </div>
-
-                    <div class="availability-badge">
-                        <span class="status-dot"></span>
-                        Available this week
-                    </div>
-
-                    <div class="therapist-actions" style="margin-top: 1rem;">
-                        <button class="btn-primary" onclick="bookTherapist('Dr. Michael Torres')">Book Session</button>
-                        <button class="btn-secondary" onclick="viewProfile('Dr. Michael Torres')">👁️</button>
-                    </div>
-                </div>
-
-                <!-- Therapist Card 3 -->
-                <div class="therapist-card" data-specialty="relationships,couples" data-language="english" data-type="video">
-                    <div class="therapist-header">
-                        <div class="therapist-avatar">👩‍⚕️</div>
-                        <div class="therapist-info">
-                            <h3>Dr. Emily Rodriguez</h3>
-                            <div class="therapist-title">Couples & Family Therapist</div>
-                            <div class="therapist-rating">
-                                ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">4.8 (156 reviews)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="specialties">
-                        <span class="specialty-badge">Couples</span>
-                        <span class="specialty-badge">Relationships</span>
-                        <span class="specialty-badge">Family</span>
-                    </div>
-
-                    <p class="therapist-bio">
-                        Passionate about helping couples rebuild connection and communication. Using Gottman Method and EFT to strengthen relationships and resolve conflicts.
-                    </p>
-
-                    <div class="therapist-stats">
-                        <div class="stat">
-                            <div class="stat-value">10+</div>
-                            <div class="stat-label">Years Exp</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">300+</div>
-                            <div class="stat-label">Couples</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">92%</div>
-                            <div class="stat-label">Success Rate</div>
-                        </div>
-                    </div>
-
-                    <div class="availability-badge">
-                        <span class="status-dot"></span>
-                        Available today
-                    </div>
-
-                    <div class="therapist-actions" style="margin-top: 1rem;">
-                        <button class="btn-primary" onclick="bookTherapist('Dr. Emily Rodriguez')">Book Session</button>
-                        <button class="btn-secondary" onclick="viewProfile('Dr. Emily Rodriguez')">👁️</button>
-                    </div>
-                </div>
-
-                <!-- Therapist Card 4 -->
-                <div class="therapist-card" data-specialty="anxiety,stress" data-language="english" data-type="video,chat">
-                    <div class="therapist-header">
-                        <div class="therapist-avatar">👨‍⚕️</div>
-                        <div class="therapist-info">
-                            <h3>Dr. James Anderson</h3>
-                            <div class="therapist-title">Anxiety & Stress Specialist</div>
-                            <div class="therapist-rating">
-                                ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">4.9 (203 reviews)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="specialties">
-                        <span class="specialty-badge">Anxiety</span>
-                        <span class="specialty-badge">Stress</span>
-                        <span class="specialty-badge">Mindfulness</span>
-                        <span class="specialty-badge">ACT</span>
-                    </div>
-
-                    <p class="therapist-bio">
-                        Expert in anxiety disorders and stress management. Combining ACT, mindfulness, and somatic approaches to help clients find peace and resilience.
-                    </p>
-
-                    <div class="therapist-stats">
-                        <div class="stat">
-                            <div class="stat-value">14+</div>
-                            <div class="stat-label">Years Exp</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">600+</div>
-                            <div class="stat-label">Clients</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">96%</div>
-                            <div class="stat-label">Success Rate</div>
-                        </div>
-                    </div>
-
-                    <div class="availability-badge">
-                        <span class="status-dot"></span>
-                        Available tomorrow
-                    </div>
-
-                    <div class="therapist-actions" style="margin-top: 1rem;">
-                        <button class="btn-primary" onclick="bookTherapist('Dr. James Anderson')">Book Session</button>
-                        <button class="btn-secondary" onclick="viewProfile('Dr. James Anderson')">👁️</button>
-                    </div>
-                </div>
-
-                <!-- Therapist Card 5 -->
-                <div class="therapist-card" data-specialty="depression,teen" data-language="english" data-type="video,chat">
-                    <div class="therapist-header">
-                        <div class="therapist-avatar">👩‍⚕️</div>
-                        <div class="therapist-info">
-                            <h3>Dr. Lisa Park</h3>
-                            <div class="therapist-title">Teen & Young Adult Specialist</div>
-                            <div class="therapist-rating">
-                                ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">4.9 (134 reviews)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="specialties">
-                        <span class="specialty-badge">Teens</span>
-                        <span class="specialty-badge">Depression</span>
-                        <span class="specialty-badge">Identity</span>
-                        <span class="specialty-badge">LGBTQ+</span>
-                    </div>
-
-                    <p class="therapist-bio">
-                        Specializing in adolescent and young adult mental health. LGBTQ+ affirming practice focused on identity, depression, and life transitions.
-                    </p>
-
-                    <div class="therapist-stats">
-                        <div class="stat">
-                            <div class="stat-value">8+</div>
-                            <div class="stat-label">Years Exp</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">250+</div>
-                            <div class="stat-label">Clients</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">94%</div>
-                            <div class="stat-label">Success Rate</div>
-                        </div>
-                    </div>
-
-                    <div class="availability-badge">
-                        <span class="status-dot"></span>
-                        Available this week
-                    </div>
-
-                    <div class="therapist-actions" style="margin-top: 1rem;">
-                        <button class="btn-primary" onclick="bookTherapist('Dr. Lisa Park')">Book Session</button>
-                        <button class="btn-secondary" onclick="viewProfile('Dr. Lisa Park')">👁️</button>
-                    </div>
-                </div>
-
-                <!-- Therapist Card 6 -->
-                <div class="therapist-card" data-specialty="addiction,trauma" data-language="english" data-type="video">
-                    <div class="therapist-header">
-                        <div class="therapist-avatar">👨‍⚕️</div>
-                        <div class="therapist-info">
-                            <h3>Dr. Robert Kim</h3>
-                            <div class="therapist-title">Addiction & Recovery Specialist</div>
-                            <div class="therapist-rating">
-                                ⭐⭐⭐⭐⭐ <span style="color: var(--gray);">5.0 (98 reviews)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="specialties">
-                        <span class="specialty-badge">Addiction</span>
-                        <span class="specialty-badge">Recovery</span>
-                        <span class="specialty-badge">12-Step</span>
-                    </div>
-
-                    <p class="therapist-bio">
-                        Compassionate support for addiction recovery and relapse prevention. 20 years helping individuals reclaim their lives through evidence-based treatments.
-                    </p>
-
-                    <div class="therapist-stats">
-                        <div class="stat">
-                            <div class="stat-value">20+</div>
-                            <div class="stat-label">Years Exp</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">700+</div>
-                            <div class="stat-label">Clients</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">89%</div>
-                            <div class="stat-label">Success Rate</div>
-                        </div>
-                    </div>
-
-                    <div class="availability-badge">
-                        <span class="status-dot"></span>
-                        Available today
-                    </div>
-
-                    <div class="therapist-actions" style="margin-top: 1rem;">
-                        <button class="btn-primary" onclick="bookTherapist('Dr. Robert Kim')">Book Session</button>
-                        <button class="btn-secondary" onclick="viewProfile('Dr. Robert Kim')">👁️</button>
                     </div>
                 </div>
             </div>
@@ -813,6 +571,8 @@
         }
     </script>
     <link rel="stylesheet" href="chat-widget.css">
+    <script src="nupi-avatar.js"></script>
+    <script src="chat-guide-system.js"></script>
     <script src="chat-widget.js"></script>
 </body>
 </html>

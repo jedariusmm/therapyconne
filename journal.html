@@ -379,7 +379,7 @@
             <div class="nav-links">
                 <a href="dashboard.html">Dashboard</a>
                 <a href="sessions.html">Sessions</a>
-                <a href="therapists.html">Therapists</a>
+                <a href="therapist-finder.html">Therapists</a>
                 <a href="resources.html">Resources</a>
                 <a href="profile.html">Profile</a>
                 <button class="btn btn-secondary" onclick="logout()">Logout</button>
@@ -512,95 +512,29 @@
                             <h4>Three things I'm grateful for today:</h4>
                             <div class="gratitude-item">
                                 <span>1.</span>
-                                <input type="text" placeholder="First gratitude..." style="flex: 1; background: transparent; border: none; color: white; outline: none;">
+                                <input type="text" placeholder="First gratitude..." style="flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(102, 194, 165, 0.2); border-radius: 8px; padding: 0.5rem; color: #ffffff; outline: none;">
                             </div>
                             <div class="gratitude-item">
                                 <span>2.</span>
-                                <input type="text" placeholder="Second gratitude..." style="flex: 1; background: transparent; border: none; color: white; outline: none;">
+                                <input type="text" placeholder="Second gratitude..." style="flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(102, 194, 165, 0.2); border-radius: 8px; padding: 0.5rem; color: #ffffff; outline: none;">
                             </div>
                             <div class="gratitude-item">
                                 <span>3.</span>
-                                <input type="text" placeholder="Third gratitude..." style="flex: 1; background: transparent; border: none; color: white; outline: none;">
+                                <input type="text" placeholder="Third gratitude..." style="flex: 1; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(102, 194, 165, 0.2); border-radius: 8px; padding: 0.5rem; color: #ffffff; outline: none;">
                             </div>
                         </div>
                     </div>
 
                     <!-- Entries List -->
                     <div class="entries-list" id="entriesList">
-                        <div class="entry-card" onclick="viewEntry(this)">
-                            <div class="entry-header">
-                                <div class="entry-date">Today, 8:32 PM</div>
-                                <div class="entry-mood">😊</div>
-                            </div>
-                            <h3 class="entry-title">Feeling hopeful about progress</h3>
-                            <p class="entry-preview">
-                                Today's therapy session was really productive. We talked about the breathing techniques and I realized how much progress I've made in just a few weeks. I'm feeling more in control of my anxiety and that's such a relief...
-                            </p>
-                            <div class="entry-tags">
-                                <span class="entry-tag">#therapy</span>
-                                <span class="entry-tag">#progress</span>
-                                <span class="entry-tag">#gratitude</span>
-                            </div>
-                        </div>
-
-                        <div class="entry-card" onclick="viewEntry(this)">
-                            <div class="entry-header">
-                                <div class="entry-date">Yesterday, 9:15 PM</div>
-                                <div class="entry-mood">🙂</div>
-                            </div>
-                            <h3 class="entry-title">Small victories</h3>
-                            <p class="entry-preview">
-                                Practiced meditation for 15 minutes this morning. It wasn't easy - my mind kept wandering - but I stuck with it. That's what matters. Also managed to set a boundary at work today and it felt good to prioritize my wellbeing...
-                            </p>
-                            <div class="entry-tags">
-                                <span class="entry-tag">#meditation</span>
-                                <span class="entry-tag">#boundaries</span>
-                            </div>
-                        </div>
-
-                        <div class="entry-card" onclick="viewEntry(this)">
-                            <div class="entry-header">
-                                <div class="entry-date">Nov 9, 10:45 PM</div>
-                                <div class="entry-mood">😐</div>
-                            </div>
-                            <h3 class="entry-title">Challenging day but I got through it</h3>
-                            <p class="entry-preview">
-                                Work was stressful today and I felt overwhelmed. Used the 4-7-8 breathing technique during a panic moment and it actually helped. Reminded myself that it's okay to have hard days - progress isn't linear...
-                            </p>
-                            <div class="entry-tags">
-                                <span class="entry-tag">#anxiety</span>
-                                <span class="entry-tag">#coping-skills</span>
-                            </div>
-                        </div>
-
-                        <div class="entry-card" onclick="viewEntry(this)">
-                            <div class="entry-header">
-                                <div class="entry-date">Nov 7, 7:20 PM</div>
-                                <div class="entry-mood">😄</div>
-                            </div>
-                            <h3 class="entry-title">Grateful for my support system</h3>
-                            <p class="entry-preview">
-                                Had a great conversation with a friend today. It reminded me how important it is to stay connected with people who support me. Sometimes I isolate when I'm anxious, but reaching out today felt really good...
-                            </p>
-                            <div class="entry-tags">
-                                <span class="entry-tag">#gratitude</span>
-                                <span class="entry-tag">#connection</span>
-                            </div>
-                        </div>
-
-                        <div class="entry-card" onclick="viewEntry(this)">
-                            <div class="entry-header">
-                                <div class="entry-date">Nov 5, 9:00 PM</div>
-                                <div class="entry-mood">😊</div>
-                            </div>
-                            <h3 class="entry-title">Celebrating one month of therapy</h3>
-                            <p class="entry-preview">
-                                It's been a month since I started therapy and I can already see changes. I'm more aware of my thought patterns, I have tools to manage anxiety, and I feel hopeful about the future. This journey isn't easy but it's worth it...
-                            </p>
-                            <div class="entry-tags">
-                                <span class="entry-tag">#milestone</span>
-                                <span class="entry-tag">#therapy-journey</span>
-                            </div>
+                        <!-- Real journal entries will appear here -->
+                        <div style="text-align: center; padding: 4rem 2rem; color: rgba(255,255,255,0.6);">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">�</div>
+                            <h3 style="color: white; margin-bottom: 1rem;">No Entries Yet</h3>
+                            <p>Start your wellness journey by creating your first journal entry!</p>
+                            <button onclick="showEditor()" style="margin-top: 2rem; padding: 1rem 2rem; background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal)); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer;">
+                                ✍️ Write Your First Entry
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -655,6 +589,8 @@
         }
     </script>
     <link rel="stylesheet" href="chat-widget.css">
+    <script src="nupi-avatar.js"></script>
+    <script src="chat-guide-system.js"></script>
     <script src="chat-widget.js"></script>
 </body>
 </html>

@@ -318,6 +318,62 @@ function debounce(func, wait) {
 }
 
 window.addEventListener('resize', debounce(createMobileMenu, 250));
+
+// Load Profile Picture in Navbar
+function loadNavbarProfilePicture() {
+    const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+    const navAvatar = document.getElementById('navUserAvatar');
+    
+    if (!navAvatar) return;
+    
+    if (userData.profilePicture) {
+        // Show uploaded profile picture
+        navAvatar.innerHTML = `<img src="${userData.profilePicture}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(99, 102, 241, 0.3);">`;
+    } else if (userData.name || userData.fullName) {
+        // Show initials
+        const name = userData.name || userData.fullName;
+        const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+        navAvatar.textContent = initials;
+        navAvatar.style.display = 'flex';
+        navAvatar.style.alignItems = 'center';
+        navAvatar.style.justifyContent = 'center';
+        navAvatar.style.width = '32px';
+        navAvatar.style.height = '32px';
+        navAvatar.style.borderRadius = '50%';
+        navAvatar.style.background = 'linear-gradient(135deg, #6366f1, #8b5cf6)';
+        navAvatar.style.fontSize = '0.9rem';
+        navAvatar.style.fontWeight = '600';
+    } else {
+        // Default avatar
+        navAvatar.textContent = '👤';
+    }
+}
+
+// Update profile picture everywhere when changed
+function updateAllProfilePictures(imageData) {
+    const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+    
+    // Update all avatar elements on the page
+    document.querySelectorAll('.user-avatar, .profile-avatar-small').forEach(avatar => {
+        if (imageData) {
+            avatar.innerHTML = `<img src="${imageData}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+        } else if (userData.name || userData.fullName) {
+            const name = userData.name || userData.fullName;
+            const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+            avatar.textContent = initials;
+        }
+    });
+    
+    // Update navbar
+    loadNavbarProfilePicture();
+}
+
+// Initialize profile picture on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadNavbarProfilePicture);
+} else {
+    loadNavbarProfilePicture();
+}
 window.addEventListener('DOMContentLoaded', createMobileMenu);
 
 console.log('🧠 TherapyConnect Loaded Successfully!');

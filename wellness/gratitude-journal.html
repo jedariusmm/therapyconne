@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gratitude Journal - TherapyConnect</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .gratitude-container {
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .gratitude-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.1), rgba(141, 211, 199, 0.05));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .journal-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            color: var(--therapeutic-green);
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .prompt-section {
+            margin-bottom: 2rem;
+        }
+
+        .prompt-box {
+            background: rgba(102, 194, 165, 0.1);
+            border-left: 4px solid var(--therapeutic-green);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .prompt-text {
+            color: var(--therapeutic-green);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .prompt-hint {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .gratitude-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .gratitude-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .item-number {
+            background: var(--therapeutic-green);
+            color: var(--dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .input-field {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--therapeutic-green);
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--therapeutic-green);
+        }
+
+        .reflection-section {
+            margin-bottom: 2rem;
+        }
+
+        .reflection-section h4 {
+            color: var(--therapeutic-green);
+            margin-bottom: 1rem;
+        }
+
+        .reflection-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--therapeutic-green);
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .reflection-input:focus {
+            outline: none;
+            border-color: var(--therapeutic-green);
+        }
+
+        .log-btn-container {
+            text-align: center;
+        }
+
+        .history-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+        }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(102, 194, 165, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .history-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1rem;
+        }
+
+        .history-list li {
+            color: var(--therapeutic-green);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .history-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--therapeutic-green);
+            font-weight: bold;
+        }
+
+        .history-reflection {
+            color: var(--gray);
+            font-style: italic;
+            padding: 1rem;
+            background: rgba(102, 194, 165, 0.05);
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .quote-section {
+            background: linear-gradient(135deg, rgba(102, 194, 165, 0.1), rgba(141, 211, 199, 0.05));
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .quote-text {
+            color: var(--therapeutic-green);
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .quote-author {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">TherapyConnect</span>
+            </div>
+            <div class="nav-links">
+                <a href="../dashboard.html">Dashboard</a>
+                <a href="../sessions.html">Sessions</a>
+                <a href="../therapists.html">Therapists</a>
+                <a href="../resources.html">Resources</a>
+                <a href="../profile.html">Profile</a>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="gratitude-container">
+        <div class="container">
+            <div class="gratitude-header">
+                <h1 style="color: var(--therapeutic-green); margin-bottom: 1rem;">🙏 Gratitude Journal</h1>
+                <p style="color: var(--gray);">Practice gratitude daily to improve your mental wellbeing and build a more positive outlook</p>
+            </div>
+
+            <div class="journal-section">
+                <h3 class="section-title">Today's Gratitude Entry</h3>
+                
+                <div class="prompt-section">
+                    <div class="prompt-box">
+                        <div class="prompt-text">What are you grateful for today?</div>
+                        <div class="prompt-hint">List three things, big or small, that you're thankful for</div>
+                    </div>
+                </div>
+
+                <div class="gratitude-items">
+                    <div class="gratitude-item">
+                        <div class="item-number">1</div>
+                        <textarea class="input-field" id="item1" placeholder="I'm grateful for..."></textarea>
+                    </div>
+                    <div class="gratitude-item">
+                        <div class="item-number">2</div>
+                        <textarea class="input-field" id="item2" placeholder="I'm grateful for..."></textarea>
+                    </div>
+                    <div class="gratitude-item">
+                        <div class="item-number">3</div>
+                        <textarea class="input-field" id="item3" placeholder="I'm grateful for..."></textarea>
+                    </div>
+                </div>
+
+                <div class="reflection-section">
+                    <h4>Reflection (optional)</h4>
+                    <textarea class="reflection-input" id="reflection" placeholder="How does expressing gratitude make you feel? What positive impact might these things have on your life?"></textarea>
+                </div>
+
+                <div class="log-btn-container">
+                    <button class="btn btn-primary" onclick="logGratitude()">Save Entry</button>
+                </div>
+            </div>
+
+            <div class="quote-section">
+                <div class="quote-text">"Gratitude turns what we have into enough."</div>
+                <div class="quote-author">— Melody Beattie</div>
+            </div>
+
+            <div class="history-section">
+                <h3 class="section-title">Your Gratitude History</h3>
+                <div id="gratitude-history">
+                    <div class="history-item">
+                        <div class="history-date">November 10, 2025</div>
+                        <ul class="history-list">
+                            <li>My family's support during challenging times</li>
+                            <li>A beautiful sunset on my evening walk</li>
+                            <li>The opportunity to learn new skills at work</li>
+                        </ul>
+                        <div class="history-reflection">Feeling grateful helps me focus on the positive aspects of my life, even when things are tough.</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-date">November 9, 2025</div>
+                        <ul class="history-list">
+                            <li>My health and ability to exercise</li>
+                            <li>A kind message from a friend</li>
+                            <li>Having a comfortable home</li>
+                        </ul>
+                        <div class="history-reflection">Recognizing these blessings reminds me how fortunate I am.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script>
+        function logGratitude() {
+            const item1 = document.getElementById('item1').value.trim();
+            const item2 = document.getElementById('item2').value.trim();
+            const item3 = document.getElementById('item3').value.trim();
+            const reflection = document.getElementById('reflection').value.trim();
+
+            if (!item1 || !item2 || !item3) {
+                alert('Please fill in all three gratitude items');
+                return;
+            }
+
+            const entry = {
+                items: [item1, item2, item3],
+                reflection: reflection,
+                timestamp: new Date().toISOString()
+            };
+
+            // Save to localStorage
+            const history = JSON.parse(localStorage.getItem('gratitudeHistory') || '[]');
+            history.unshift(entry);
+            localStorage.setItem('gratitudeHistory', JSON.stringify(history));
+
+            alert('✅ Gratitude entry saved successfully!');
+            
+            // Reset form
+            document.getElementById('item1').value = '';
+            document.getElementById('item2').value = '';
+            document.getElementById('item3').value = '';
+            document.getElementById('reflection').value = '';
+            
+            loadHistory();
+        }
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('gratitudeHistory') || '[]');
+            const historyDiv = document.getElementById('gratitude-history');
+            
+            if (history.length === 0) {
+                historyDiv.innerHTML = '<p style="color: var(--gray); text-align: center;">No entries yet. Start your gratitude practice today!</p>';
+                return;
+            }
+
+            historyDiv.innerHTML = history.slice(0, 10).map(entry => {
+                const date = new Date(entry.timestamp);
+                return `
+                    <div class="history-item">
+                        <div class="history-date">${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
+                        <ul class="history-list">
+                            ${entry.items.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                        ${entry.reflection ? `<div class="history-reflection">${entry.reflection}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('therapyConnectUser');
+                window.location.href = '../index.html';
+            }
+        }
+
+        // Load history on page load
+        loadHistory();
+    </script>
+    <link rel="stylesheet" href="../chat-widget.css">
+    <script src="../chat-widget.js"></script>
+</body>
+</html>

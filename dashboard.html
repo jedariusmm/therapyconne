@@ -223,8 +223,9 @@
             <div class="nav-links">
                 <a href="dashboard.html">Dashboard</a>
                 <a href="sessions.html">Sessions</a>
-                <a href="therapists.html">Therapists</a>
+                <a href="therapist-finder.html">Find Therapist</a>
                 <a href="resources.html">Resources</a>
+                <a href="art-therapy.html">🎨 Art Therapy</a>
                 <a href="profile.html">Profile</a>
                 <button class="btn btn-secondary" onclick="logout()">Logout</button>
             </div>
@@ -249,33 +250,33 @@
                 <div class="dashboard-card">
                     <div class="card-icon">📅</div>
                     <h3 class="card-title">Sessions This Month</h3>
-                    <div class="card-value">2 / 4</div>
-                    <p class="card-description">You have 2 sessions remaining</p>
+                    <div class="card-value">0 / ∞</div>
+                    <p class="card-description">Start your first session today!</p>
                     <a href="sessions.html" class="quick-action-btn">Book Session</a>
                 </div>
 
                 <div class="dashboard-card">
                     <div class="card-icon">📈</div>
                     <h3 class="card-title">Wellness Score</h3>
-                    <div class="card-value">78%</div>
-                    <p class="card-description">Great progress this week!</p>
+                    <div class="card-value">0%</div>
+                    <p class="card-description">Begin your wellness journey!</p>
                     <a href="progress.html" class="quick-action-btn">View Details</a>
                 </div>
 
                 <div class="dashboard-card">
                     <div class="card-icon">💬</div>
                     <h3 class="card-title">Messages</h3>
-                    <div class="card-value">3</div>
-                    <p class="card-description">New messages from your therapist</p>
-                    <a href="messages.html" class="quick-action-btn">Read Messages</a>
+                    <div class="card-value">0</div>
+                    <p class="card-description">No messages yet</p>
+                    <a href="messages.html" class="quick-action-btn">Start Chat</a>
                 </div>
 
                 <div class="dashboard-card">
                     <div class="card-icon">🎯</div>
                     <h3 class="card-title">Goals Completed</h3>
-                    <div class="card-value">5 / 8</div>
-                    <p class="card-description">Keep up the amazing work!</p>
-                    <a href="goals.html" class="quick-action-btn">View Goals</a>
+                    <div class="card-value">0 / 0</div>
+                    <p class="card-description">Set your first wellness goal!</p>
+                    <a href="goals.html" class="quick-action-btn">Set Goals</a>
                 </div>
             </div>
 
@@ -283,29 +284,13 @@
             <div class="upcoming-sessions">
                 <h2 style="color: white; margin-bottom: 1.5rem;">📅 Upcoming Sessions</h2>
                 
-                <div class="session-item">
-                    <div class="session-info">
-                        <h4>Video Session with Dr. Sarah Chen</h4>
-                        <p>General Therapy • 60 minutes</p>
-                    </div>
-                    <div class="session-time">
-                        <div class="session-date">Tomorrow, 2:00 PM</div>
-                        <a href="join-session.html" class="quick-action-btn" style="margin-top: 0.5rem;">Join Session</a>
-                    </div>
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📅</div>
+                    <p style="color: var(--gray); margin-bottom: 1.5rem;">
+                        No upcoming sessions scheduled yet
+                    </p>
+                    <a href="therapist-finder.html" class="quick-action-btn">Find a Therapist</a>
                 </div>
-
-                <div class="session-item">
-                    <div class="session-info">
-                        <h4>Chat Session with Dr. Michael Torres</h4>
-                        <p>Anxiety Support • 45 minutes</p>
-                    </div>
-                    <div class="session-time">
-                        <div class="session-date">Friday, 10:00 AM</div>
-                        <a href="schedule.html" class="quick-action-btn" style="margin-top: 0.5rem;">Reschedule</a>
-                    </div>
-                </div>
-
-                <a href="sessions.html" class="quick-action-btn" style="margin-top: 1rem;">View All Sessions</a>
             </div>
 
             <!-- Progress Section -->
@@ -314,25 +299,25 @@
                 
                 <h4 style="color: var(--therapeutic-green); margin-bottom: 0.5rem;">Overall Progress</h4>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 78%;"></div>
+                    <div class="progress-fill" style="width: 0%;"></div>
                 </div>
-                <p style="color: var(--gray); margin-bottom: 2rem;">You're making excellent progress! Keep it up!</p>
+                <p style="color: var(--gray); margin-bottom: 2rem;">Start your wellness journey today!</p>
 
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <div class="stat-number">12</div>
+                        <div class="stat-number">0</div>
                         <div class="stat-label">Total Sessions</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">5</div>
+                        <div class="stat-number">0</div>
                         <div class="stat-label">Goals Achieved</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">45</div>
+                        <div class="stat-number">0</div>
                         <div class="stat-label">Days Active</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">8.5</div>
+                        <div class="stat-number">-</div>
                         <div class="stat-label">Avg Mood Score</div>
                     </div>
                 </div>
@@ -371,17 +356,69 @@
             throw new Error('Unauthorized');
         }
 
-        // Load real user data
+        // Load real user data from wellness tools
         window.addEventListener('DOMContentLoaded', () => {
             const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
-            const progressKey = `progress_${userData.email}`;
-            const progress = JSON.parse(localStorage.getItem(progressKey) || '{}');
-            const stats = progress.stats || {};
+            
+            // Get REAL data from wellness tools
+            const moodHistory = JSON.parse(localStorage.getItem('moodHistory') || '[]');
+            const anxietyHistory = JSON.parse(localStorage.getItem('anxietyHistory') || '[]');
+            const gratitudeHistory = JSON.parse(localStorage.getItem('gratitudeHistory') || '[]');
+            const energyHistory = JSON.parse(localStorage.getItem('energyHistory') || '[]');
+            const habits = JSON.parse(localStorage.getItem('habits') || '[]');
+            const habitCompletions = JSON.parse(localStorage.getItem('habitCompletions') || '{}');
+            const sleepHistory = JSON.parse(localStorage.getItem('sleepHistory') || '[]');
+            
+            // Calculate real stats
+            const today = new Date();
+            const getTodayKey = () => `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+            const todayKey = getTodayKey();
+            
+            // Calculate streak from habits
+            let longestStreak = 0;
+            habits.forEach(habit => {
+                const completions = (habitCompletions[habit.id] || []).sort().reverse();
+                let streak = 0;
+                for (let i = 0; i < completions.length; i++) {
+                    const checkDate = new Date(completions[i]);
+                    const expectedDate = new Date(today);
+                    expectedDate.setDate(today.getDate() - streak);
+                    if (checkDate.toDateString() === expectedDate.toDateString()) {
+                        streak++;
+                    } else {
+                        break;
+                    }
+                }
+                longestStreak = Math.max(longestStreak, streak);
+            });
+            
+            // Count completed habits today
+            let completedHabitsToday = 0;
+            habits.forEach(habit => {
+                if ((habitCompletions[habit.id] || []).includes(todayKey)) {
+                    completedHabitsToday++;
+                }
+            });
+            
+            // Total exercises/tools used
+            const totalExercisesCompleted = moodHistory.length + anxietyHistory.length + gratitudeHistory.length + energyHistory.length + sleepHistory.length;
+            
+            // Calculate average mood from last 7 days
+            const recentMoods = moodHistory.slice(0, 7).map(m => parseInt(m.mood));
+            const avgMood = recentMoods.length > 0 ? Math.round(recentMoods.reduce((a,b) => a+b, 0) / recentMoods.length) : 3;
+            
+            // Build stats object from REAL data
+            const stats = {
+                sessionsCompleted: totalExercisesCompleted,
+                exercisesCompleted: completedHabitsToday,
+                streak: longestStreak,
+                mood: avgMood
+            };
             
             const sessionsKey = `therapy_sessions_${userData.email}`;
             const sessions = JSON.parse(localStorage.getItem(sessionsKey) || '[]');
             
-            const activitiesCount = progress.activities ? progress.activities.length : 0;
+            const activitiesCount = totalExercisesCompleted;
             
             // Update user name
             if (userData.fullName) {
@@ -489,6 +526,8 @@
             }
         }
     </script>
+    <script src="nupi-avatar.js"></script>
+    <script src="chat-guide-system.js"></script>
     <script src="chat-widget.js"></script>
 </body>
 </html>

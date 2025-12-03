@@ -83,7 +83,7 @@
         }
 
         .provider-card h4 {
-            color: white;
+            color: var(--therapeutic-green);
             margin-bottom: 0.5rem;
         }
 
@@ -112,7 +112,7 @@
         }
 
         .payment-card h3 {
-            color: white;
+            color: var(--therapeutic-green);
             margin-bottom: 0.75rem;
         }
 
@@ -153,7 +153,7 @@
         }
 
         .invoice-description {
-            color: white;
+            color: var(--therapeutic-green);
             font-weight: 600;
             margin-bottom: 0.25rem;
         }
@@ -168,7 +168,7 @@
         }
 
         .amount-value {
-            color: white;
+            color: var(--therapeutic-green);
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.25rem;
@@ -270,7 +270,7 @@
         .pricing-badge {
             display: inline-block;
             background: var(--therapeutic-green);
-            color: white;
+            color: var(--dark);
             padding: 0.35rem 0.75rem;
             border-radius: 8px;
             font-size: 0.8rem;
@@ -279,7 +279,7 @@
         }
 
         .pricing-card h3 {
-            color: white;
+            color: var(--therapeutic-green);
             margin-bottom: 1rem;
         }
 
@@ -335,7 +335,7 @@
         }
 
         .faq-question h4 {
-            color: white;
+            color: var(--therapeutic-green);
             margin: 0;
         }
 
@@ -389,7 +389,7 @@
             <div class="nav-links">
                 <a href="dashboard.html">Dashboard</a>
                 <a href="sessions.html">Sessions</a>
-                <a href="therapists.html">Therapists</a>
+                <a href="therapist-finder.html">Therapists</a>
                 <a href="resources.html">Resources</a>
                 <a href="profile.html">Profile</a>
                 <button class="btn btn-secondary" onclick="logout()">Logout</button>
@@ -400,7 +400,7 @@
     <div class="billing-container">
         <div class="container">
             <div class="billing-header">
-                <h1 style="color: white; margin-bottom: 1rem;">💳 Insurance & Billing</h1>
+                <h1 style="color: var(--therapeutic-green); margin-bottom: 1rem;">💳 Insurance & Billing</h1>
                 <p style="color: var(--gray);">Manage payments, insurance, and billing history</p>
             </div>
 
@@ -415,7 +415,7 @@
 
             <!-- Insurance Tab -->
             <div class="tab-content active" id="insurance">
-                <h2 style="color: white; margin-bottom: 1.5rem;">🏥 Accepted Insurance Providers</h2>
+                <h2 style="color: var(--therapeutic-green); margin-bottom: 1.5rem;">🏥 Accepted Insurance Providers</h2>
                 <p style="color: var(--gray); margin-bottom: 2rem;">
                     We work with major insurance providers. Many of our therapists accept insurance directly, 
                     or you can submit superbills for out-of-network reimbursement.
@@ -465,7 +465,7 @@
                 </div>
 
                 <div class="superbill-section">
-                    <h3 style="color: white; margin-bottom: 1rem;">📄 Superbills for Reimbursement</h3>
+                    <h3 style="color: var(--therapeutic-green); margin-bottom: 1rem;">📄 Superbills for Reimbursement</h3>
                     <p style="color: var(--gray); margin-bottom: 1.5rem;">
                         If your insurance isn't in-network, you can submit superbills for out-of-network reimbursement. 
                         We provide detailed invoices with all necessary codes.
@@ -473,7 +473,7 @@
 
                     <div class="info-box">
                         <p>
-                            <strong style="color: white;">What's included in a superbill:</strong><br>
+                            <strong style="color: var(--therapeutic-green);">What's included in a superbill:</strong><br>
                             • Provider's NPI and license information<br>
                             • CPT codes for services rendered (90834, 90837, etc.)<br>
                             • ICD-10 diagnosis codes<br>
@@ -491,7 +491,7 @@
 
             <!-- Payment Methods Tab -->
             <div class="tab-content" id="payment">
-                <h2 style="color: white; margin-bottom: 1.5rem;">💰 Payment Methods</h2>
+                <h2 style="color: var(--therapeutic-green); margin-bottom: 1.5rem;">💰 Payment Methods</h2>
                 <p style="color: var(--gray); margin-bottom: 2rem;">
                     We accept various payment methods to make therapy accessible and convenient.
                 </p>
@@ -535,13 +535,13 @@
                 </div>
 
                 <div style="margin-top: 3rem;">
-                    <h3 style="color: white; margin-bottom: 1rem;">Your Saved Payment Methods</h3>
+                    <h3 style="color: var(--therapeutic-green); margin-bottom: 1rem;">Your Saved Payment Methods</h3>
                     <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(102, 194, 165, 0.2); border-radius: 15px; padding: 2rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(102, 194, 165, 0.2);">
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 <div style="font-size: 2rem;">💳</div>
                                 <div>
-                                    <div style="color: white; font-weight: 600;">Visa •••• 4242</div>
+                                    <div style="color: var(--therapeutic-green); font-weight: 600;">Visa •••• 4242</div>
                                     <div style="color: var(--gray); font-size: 0.9rem;">Expires 12/2026</div>
                                 </div>
                             </div>
@@ -558,7 +558,7 @@
 
             <!-- Billing History Tab -->
             <div class="tab-content" id="history">
-                <h2 style="color: white; margin-bottom: 1.5rem;">📊 Billing History</h2>
+                <h2 style="color: var(--therapeutic-green); margin-bottom: 1.5rem;">📊 Billing History</h2>
                 
                 <div class="billing-history">
                     <div class="invoice-item">
@@ -649,7 +649,7 @@
 
             <!-- Pricing Tab -->
             <div class="tab-content" id="pricing">
-                <h2 style="color: white; margin-bottom: 1rem; text-align: center;">💎 Subscription Plans</h2>
+                <h2 style="color: var(--therapeutic-green); margin-bottom: 1rem; text-align: center;">💎 Subscription Plans</h2>
                 <p style="color: var(--gray); margin-bottom: 3rem; text-align: center;">
                     Choose a plan that fits your needs. All plans include platform features and reduced session rates.
                 </p>
@@ -657,7 +657,7 @@
                 <div class="pricing-tiers">
                     <div class="pricing-card">
                         <h3>Basic</h3>
-                        <div class="price">$29</div>
+                        <div class="price">$2.99</div>
                         <div class="price-period">per month</div>
                         <ul class="pricing-features">
                             <li>Access to therapist directory</li>
@@ -673,7 +673,7 @@
                     <div class="pricing-card featured">
                         <span class="pricing-badge">MOST POPULAR</span>
                         <h3>Premium</h3>
-                        <div class="price">$79</div>
+                        <div class="price">$9.99</div>
                         <div class="price-period">per month</div>
                         <ul class="pricing-features">
                             <li>All Basic features</li>
@@ -705,7 +705,7 @@
 
                 <div class="info-box" style="margin-top: 3rem;">
                     <p style="text-align: center;">
-                        <strong style="color: white;">🎁 7-Day Free Trial</strong><br>
+                        <strong style="color: var(--therapeutic-green);">🎁 7-Day Free Trial</strong><br>
                         Try Premium risk-free for 7 days. Cancel anytime before trial ends, no charges.
                     </p>
                 </div>
@@ -713,7 +713,7 @@
 
             <!-- FAQ Tab -->
             <div class="tab-content" id="faq">
-                <h2 style="color: white; margin-bottom: 2rem;">❓ Billing FAQ</h2>
+                <h2 style="color: var(--therapeutic-green); margin-bottom: 2rem;">❓ Billing FAQ</h2>
 
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFAQ(this)">
@@ -869,13 +869,72 @@
             alert('Loading more invoices...\n\nShowing billing history from the past 12 months.');
         }
 
-        function selectPlan(planName) {
+        // Load Stripe
+        const stripeScript = document.createElement('script');
+        stripeScript.src = 'https://js.stripe.com/v3/';
+        document.head.appendChild(stripeScript);
+        
+        // Load Stripe config
+        const configScript = document.createElement('script');
+        configScript.src = 'stripe-config.js';
+        document.head.appendChild(configScript);
+
+        async function selectPlan(planName) {
             const plans = {
-                'basic': 'Basic Plan ($29/month)',
-                'premium': 'Premium Plan ($79/month)',
+                'basic': 'Basic Plan ($2.99/month)',
+                'premium': 'Premium Plan ($9.99/month)',
                 'payperuse': 'Pay-Per-Session (No subscription)'
             };
-            alert(`You selected: ${plans[planName]}\n\nProceeding to checkout...`);
+            
+            if (planName === 'payperuse') {
+                alert(`You selected: ${plans[planName]}\n\nNo subscription needed! You'll pay per session only.`);
+                return;
+            }
+            
+            // Wait for Stripe to load
+            if (typeof Stripe === 'undefined' || !window.STRIPE_CONFIG) {
+                alert('Loading payment system...\n\nPlease wait a moment and try again.');
+                setTimeout(() => {
+                    if (typeof Stripe !== 'undefined' && window.STRIPE_CONFIG) {
+                        initializeStripe();
+                    }
+                }, 2000);
+                return;
+            }
+            
+            try {
+                // Initialize Stripe if not already done
+                if (!window.stripe) {
+                    initializeStripe();
+                }
+                
+                // Get user email from localStorage or prompt
+                const user = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+                const userEmail = user.email || prompt('Enter your email to continue:');
+                
+                if (!userEmail) {
+                    alert('Email required to proceed with subscription.');
+                    return;
+                }
+                
+                // Show loading state
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Processing...';
+                btn.disabled = true;
+                
+                // Create checkout session
+                await createCheckoutSession(planName, userEmail);
+                
+                // Reset button (in case checkout is cancelled)
+                btn.textContent = originalText;
+                btn.disabled = false;
+            } catch (error) {
+                console.error('Checkout error:', error);
+                alert('Unable to process checkout. Please try again or contact support.');
+                event.target.textContent = event.target.textContent.replace('Processing...', 'Choose ' + planName.charAt(0).toUpperCase() + planName.slice(1));
+                event.target.disabled = false;
+            }
         }
 
         function logout() {
@@ -886,6 +945,8 @@
         }
     </script>
     <link rel="stylesheet" href="chat-widget.css">
+    <script src="nupi-avatar.js"></script>
+    <script src="chat-guide-system.js"></script>
     <script src="chat-widget.js"></script>
 </body>
 </html>

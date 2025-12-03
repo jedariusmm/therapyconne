@@ -355,7 +355,7 @@
             <div class="nav-links">
                 <a href="dashboard.html">Dashboard</a>
                 <a href="sessions.html" class="active">Sessions</a>
-                <a href="therapists.html">Therapists</a>
+                <a href="therapist-finder.html">Therapists</a>
                 <a href="resources.html">Resources</a>
                 <a href="profile.html">Profile</a>
                 <button class="btn btn-secondary" onclick="logout()">Logout</button>
@@ -403,157 +403,30 @@
             <!-- Upcoming Sessions Tab -->
             <div class="tab-content active" id="upcoming-tab">
                 <div class="session-list">
-                    <!-- Session Starting Soon -->
-                    <div class="session-card upcoming">
-                        <div class="countdown-timer">
-                            <h4>Session Starting Soon!</h4>
-                            <div class="countdown" id="countdown">Starting in 23:45:12</div>
-                        </div>
-
-                        <div class="session-header">
-                            <div class="session-info">
-                                <div class="therapist-avatar-sm">👩‍⚕️</div>
-                                <div class="session-details">
-                                    <h3>Dr. Sarah Chen</h3>
-                                    <div class="session-type">📹 Video Session • 60 minutes</div>
-                                    <div class="session-datetime">
-                                        <div class="datetime-item">📅 Tomorrow, Nov 12</div>
-                                        <div class="datetime-item">🕐 2:00 PM EST</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="status-badge upcoming">Confirmed</span>
-                        </div>
-
-                        <div class="session-notes">
-                            <h4>Your Notes:</h4>
-                            <p>Want to discuss coping strategies for work-related anxiety and stress management techniques.</p>
-                        </div>
-
-                        <div class="session-actions">
-                            <button class="btn-join" onclick="joinSession('session1')">📹 Join Session</button>
-                            <button class="btn-action" onclick="rescheduleSession('session1')">🔄 Reschedule</button>
-                            <button class="btn-action" onclick="cancelSession('session1')">✕ Cancel</button>
-                        </div>
+                    <!-- No upcoming sessions yet -->
+                    <div style="text-align: center; padding: 4rem 2rem;">
+                        <div style="font-size: 4rem;">�</div>
+                        <h3>No Upcoming Sessions</h3>
+                        <p style="color: var(--gray); margin-bottom: 2rem;">
+                            You don't have any therapy sessions scheduled yet.
+                        </p>
+                        <a href="therapist-finder.html" class="btn-join" style="text-decoration: none;">
+                            🔍 Find a Therapist
+                        </a>
                     </div>
-
-                    <!-- Next Upcoming Session -->
-                    <div class="session-card upcoming">
-                        <div class="session-header">
-                            <div class="session-info">
-                                <div class="therapist-avatar-sm">👨‍⚕️</div>
-                                <div class="session-details">
-                                    <h3>Dr. Michael Torres</h3>
-                                    <div class="session-type">💬 Chat Session • 45 minutes</div>
-                                    <div class="session-datetime">
-                                        <div class="datetime-item">📅 Friday, Nov 15</div>
-                                        <div class="datetime-item">🕐 10:00 AM EST</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="status-badge upcoming">Confirmed</span>
-                        </div>
-
-                        <div class="session-notes">
-                            <h4>Your Notes:</h4>
-                            <p>Follow-up on EMDR progress and discuss recent triggers.</p>
-                        </div>
-
-                        <div class="session-actions">
-                            <button class="btn-action" onclick="addToCalendar('session2')">📆 Add to Calendar</button>
-                            <button class="btn-action" onclick="rescheduleSession('session2')">🔄 Reschedule</button>
-                            <button class="btn-action" onclick="cancelSession('session2')">✕ Cancel</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-top: 2rem;">
-                    <a href="book-session.html" class="btn-join" style="text-decoration: none;">📅 Book New Session</a>
                 </div>
             </div>
 
             <!-- Completed Sessions Tab -->
             <div class="tab-content" id="completed-tab">
                 <div class="session-list">
-                    <div class="session-card completed">
-                        <div class="session-header">
-                            <div class="session-info">
-                                <div class="therapist-avatar-sm">👩‍⚕️</div>
-                                <div class="session-details">
-                                    <h3>Dr. Sarah Chen</h3>
-                                    <div class="session-type">📹 Video Session • 60 minutes</div>
-                                    <div class="session-datetime">
-                                        <div class="datetime-item">📅 Nov 7, 2025</div>
-                                        <div class="datetime-item">🕐 2:00 PM EST</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="status-badge completed">Completed</span>
-                        </div>
-
-                        <div class="session-notes">
-                            <h4>Session Summary:</h4>
-                            <p>Discussed breathing techniques and cognitive reframing. Practiced 4-7-8 breathing method. Homework: Daily gratitude journaling.</p>
-                        </div>
-
-                        <div class="session-actions">
-                            <button class="btn-action" onclick="viewNotes('session3')">📝 View Full Notes</button>
-                            <button class="btn-action" onclick="bookAgain('Dr. Sarah Chen')">🔁 Book Again</button>
-                        </div>
-                    </div>
-
-                    <div class="session-card completed">
-                        <div class="session-header">
-                            <div class="session-info">
-                                <div class="therapist-avatar-sm">👨‍⚕️</div>
-                                <div class="session-details">
-                                    <h3>Dr. Michael Torres</h3>
-                                    <div class="session-type">📹 Video Session • 60 minutes</div>
-                                    <div class="session-datetime">
-                                        <div class="datetime-item">📅 Nov 3, 2025</div>
-                                        <div class="datetime-item">🕐 10:00 AM EST</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="status-badge completed">Completed</span>
-                        </div>
-
-                        <div class="session-notes">
-                            <h4>Session Summary:</h4>
-                            <p>Continued EMDR processing. Made significant progress on childhood trauma. Follow-up scheduled.</p>
-                        </div>
-
-                        <div class="session-actions">
-                            <button class="btn-action" onclick="viewNotes('session4')">📝 View Full Notes</button>
-                            <button class="btn-action" onclick="bookAgain('Dr. Michael Torres')">🔁 Book Again</button>
-                        </div>
-                    </div>
-
-                    <div class="session-card completed">
-                        <div class="session-header">
-                            <div class="session-info">
-                                <div class="therapist-avatar-sm">👩‍⚕️</div>
-                                <div class="session-details">
-                                    <h3>Dr. Sarah Chen</h3>
-                                    <div class="session-type">💬 Chat Session • 45 minutes</div>
-                                    <div class="session-datetime">
-                                        <div class="datetime-item">📅 Oct 28, 2025</div>
-                                        <div class="datetime-item">🕐 3:00 PM EST</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="status-badge completed">Completed</span>
-                        </div>
-
-                        <div class="session-notes">
-                            <h4>Session Summary:</h4>
-                            <p>Check-in on anxiety levels. Reviewed progress on CBT exercises. Adjusted coping strategies for work situations.</p>
-                        </div>
-
-                        <div class="session-actions">
-                            <button class="btn-action" onclick="viewNotes('session5')">📝 View Full Notes</button>
-                            <button class="btn-action" onclick="bookAgain('Dr. Sarah Chen')">🔁 Book Again</button>
-                        </div>
+                    <!-- No completed sessions yet -->
+                    <div style="text-align: center; padding: 4rem 2rem;">
+                        <div style="font-size: 4rem;">✅</div>
+                        <h3>No Completed Sessions</h3>
+                        <p style="color: var(--gray);">
+                            Your completed therapy sessions will appear here with notes and summaries.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -561,30 +434,13 @@
             <!-- Cancelled Sessions Tab -->
             <div class="tab-content" id="cancelled-tab">
                 <div class="session-list">
-                    <div class="session-card cancelled">
-                        <div class="session-header">
-                            <div class="session-info">
-                                <div class="therapist-avatar-sm">👨‍⚕️</div>
-                                <div class="session-details">
-                                    <h3>Dr. James Anderson</h3>
-                                    <div class="session-type">📹 Video Session • 60 minutes</div>
-                                    <div class="session-datetime">
-                                        <div class="datetime-item">📅 Oct 25, 2025</div>
-                                        <div class="datetime-item">🕐 4:00 PM EST</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="status-badge cancelled">Cancelled</span>
-                        </div>
-
-                        <div class="session-notes">
-                            <h4>Cancellation Reason:</h4>
-                            <p>Schedule conflict - Rescheduled to a later date.</p>
-                        </div>
-
-                        <div class="session-actions">
-                            <button class="btn-action" onclick="bookAgain('Dr. James Anderson')">📅 Rebook</button>
-                        </div>
+                    <!-- No cancelled sessions -->
+                    <div style="text-align: center; padding: 4rem 2rem;">
+                        <div style="font-size: 4rem;">❌</div>
+                        <h3>No Cancelled Sessions</h3>
+                        <p style="color: var(--gray);">
+                            Cancelled sessions will appear here if you need to reschedule.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -601,6 +457,8 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="nupi-avatar.js"></script>
+    <script src="chat-guide-system.js"></script>
     <script src="chat-widget.js"></script>
     <script>
         // Load real user session data

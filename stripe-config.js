@@ -18,22 +18,22 @@ const STRIPE_CONFIG = {
             description: '30 days free access with full features'
         },
         basic: {
-            priceId: 'price_basic_monthly',
-            productId: 'prod_basic',
-            amount: 9999, // $99.99 in cents
+            priceId: 'price_1QQWTdBnC0bWNfLeKpV0xVCc', // $2.99/month Stripe Price ID
+            productId: 'prod_RLv4ybNLz51kag',
+            amount: 299, // $2.99 in cents
             currency: 'usd',
             interval: 'month',
-            name: 'Basic Plan',
-            description: '4 therapy sessions per month'
+            name: 'Basic Therapy Plan',
+            description: 'AI therapy sessions and wellness tracker access'
         },
         premium: {
-            priceId: 'price_premium_monthly',
-            productId: 'prod_premium',
-            amount: 14999, // $149.99 in cents
+            priceId: 'price_1QQWTwBnC0bWNfLeM8KyTvuV', // $9.99/month Stripe Price ID  
+            productId: 'prod_RLv5OvJ2aX1CbX',
+            amount: 999, // $9.99 in cents
             currency: 'usd',
             interval: 'month',
-            name: 'Premium Plan',
-            description: '8 therapy sessions per month'
+            name: 'Premium Therapy Plan',
+            description: 'Unlimited AI therapy sessions, full wellness tracking, and progress analytics'
         },
         enterprise: {
             priceId: 'price_enterprise_custom',

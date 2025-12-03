@@ -1,5 +1,6 @@
-/* AI Therapist Chat Widget - Floating on all pages */
+/* NUPI Therapist Chat Widget - Floating on all pages */
 
+.nupi-chat-widget,
 .ai-chat-widget {
     position: fixed;
     bottom: 2rem;
@@ -48,6 +49,14 @@
     overflow: hidden;
     backdrop-filter: blur(20px);
     z-index: 999998 !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chat-window.guided-mode {
+    width: 600px;
+    height: 750px;
+    border-color: rgba(102, 194, 165, 0.6);
+    box-shadow: 0 30px 80px rgba(102, 194, 165, 0.3), 0 15px 50px rgba(102, 126, 234, 0.2);
 }
 
 .chat-window.active {
@@ -61,6 +70,13 @@
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+.chat-window.guided-mode .chat-header {
+    background: linear-gradient(135deg, #66c2a5 0%, #8dd3c7 100%);
+    box-shadow: 0 4px 25px rgba(102, 194, 165, 0.3);
 }
 
 .chat-header-info {
@@ -358,15 +374,96 @@
     width: 100%;
 }
 
+/* Guide Mode Badge Animation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+@keyframes slideInBadge {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.guide-mode-badge {
+    animation: slideInBadge 0.5s ease, pulse 2s infinite !important;
+}
+
 @media (max-width: 768px) {
+    .nupi-chat-widget,
+    .ai-chat-widget {
+        bottom: 1.25rem;
+        right: 1.25rem;
+    }
+    
+    .chat-bubble-btn {
+        width: 65px;
+        height: 65px;
+        font-size: 1.8rem;
+        /* FIXED: Make stationary on mobile - disable dragging */
+        position: fixed !important;
+        bottom: 1.25rem !important;
+        right: 1.25rem !important;
+        left: auto !important;
+        top: auto !important;
+        pointer-events: all !important;
+        touch-action: manipulation !important;
+    }
+    
     .chat-window {
         width: calc(100vw - 2rem);
         right: 1rem;
         bottom: 90px;
+        /* FIXED: Prevent window from being affected by bubble position */
+        position: fixed !important;
     }
     
+    .chat-window.guided-mode {
+        width: calc(100vw - 2rem);
+        height: calc(100vh - 120px);
+    }
+}
+
+/* Extra positioning support for small mobile screens */
+@media (max-width: 480px) {
+    .nupi-chat-widget,
     .ai-chat-widget {
         bottom: 1rem;
         right: 1rem;
+    }
+    
+    .chat-bubble-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.6rem;
+        /* FIXED: Make stationary on mobile - disable dragging */
+        position: fixed !important;
+        bottom: 1rem !important;
+        right: 1rem !important;
+        left: auto !important;
+        top: auto !important;
+        pointer-events: all !important;
+        touch-action: manipulation !important;
+    }
+    
+    .chat-window {
+        width: calc(100vw - 1.5rem);
+        right: 0.75rem;
+        /* FIXED: Prevent window from being affected by bubble position */
+        position: fixed !important;
+        bottom: 75px;
+        max-height: calc(100vh - 100px);
     }
 }

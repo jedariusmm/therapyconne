@@ -361,7 +361,8 @@
             <div class="nav-links">
                 <a href="dashboard.html">Dashboard</a>
                 <a href="sessions.html">Sessions</a>
-                <a href="therapists.html">Therapists</a>
+                <a href="therapist-finder.html">Therapists</a>
+                <a href="yoga-guide.html">Yoga</a>
                 <a href="resources.html" class="active">Resources</a>
                 <a href="profile.html">Profile</a>
                 <button class="btn btn-secondary" onclick="logout()">Logout</button>
@@ -381,7 +382,10 @@
 
             <!-- Tabs -->
             <div class="resource-tabs">
-                <button class="resource-tab active" onclick="switchResourceTab('games')">
+                <button class="resource-tab active" onclick="switchResourceTab('yoga')">
+                    🧘 Yoga & Wellness
+                </button>
+                <button class="resource-tab" onclick="switchResourceTab('games')">
                     🎮 Games (FREE)
                 </button>
                 <button class="resource-tab" onclick="switchResourceTab('relationship')">
@@ -404,9 +408,293 @@
                 </button>
             </div>
 
+            <!-- Yoga & Wellness Tab -->
+            <div class="tab-content active" id="yoga-content">
+                <h3 style="color: white; margin: 0 0 2rem; text-align: center; font-size: 2rem;">🧘 Yoga & Wellness Practices</h3>
+                
+                <!-- Redirect to Full Yoga Guide -->
+                <div style="background: linear-gradient(135deg, rgba(102, 194, 165, 0.2), rgba(141, 211, 199, 0.1)); border: 2px solid var(--therapeutic-green); border-radius: 20px; padding: 3rem; margin-bottom: 3rem; text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🧘✨</div>
+                    <h2 style="color: white; margin-bottom: 1rem;">Interactive Yoga Guide with NUPI</h2>
+                    <p style="color: var(--gray); margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto; font-size: 1.1rem;">
+                        Access our full interactive yoga guide with animated poses, step-by-step instructions, and real-time guidance from NUPI. Perfect for all skill levels!
+                    </p>
+                    <a href="yoga-guide.html" style="display: inline-block; padding: 1.5rem 3rem; background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal)); color: white; text-decoration: none; border-radius: 15px; font-weight: 700; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(102, 194, 165, 0.4);">
+                        🧘 Open Full Yoga Guide →
+                    </a>
+                </div>
+                
+                <div class="resource-grid">
+                    <!-- Mountain Pose -->
+                    <div class="resource-card" onclick="showYogaPoseModal('mountain')">
+                        <div class="resource-image" style="background: linear-gradient(135deg, #667db6, #0082c8);">
+                            <svg width="140" height="180" viewBox="0 0 140 180" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                                <!-- Head -->
+                                <circle cx="70" cy="30" r="20" fill="white"/>
+                                <!-- Body -->
+                                <rect x="60" y="50" width="20" height="60" rx="10" fill="white"/>
+                                <!-- Arms straight down -->
+                                <rect x="40" y="55" width="15" height="50" rx="7" fill="white"/>
+                                <rect x="85" y="55" width="15" height="50" rx="7" fill="white"/>
+                                <!-- Legs -->
+                                <rect x="55" y="110" width="12" height="50" rx="6" fill="white"/>
+                                <rect x="73" y="110" width="12" height="50" rx="6" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Mountain Pose (Tadasana)</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem; margin: 0.5rem 0;">
+                                Foundation pose for grounding and centering
+                            </p>
+                            <div style="color: var(--therapeutic-green); font-size: 0.85rem;">
+                                ⏱️ Hold: 30-60 seconds
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tree Pose -->
+                    <div class="resource-card" onclick="showYogaPoseModal('tree')">
+                        <div class="resource-image" style="background: linear-gradient(135deg, #56ab2f, #a8e063);">
+                            <svg width="140" height="180" viewBox="0 0 140 180" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                                <!-- Head -->
+                                <circle cx="70" cy="30" r="20" fill="white"/>
+                                <!-- Body -->
+                                <rect x="60" y="50" width="20" height="60" rx="10" fill="white"/>
+                                <!-- Arms up forming circle -->
+                                <ellipse cx="70" cy="40" rx="45" ry="35" fill="none" stroke="white" stroke-width="10"/>
+                                <!-- Standing leg -->
+                                <rect x="60" y="110" width="14" height="50" rx="7" fill="white"/>
+                                <!-- Bent leg -->
+                                <rect x="75" y="90" width="35" height="12" rx="6" fill="white" transform="rotate(45 75 90)"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Tree Pose (Vrksasana)</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem; margin: 0.5rem 0;">
+                                Improves balance, focus, and mental clarity
+                            </p>
+                            <div style="color: var(--therapeutic-green); font-size: 0.85rem;">
+                                ⏱️ Hold: 30 seconds each side
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Child's Pose -->
+                    <div class="resource-card" onclick="showYogaPoseModal('child')">
+                        <div class="resource-image" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb);">
+                            <svg width="140" height="180" viewBox="0 0 140 180" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                                <!-- Rounded back/body -->
+                                <ellipse cx="70" cy="100" rx="50" ry="35" fill="white"/>
+                                <!-- Head down -->
+                                <circle cx="50" cy="90" r="18" fill="white"/>
+                                <!-- Arms extended forward -->
+                                <rect x="20" y="95" width="40" height="8" rx="4" fill="white"/>
+                                <rect x="80" y="95" width="40" height="8" rx="4" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Child's Pose (Balasana)</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem; margin: 0.5rem 0;">
+                                Calming resting pose for stress relief
+                            </p>
+                            <div style="color: var(--therapeutic-green); font-size: 0.85rem;">
+                                ⏱️ Hold: 1-3 minutes
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Warrior Pose -->
+                    <div class="resource-card" onclick="showYogaPoseModal('warrior')">
+                        <div class="resource-image" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                            <svg width="140" height="180" viewBox="0 0 140 180" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                                <!-- Head -->
+                                <circle cx="75" cy="30" r="18" fill="white"/>
+                                <!-- Body angled -->
+                                <rect x="65" y="48" width="20" height="50" rx="10" fill="white" transform="rotate(10 75 73)"/>
+                                <!-- Front arm extended -->
+                                <rect x="85" y="55" width="45" height="10" rx="5" fill="white"/>
+                                <!-- Back arm extended -->
+                                <rect x="20" y="60" width="45" height="10" rx="5" fill="white"/>
+                                <!-- Front leg lunged -->
+                                <rect x="70" y="98" width="12" height="45" rx="6" fill="white" transform="rotate(15 76 120)"/>
+                                <!-- Back leg extended -->
+                                <rect x="45" y="100" width="12" height="50" rx="6" fill="white" transform="rotate(-25 51 125)"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Warrior II (Virabhadrasana II)</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem; margin: 0.5rem 0;">
+                                Builds strength, stamina, and confidence
+                            </p>
+                            <div style="color: var(--therapeutic-green); font-size: 0.85rem;">
+                                ⏱️ Hold: 30 seconds each side
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cat-Cow -->
+                    <div class="resource-card" onclick="showYogaPoseModal('catcow')">
+                        <div class="resource-image" style="background: linear-gradient(135deg, #fa709a, #fee140);">
+                            <svg width="140" height="180" viewBox="0 0 140 180" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                                <!-- Arched back (cat) -->
+                                <path d="M 30 100 Q 70 70 110 100" fill="none" stroke="white" stroke-width="35" stroke-linecap="round"/>
+                                <!-- Head -->
+                                <circle cx="25" cy="85" r="16" fill="white"/>
+                                <!-- Front legs -->
+                                <rect x="35" y="100" width="10" height="35" rx="5" fill="white"/>
+                                <!-- Back legs -->
+                                <rect x="95" y="100" width="10" height="35" rx="5" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Cat-Cow Pose (Marjaryasana)</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem; margin: 0.5rem 0;">
+                                Spinal flexibility and stress relief
+                            </p>
+                            <div style="color: var(--therapeutic-green); font-size: 0.85rem;">
+                                ⏱️ Flow: 5-10 breaths
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Corpse Pose -->
+                    <div class="resource-card" onclick="showYogaPoseModal('corpse')">
+                        <div class="resource-image" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                            <svg width="140" height="180" viewBox="0 0 140 180" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                                <!-- Head -->
+                                <circle cx="70" cy="60" r="18" fill="white"/>
+                                <!-- Body lying flat -->
+                                <rect x="50" y="78" width="40" height="20" rx="10" fill="white"/>
+                                <!-- Arms at sides -->
+                                <rect x="25" y="85" width="20" height="8" rx="4" fill="white"/>
+                                <rect x="95" y="85" width="20" height="8" rx="4" fill="white"/>
+                                <!-- Legs flat -->
+                                <rect x="55" y="98" width="12" height="40" rx="6" fill="white"/>
+                                <rect x="73" y="98" width="12" height="40" rx="6" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Corpse Pose (Savasana)</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem; margin: 0.5rem 0;">
+                                Final relaxation for mind-body integration
+                            </p>
+                            <div style="color: var(--therapeutic-green); font-size: 0.85rem;">
+                                ⏱️ Rest: 5-15 minutes
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Breathing Exercise -->
+                    <div class="resource-card" onclick="showYogaPoseModal('breathing')">
+                        <div class="resource-image" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <svg width="140" height="180" viewBox="0 0 140 180" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                                <!-- Breathing circle with pulse effect -->
+                                <circle cx="70" cy="90" r="50" fill="none" stroke="white" stroke-width="8" opacity="0.3"/>
+                                <circle cx="70" cy="90" r="35" fill="none" stroke="white" stroke-width="6" opacity="0.6"/>
+                                <circle cx="70" cy="90" r="20" fill="white" opacity="0.9"/>
+                                <!-- Arrow symbols for breath -->
+                                <path d="M 70 50 L 70 70 M 60 60 L 70 50 L 80 60" stroke="white" stroke-width="4" fill="none"/>
+                                <path d="M 70 110 L 70 130 M 60 120 L 70 130 L 80 120" stroke="white" stroke-width="4" fill="none"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Box Breathing (4-4-4-4)</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem; margin: 0.5rem 0;">
+                                Calms nervous system and reduces anxiety
+                            </p>
+                            <div style="color: var(--therapeutic-green); font-size: 0.85rem;">
+                                ⏱️ Practice: 5-10 minutes
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Seated Meditation -->
+                    <div class="resource-card" onclick="showYogaPoseModal('meditation')">
+                        <div class="resource-image" style="background: linear-gradient(135deg, #ffecd2, #fcb69f);">
+                            <svg width="140" height="180" viewBox="0 0 140 180" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                                <!-- Head with aura -->
+                                <circle cx="70" cy="50" r="20" fill="white"/>
+                                <circle cx="70" cy="50" r="28" fill="none" stroke="white" stroke-width="2" opacity="0.5"/>
+                                <!-- Lotus body seated -->
+                                <path d="M 40 110 Q 70 90 100 110" fill="white"/>
+                                <ellipse cx="70" cy="80" rx="25" ry="30" fill="white"/>
+                                <!-- Hands in mudra -->
+                                <circle cx="50" cy="95" r="8" fill="white"/>
+                                <circle cx="90" cy="95" r="8" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Seated Meditation</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem; margin: 0.5rem 0;">
+                                Mindfulness practice for inner peace
+                            </p>
+                            <div style="color: var(--therapeutic-green); font-size: 0.85rem;">
+                                ⏱️ Sit: 10-20 minutes
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sun Salutation -->
+                    <div class="resource-card" onclick="showYogaPoseModal('sun')">
+                        <div class="resource-image" style="background: linear-gradient(135deg, #ff9a9e, #fad0c4);">
+                            <svg width="140" height="180" viewBox="0 0 140 180" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                                <!-- Sun symbol -->
+                                <circle cx="70" cy="40" r="25" fill="white" opacity="0.3"/>
+                                <circle cx="70" cy="40" r="15" fill="white"/>
+                                <!-- Sun rays -->
+                                <line x1="70" y1="10" x2="70" y2="25" stroke="white" stroke-width="3"/>
+                                <line x1="95" y1="15" x2="85" y2="28" stroke="white" stroke-width="3"/>
+                                <line x1="100" y1="40" x2="85" y2="40" stroke="white" stroke-width="3"/>
+                                <line x1="45" y1="15" x2="55" y2="28" stroke="white" stroke-width="3"/>
+                                <line x1="40" y1="40" x2="55" y2="40" stroke="white" stroke-width="3"/>
+                                <!-- Person reaching up -->
+                                <circle cx="70" cy="90" r="16" fill="white"/>
+                                <rect x="62" y="106" width="16" height="40" rx="8" fill="white"/>
+                                <!-- Arms reaching to sun -->
+                                <rect x="45" y="95" width="10" height="35" rx="5" fill="white" transform="rotate(-45 50 112)"/>
+                                <rect x="85" y="95" width="10" height="35" rx="5" fill="white" transform="rotate(45 90 112)"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <h4 style="color: white;">Sun Salutation (Surya Namaskar)</h4>
+                            <p style="color: var(--gray); font-size: 0.9rem; margin: 0.5rem 0;">
+                                Complete flow sequence for energy
+                            </p>
+                            <div style="color: var(--therapeutic-green); font-size: 0.85rem;">
+                                ⏱️ Flow: 5-10 rounds
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat with NUPI for Guidance -->
+                <div style="background: linear-gradient(135deg, rgba(102, 194, 165, 0.15), rgba(141, 211, 199, 0.05)); border: 2px solid var(--therapeutic-green); border-radius: 20px; padding: 2.5rem; margin-top: 3rem; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💬✨</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">Need Personalized Yoga Guidance?</h3>
+                    <p style="color: var(--gray); margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Chat with NUPI for customized yoga sequences, modifications for injuries, breathing techniques, and meditation practices tailored to your needs.
+                    </p>
+                    <button onclick="if(window.therapistChat){window.therapistChat.toggleChat()}else{document.getElementById('chatBubbleBtn').click()}" style="padding: 1rem 2.5rem; background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal)); color: white; border: none; border-radius: 12px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(102, 194, 165, 0.3);">
+                        💬 Chat with NUPI
+                    </button>
+                </div>
+            </div>
+
             <!-- Games Tab (FREE) -->
-            <div class="tab-content active" id="games-content">
+            <div class="tab-content" id="games-content">
                 <h3 style="color: white; margin: 0 0 2rem;">🎮 Interactive Therapy Games (FREE - No Sign In Required)</h3>
+                
+                <!-- Featured: Interactive Yoga Guide -->
+                <div style="background: linear-gradient(135deg, rgba(102, 194, 165, 0.2), rgba(141, 211, 199, 0.1)); border: 2px solid var(--therapeutic-green); border-radius: 20px; padding: 2rem; margin-bottom: 2rem; text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🧘✨</div>
+                    <h3 style="color: white; margin-bottom: 0.5rem;">NEW: Interactive Yoga & Poses Guide</h3>
+                    <p style="color: var(--gray); margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Guided yoga practices with NUPI! Animated poses, step-by-step instructions, breathing exercises, and meditation. Chat expands for real-time guidance.
+                    </p>
+                    <a href="yoga-guide.html" style="display: inline-block; padding: 1rem 2.5rem; background: linear-gradient(135deg, var(--therapeutic-green), var(--peaceful-teal)); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(102, 194, 165, 0.3);">
+                        🧘 Start Guided Practice →
+                    </a>
+                </div>
                 
                 <div class="resource-grid">
                     <!-- Breathing Exercise -->
@@ -572,8 +860,8 @@
                         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                             <div style="font-size: 3rem;">🧠</div>
                             <div>
-                                <h3 style="color: white; margin: 0 0 0.25rem 0; font-size: 1.4rem;">AI Relationship Therapist</h3>
-                                <p style="color: rgba(255,255,255,0.8); margin: 0; font-size: 0.9rem;">Available 24/7 • Powered by Claude AI</p>
+                                <h3 style="color: white; margin: 0 0 0.25rem 0; font-size: 1.4rem;">NUPI Therapist</h3>
+                                <p style="color: rgba(255,255,255,0.8); margin: 0; font-size: 0.9rem;">Available 24/7 • Professional Support</p>
                             </div>
                         </div>
                         <p style="color: rgba(255,255,255,0.95); margin-bottom: 1.5rem; line-height: 1.6;">Get instant, compassionate relationship advice for couples communication, dating challenges, conflict resolution, and emotional support. Your conversations are private and secure.</p>
@@ -1534,7 +1822,10 @@
                             </div>
                         </div>
                         <div class="exercise-duration">15 min</div>
-                        <button class="start-btn" onclick="startExercise('bodyscan')">Start</button>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="start-btn" onclick="startExercise('bodyscan')">Start</button>
+                            <button class="start-btn" onclick="askNUPIForGuidance('bodyscan')" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🧠</button>
+                        </div>
                     </div>
 
                     <div class="exercise-item">
@@ -1558,7 +1849,10 @@
                             </div>
                         </div>
                         <div class="exercise-duration">10 min</div>
-                        <button class="start-btn" onclick="startExercise('gratitude')">Start</button>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="start-btn" onclick="startExercise('gratitude')">Start</button>
+                            <button class="start-btn" onclick="askNUPIForGuidance('gratitude')" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🧠</button>
+                        </div>
                     </div>
 
                     <div class="exercise-item">
@@ -1582,7 +1876,10 @@
                             </div>
                         </div>
                         <div class="exercise-duration">12 min</div>
-                        <button class="start-btn" onclick="startExercise('reframing')">Start</button>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="start-btn" onclick="startExercise('reframing')">Start</button>
+                            <button class="start-btn" onclick="askNUPIForGuidance('reframing')" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🧠</button>
+                        </div>
                     </div>
 
                     <div class="exercise-item">
@@ -1594,7 +1891,10 @@
                             </div>
                         </div>
                         <div class="exercise-duration">10 min</div>
-                        <button class="start-btn" onclick="startExercise('visualization')">Start</button>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="start-btn" onclick="startExercise('visualization')">Start</button>
+                            <button class="start-btn" onclick="askNUPIForGuidance('visualization')" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🧠</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1636,6 +1936,18 @@
                                 Express your thoughts and feelings in a private, secure digital journal with guided prompts.
                             </p>
                             <button class="resource-action">Open Tool</button>
+                        </div>
+                    </div>
+
+                    <div class="resource-card" onclick="window.location.href='art-therapy.html'">
+                        <div class="resource-image">🎨</div>
+                        <div class="resource-content">
+                            <span class="resource-category">Creative</span>
+                            <h3 class="resource-title">Art Therapy Studio</h3>
+                            <p class="resource-description">
+                                Express emotions through creative painting, therapeutic coloring pages, and save your artwork.
+                            </p>
+                            <button class="resource-action">Create Art</button>
                         </div>
                     </div>
 
@@ -2095,6 +2407,11 @@
                             <p style="color: #333; line-height: 1.6;">Feel your whole body relaxed and at peace. Take 3 deep breaths. Slowly open your eyes when ready.</p>
                         </div>
                     </div>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button onclick="askNUPIForGuidance('bodyscan')" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 12px; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(99, 102, 241, 0.3); transition: all 0.3s;">
+                            🧠 Get NUPI Guidance
+                        </button>
+                    </div>
                 `;
             } else if (exerciseId === 'breathing') {
                 exerciseHTML = `
@@ -2106,7 +2423,10 @@
                     <div style="text-align: center; margin: 3rem 0;">
                         <div id="breathingCircle" style="width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, #66c2a5, #8dd3c7); margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem; font-weight: bold; box-shadow: 0 10px 40px rgba(102, 194, 165, 0.4); transition: all 4s ease-in-out;">4</div>
                         <p id="breathingInstruction" style="font-size: 1.5rem; color: #66c2a5; font-weight: 600; margin-bottom: 2rem;">Click Start</p>
-                        <button id="startBreathingEx" onclick="startBreathingExercise()" style="padding: 1.2rem 3rem; background: linear-gradient(135deg, #66c2a5, #8dd3c7); color: white; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(102, 194, 165, 0.3);">Start Exercise</button>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <button id="startBreathingEx" onclick="startBreathingExercise()" style="padding: 1.2rem 3rem; background: linear-gradient(135deg, #66c2a5, #8dd3c7); color: white; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(102, 194, 165, 0.3);">Start Exercise</button>
+                            <button onclick="askNUPIForGuidance('breathing')" style="padding: 1.2rem 3rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);">🧠 Get NUPI Guidance</button>
+                        </div>
                     </div>
                     <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 12px;">
                         <h3 style="color: #66c2a5; margin-bottom: 1rem;">How it works:</h3>
@@ -2153,7 +2473,8 @@
                         </div>
                     </div>
                     <div style="text-align: center; padding: 2rem; background: #f0f9f7; border-radius: 12px;">
-                        <p style="color: #66c2a5; font-size: 1.2rem; font-weight: 600;">You are here. You are safe. You are present. 🌿</p>
+                        <p style="color: #66c2a5; font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem;">You are here. You are safe. You are present. 🌿</p>
+                        <button onclick="askNUPIForGuidance('grounding')" style="padding: 1.2rem 3rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);">🧠 Get NUPI Guidance</button>
                     </div>
                 `;
             } else if (exerciseId === 'gratitude') {
@@ -2711,8 +3032,8 @@
                 exerciseHTML = `
                     <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: #66c2a5; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
                     <h2 style="color: #66c2a5; margin-bottom: 2rem;">💕 Relationship Exercise</h2>
-                    <p style="color: #333; line-height: 1.8;">This exercise is available! Our AI therapist can provide personalized guidance.</p>
-                    <button onclick="document.getElementById('chatBubbleBtn').click(); this.closest('div').parentElement.remove();" style="width: 100%; padding: 1.5rem; background: linear-gradient(135deg, #66c2a5, #8dd3c7); color: white; border: none; border-radius: 15px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 2rem;">Open AI Therapist Chat</button>
+                    <p style="color: #333; line-height: 1.8;">This exercise is available! NUPI can provide personalized guidance.</p>
+                    <button onclick="document.getElementById('chatBubbleBtn').click(); this.closest('div').parentElement.remove();" style="width: 100%; padding: 1.5rem; background: linear-gradient(135deg, #66c2a5, #8dd3c7); color: white; border: none; border-radius: 15px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 2rem;">Chat with NUPI</button>
                 `;
             }
             
@@ -2721,44 +3042,104 @@
             document.body.appendChild(modal);
         }
         
+        let breathingExerciseState = {
+            isPaused: false,
+            cycle: 0,
+            phase: 0,
+            timer: null
+        };
+        
         function startBreathingExercise() {
             const circle = document.getElementById('breathingCircle');
             const text = document.getElementById('breathingInstruction');
             const btn = document.getElementById('startBreathingEx');
-            let cycle = 0;
-            let phase = 0;
+            
+            // Reset state
+            breathingExerciseState = {
+                isPaused: false,
+                cycle: 0,
+                phase: 0,
+                timer: null
+            };
             
             btn.style.display = 'none';
             
-            function breathe() {
-                if (cycle >= 4) {
-                    text.textContent = '✅ Exercise Complete! Well done.';
-                    text.style.color = '#66c2a5';
-                    circle.textContent = '✓';
-                    setTimeout(() => btn.style.display = 'block', 2000);
-                    return;
+            // Add control buttons
+            const controlsDiv = document.createElement('div');
+            controlsDiv.id = 'breathingControls';
+            controlsDiv.style.cssText = 'display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;';
+            controlsDiv.innerHTML = `
+                <button id="pauseBreathing" style="padding: 0.75rem 2rem; background: rgba(255,149,0,0.2); border: 2px solid #ff9500; color: #ff9500; border-radius: 10px; font-weight: 600; cursor: pointer;">⏸ Pause</button>
+                <button id="stopBreathing" style="padding: 0.75rem 2rem; background: rgba(255,59,48,0.2); border: 2px solid #ff3b30; color: #ff3b30; border-radius: 10px; font-weight: 600; cursor: pointer;">⏹ Stop</button>
+            `;
+            
+            // Insert controls after button
+            btn.parentElement.insertBefore(controlsDiv, btn.nextSibling);
+            
+            // Control handlers
+            document.getElementById('pauseBreathing').addEventListener('click', () => {
+                breathingExerciseState.isPaused = !breathingExerciseState.isPaused;
+                const pauseBtn = document.getElementById('pauseBreathing');
+                if (breathingExerciseState.isPaused) {
+                    pauseBtn.innerHTML = '▶️ Resume';
+                    pauseBtn.style.background = 'rgba(52,199,89,0.2)';
+                    pauseBtn.style.borderColor = '#34c759';
+                    pauseBtn.style.color = '#34c759';
+                    if (breathingExerciseState.timer) clearTimeout(breathingExerciseState.timer);
+                } else {
+                    pauseBtn.innerHTML = '⏸ Pause';
+                    pauseBtn.style.background = 'rgba(255,149,0,0.2)';
+                    pauseBtn.style.borderColor = '#ff9500';
+                    pauseBtn.style.color = '#ff9500';
+                    breathe(); // Resume
                 }
+            });
+            
+            document.getElementById('stopBreathing').addEventListener('click', () => {
+                if (breathingExerciseState.timer) clearTimeout(breathingExerciseState.timer);
+                text.textContent = 'Exercise stopped. Click Start to begin again.';
+                text.style.color = '#666';
+                circle.textContent = '4';
+                circle.style.transform = 'scale(1)';
+                btn.style.display = 'block';
+                document.getElementById('breathingControls').remove();
+                breathingExerciseState = { isPaused: false, cycle: 0, phase: 0, timer: null };
+            });
+            
+            function breathe() {
+                if (breathingExerciseState.isPaused) return;
                 
-                if (phase === 0) {
+                // No automatic stop - let user control it
+                
+                if (breathingExerciseState.phase === 0) {
                     circle.style.transform = 'scale(1.5)';
                     circle.style.boxShadow = '0 20px 60px rgba(102, 194, 165, 0.8)';
                     circle.textContent = '4';
-                    text.textContent = '🌬️ Breathe IN (4s)';
+                    text.textContent = `🌬️ Breathe IN (4s) - Cycle ${breathingExerciseState.cycle + 1}`;
                     text.style.color = '#66c2a5';
-                    setTimeout(() => { phase = 1; breathe(); }, 4000);
-                } else if (phase === 1) {
+                    breathingExerciseState.timer = setTimeout(() => { 
+                        breathingExerciseState.phase = 1; 
+                        breathe(); 
+                    }, 4000);
+                } else if (breathingExerciseState.phase === 1) {
                     circle.textContent = '7';
-                    text.textContent = '⏸️ HOLD (7s)';
+                    text.textContent = `⏸️ HOLD (7s) - Cycle ${breathingExerciseState.cycle + 1}`;
                     text.style.color = '#8dd3c7';
-                    setTimeout(() => { phase = 2; breathe(); }, 7000);
+                    breathingExerciseState.timer = setTimeout(() => { 
+                        breathingExerciseState.phase = 2; 
+                        breathe(); 
+                    }, 7000);
                 } else {
                     circle.style.transform = 'scale(1)';
                     circle.style.boxShadow = '0 10px 40px rgba(102, 194, 165, 0.4)';
                     circle.textContent = '8';
-                    text.textContent = '💨 Breathe OUT (8s)';
+                    text.textContent = `💨 Breathe OUT (8s) - Cycle ${breathingExerciseState.cycle + 1}`;
                     text.style.color = '#5ab89c';
-                    cycle++;
-                    setTimeout(() => { phase = 0; breathe(); }, 8000);
+                    breathingExerciseState.cycle++;
+                    breathingExerciseState.timer = setTimeout(() => { 
+                        breathingExerciseState.phase = 0; 
+                        breathe(); 
+                    }, 8000);
                 }
             }
             
@@ -2801,7 +3182,7 @@
             }
             
             // For remaining tools, show coming soon message
-            alert(`The ${toolId} tool is coming soon! For now, try our wellness games or chat with the AI therapist.`);
+            alert(`The ${toolId} tool is coming soon! For now, try our wellness games or chat with NUPI.`);
         }
 
         function openPodcast(podcastId) {
@@ -3182,6 +3563,1230 @@
                         
                         <p>🌟 <em>You deserve someone who's excited about you!</em></p>
                     `
+                },
+                'identity': {
+                    title: 'Maintaining Your Identity in a Relationship',
+                    content: `
+                        <h2>Maintaining Your Identity in a Relationship</h2>
+                        <p><strong>By Dr. Jasmine Lee | 11 min read</strong></p>
+                        
+                        <h3>The "We" vs "Me" Balance</h3>
+                        <p>Falling in love is beautiful, but losing yourself in the process isn't. Healthy relationships allow both people to maintain their individual identities while building something together.</p>
+                        
+                        <h3>Signs You're Losing Yourself</h3>
+                        <ul>
+                            <li>You can't remember your interests before the relationship</li>
+                            <li>You always defer to your partner's preferences</li>
+                            <li>You've stopped seeing friends</li>
+                            <li>You feel guilty pursuing solo activities</li>
+                            <li>You don't recognize yourself anymore</li>
+                            <li>Your opinions always match your partner's</li>
+                        </ul>
+                        
+                        <h3>Why Identity Matters</h3>
+                        <p>When you lose yourself, you lose what made your partner attracted to you in the first place. You also become dependent, resentful, and unfulfilled.</p>
+                        
+                        <h3>How to Maintain Your Identity</h3>
+                        <h4>1. Keep Your Hobbies Alive</h4>
+                        <p>That pottery class, book club, or hiking group? Don't abandon them. Your interests make you interesting!</p>
+                        
+                        <h4>2. Maintain Friendships</h4>
+                        <p>Your friends knew you before your partner. They're part of your support system and identity. Schedule regular friend time.</p>
+                        
+                        <h4>3. Have Solo Time</h4>
+                        <p>It's healthy to enjoy time apart. Take yourself to dinner, go for a solo walk, journal in a coffee shop.</p>
+                        
+                        <h4>4. Keep Your Career/Goals</h4>
+                        <p>Your ambitions matter. Don't sacrifice your career or dreams for the relationship.</p>
+                        
+                        <h4>5. Express Your Opinions</h4>
+                        <p>It's okay to disagree! Healthy relationships thrive on two distinct people with their own thoughts.</p>
+                        
+                        <h3>The "Interdependent" Sweet Spot</h3>
+                        <p>Not codependent (losing yourself), not independent (never connecting). <strong>Interdependent</strong>: Two whole people choosing to build together.</p>
+                        
+                        <h3>Conversation Starter with Your Partner</h3>
+                        <p>"I love us, and I also want to make sure we both have space to be ourselves. Can we talk about how we can support each other's individual growth?"</p>
+                        
+                        <h3>Rediscovering Yourself</h3>
+                        <p>If you've already lost touch with who you are:</p>
+                        <ol>
+                            <li>List what you loved before the relationship</li>
+                            <li>Choose one thing to reconnect with this week</li>
+                            <li>Schedule it like an important meeting</li>
+                            <li>Notice how you feel when you're being authentically you</li>
+                        </ol>
+                        
+                        <p><strong>Remember:</strong> The strongest couples are made of two strong individuals.</p>
+                        
+                        <p>💫 <em>You can be deeply in love AND deeply yourself.</em></p>
+                    `
+                },
+                'attachment': {
+                    title: 'Understanding Attachment Styles',
+                    content: `
+                        <h2>Understanding Attachment Styles</h2>
+                        <p><strong>By Dr. Marcus Thompson | 18 min read</strong></p>
+                        
+                        <h3>What Are Attachment Styles?</h3>
+                        <p>Your attachment style is your blueprint for relationships, formed in childhood based on how your caregivers responded to your needs. It affects how you connect, trust, and show love.</p>
+                        
+                        <h3>The Four Attachment Styles</h3>
+                        
+                        <h4>1. Secure Attachment (50% of people)</h4>
+                        <p><strong>Characteristics:</strong></p>
+                        <ul>
+                            <li>Comfortable with intimacy and independence</li>
+                            <li>Trusts easily without being naive</li>
+                            <li>Communicates needs directly</li>
+                            <li>Handles conflict constructively</li>
+                            <li>Emotionally available</li>
+                        </ul>
+                        <p><strong>In Relationships:</strong> "I love you, and I also need my own time. Both can be true."</p>
+                        
+                        <h4>2. Anxious-Preoccupied (20%)</h4>
+                        <p><strong>Characteristics:</strong></p>
+                        <ul>
+                            <li>Craves closeness intensely</li>
+                            <li>Fears abandonment</li>
+                            <li>Needs constant reassurance</li>
+                            <li>Overanalyzes texts and actions</li>
+                            <li>Can be clingy or needy</li>
+                        </ul>
+                        <p><strong>In Relationships:</strong> "Why haven't they texted back? Do they still love me?"</p>
+                        
+                        <h4>3. Dismissive-Avoidant (25%)</h4>
+                        <p><strong>Characteristics:</strong></p>
+                        <ul>
+                            <li>Values independence above all</li>
+                            <li>Uncomfortable with emotional intimacy</li>
+                            <li>Pulls away when things get serious</li>
+                            <li>Self-reliant to a fault</li>
+                            <li>Downplays emotions</li>
+                        </ul>
+                        <p><strong>In Relationships:</strong> "I don't need anyone. I'm fine on my own."</p>
+                        
+                        <h4>4. Fearful-Avoidant (5%)</h4>
+                        <p><strong>Characteristics:</strong></p>
+                        <ul>
+                            <li>Wants intimacy but fears it</li>
+                            <li>Push-pull dynamic</li>
+                            <li>Intense but unstable relationships</li>
+                            <li>Deep fear of rejection AND engulfment</li>
+                            <li>Conflicted about needs</li>
+                        </ul>
+                        <p><strong>In Relationships:</strong> "Come closer! No, get away! Wait, don't leave!"</p>
+                        
+                        <h3>Common Pairings</h3>
+                        <p><strong>Anxious + Avoidant = Toxic Dance</strong></p>
+                        <p>The anxious person pursues, the avoidant person withdraws. This confirms both their fears and creates a painful cycle.</p>
+                        
+                        <p><strong>Secure + Anyone = Growth</strong></p>
+                        <p>Secure partners can help insecure partners feel safer and move toward security themselves.</p>
+                        
+                        <h3>Healing Your Attachment Style</h3>
+                        <h4>For Anxious Types:</h4>
+                        <ul>
+                            <li>Practice self-soothing when anxious</li>
+                            <li>Build self-esteem outside the relationship</li>
+                            <li>Communicate needs without demanding</li>
+                            <li>Choose secure or working-on-it partners</li>
+                        </ul>
+                        
+                        <h4>For Avoidant Types:</h4>
+                        <ul>
+                            <li>Practice vulnerability in small doses</li>
+                            <li>Notice when you're withdrawing</li>
+                            <li>Communicate instead of stonewalling</li>
+                            <li>Challenge beliefs about independence</li>
+                        </ul>
+                        
+                        <h3>Moving Toward Security</h3>
+                        <p>Good news: Attachment styles aren't fixed! With awareness, therapy, and healthy relationships, you can become more securely attached.</p>
+                        
+                        <p><strong>Action step:</strong> Identify your attachment style, then choose one healing strategy to practice this week.</p>
+                        
+                        <p>🌱 <em>You're not broken—you're just working with an old blueprint. You can create a new one.</em></p>
+                    `
+                },
+                'longdistance': {
+                    title: 'Thriving in Long-Distance Relationships',
+                    content: `
+                        <h2>Thriving in Long-Distance Relationships</h2>
+                        <p><strong>By Dr. Priya Sharma | 13 min read</strong></p>
+                        
+                        <h3>The LDR Reality</h3>
+                        <p>Long-distance relationships require extra effort, but they can work beautifully with the right strategies and mindset. 58% of long-distance couples who stay intentional about connection end up together long-term.</p>
+                        
+                        <h3>Communication is EVERYTHING</h3>
+                        <h4>Daily Connection Rituals</h4>
+                        <ul>
+                            <li><strong>Good morning texts:</strong> Start each other's day with love</li>
+                            <li><strong>Video call dates:</strong> Schedule at least 2-3 per week</li>
+                            <li><strong>Bedtime calls:</strong> Fall asleep "together"</li>
+                            <li><strong>Voice notes:</strong> Hear each other's voices throughout the day</li>
+                        </ul>
+                        
+                        <h4>Go Beyond Surface Level</h4>
+                        <p>Don't just report your day—share feelings, dreams, fears. Use apps like:</p>
+                        <ul>
+                            <li><strong>Icebreaker questions:</strong> "What's your biggest fear about us?"</li>
+                            <li><strong>Couples apps:</strong> Lasting, Paired, Happy Couple</li>
+                            <li><strong>Shared journals:</strong> Google Doc where you both write</li>
+                        </ul>
+                        
+                        <h3>Quality Time from Afar</h3>
+                        <h4>Creative Virtual Dates</h4>
+                        <ul>
+                            <li>🍿 <strong>Netflix Party:</strong> Watch movies simultaneously</li>
+                            <li>🎮 <strong>Online games:</strong> Words With Friends, mobile games</li>
+                            <li>🍝 <strong>Cook together:</strong> Video call while making the same recipe</li>
+                            <li>📖 <strong>Book club for two:</strong> Read and discuss books</li>
+                            <li>🎨 <strong>Virtual museum tours:</strong> Explore together online</li>
+                            <li>🌃 <strong>Virtual walks:</strong> FaceTime while walking in your areas</li>
+                        </ul>
+                        
+                        <h3>Managing the Challenges</h3>
+                        <h4>1. Different Time Zones</h4>
+                        <p>Download a world clock app. Find overlapping free time and protect it. Be flexible about sleep schedules when possible.</p>
+                        
+                        <h4>2. Loneliness</h4>
+                        <p>Build a local support system. Stay busy with hobbies and friends. Don't put life on hold waiting for reunion.</p>
+                        
+                        <h4>3. Jealousy</h4>
+                        <p>Trust is crucial. Share your social life openly. Introduce each other (virtually) to friends. Don't let insecurity create problems that don't exist.</p>
+                        
+                        <h4>4. Physical Intimacy</h4>
+                        <p>Be creative: sexting, voice notes, video calls. Send physical reminders—perfume/cologne on a pillowcase, care packages, handwritten letters.</p>
+                        
+                        <h3>Plan Your Reunions</h3>
+                        <p>Always have the next visit scheduled! It gives you both something to look forward to.</p>
+                        
+                        <h4>When You're Together:</h4>
+                        <ul>
+                            <li>Balance couple time with seeing friends/family</li>
+                            <li>Do both exciting activities AND mundane tasks together</li>
+                            <li>Take lots of photos for between visits</li>
+                            <li>Don't pressure every moment to be perfect</li>
+                        </ul>
+                        
+                        <h3>The End Game</h3>
+                        <p>Have honest conversations about:</p>
+                        <ul>
+                            <li>How long will the distance last?</li>
+                            <li>Who might relocate? When?</li>
+                            <li>What's the plan if neither can move?</li>
+                            <li>Are we both committed to making this work?</li>
+                        </ul>
+                        
+                        <h3>When to Call It</h3>
+                        <p>Consider ending if:</p>
+                        <ul>
+                            <li>There's no realistic end date in sight</li>
+                            <li>One person isn't putting in effort</li>
+                            <li>You're just avoiding breakup, not building future</li>
+                            <li>The distance is indefinite with no plan</li>
+                        </ul>
+                        
+                        <p><strong>Remember:</strong> Distance is temporary if you're both committed. The effort you put in now is building a strong foundation.</p>
+                        
+                        <p>✈️ <em>The best part? When you finally close the distance, you'll appreciate each other even more.</em></p>
+                    `
+                },
+                'passion': {
+                    title: 'Keeping the Spark Alive',
+                    content: `
+                        <h2>Keeping the Spark Alive</h2>
+                        <p><strong>By Dr. Sofia Martinez | 16 min read</strong></p>
+                        
+                        <h3>The Passion Lifecycle</h3>
+                        <p>That electric, can't-keep-your-hands-off-each-other feeling? It's called limerence, and biologically, it lasts 12-18 months. But here's the secret: what comes after can be even better if you nurture it intentionally.</p>
+                        
+                        <h3>Why Passion Fades (And It's Normal!)</h3>
+                        <ul>
+                            <li><strong>Familiarity:</strong> The mystery decreases</li>
+                            <li><strong>Routine:</strong> Life gets predictable</li>
+                            <li><strong>Stress:</strong> Work, bills, responsibilities</li>
+                            <li><strong>Kids:</strong> Exhaustion and lack of alone time</li>
+                            <li><strong>Complacency:</strong> Stopping the effort</li>
+                        </ul>
+                        
+                        <h3>Rekindling Physical Intimacy</h3>
+                        <h4>1. Schedule Sex (Yes, Really!)</h4>
+                        <p>Spontaneity is overrated. Put it on the calendar and build anticipation. Send flirty texts throughout the day leading up to it.</p>
+                        
+                        <h4>2. Prioritize Non-Sexual Touch</h4>
+                        <ul>
+                            <li>Hold hands while walking</li>
+                            <li>Hug for 20 seconds (releases oxytocin)</li>
+                            <li>Kiss goodbye and hello—really kiss, not a peck</li>
+                            <li>Massage each other's shoulders</li>
+                            <li>Cuddle without expectation of sex</li>
+                        </ul>
+                        
+                        <h4>3. Try Something New in the Bedroom</h4>
+                        <ul>
+                            <li>New location (not just the bed)</li>
+                            <li>New time (morning instead of night)</li>
+                            <li>Send each other articles about what you want to try</li>
+                            <li>Take a "Mojo Upgrade" quiz together (shows only mutual interests)</li>
+                        </ul>
+                        
+                        <h3>Emotional Intimacy = Better Sex</h3>
+                        <p>Physical passion without emotional connection is empty. Nurture your emotional bond:</p>
+                        <ul>
+                            <li><strong>Weekly check-ins:</strong> "How are we doing? What do you need from me?"</li>
+                            <li><strong>Express appreciation:</strong> Daily specific compliments</li>
+                            <li><strong>Share vulnerabilities:</strong> Talk about fears and dreams</li>
+                            <li><strong>Laugh together:</strong> Watch comedies, be silly, play</li>
+                        </ul>
+                        
+                        <h3>Novelty Reignites Desire</h3>
+                        <p>Do NEW things together to spike dopamine:</p>
+                        <ul>
+                            <li>Take a class together (dance, cooking, pottery)</li>
+                            <li>Travel to new places</li>
+                            <li>Try adventure activities (zip-lining, escape rooms)</li>
+                            <li>Go to events you normally wouldn't</li>
+                            <li>Change up your date night routine</li>
+                        </ul>
+                        
+                        <h3>The "State of Desire" Approach</h3>
+                        <p>Esther Perel's wisdom: Desire needs space. You can't want someone who's always there.</p>
+                        <ul>
+                            <li>Maintain separate interests</li>
+                            <li>Miss each other occasionally</li>
+                            <li>See each other through fresh eyes (watch them do what they love)</li>
+                            <li>Cultivate mystery—you don't have to share EVERYTHING</li>
+                        </ul>
+                        
+                        <h3>Address the Real Issues</h3>
+                        <p>Sometimes low passion is a symptom of deeper problems:</p>
+                        <ul>
+                            <li><strong>Resentment:</strong> Unresolved conflicts kill desire</li>
+                            <li><strong>Stress:</strong> Hard to feel sexy when overwhelmed</li>
+                            <li><strong>Body image:</strong> Feeling unsexy about yourself</li>
+                            <li><strong>Mismatched libidos:</strong> Need to find compromise</li>
+                            <li><strong>Medical issues:</strong> Hormones, medications, depression</li>
+                        </ul>
+                        
+                        <h3>The 6-Week Passion Reboot</h3>
+                        <p><strong>Week 1-2:</strong> Daily 6-second kisses + compliments</p>
+                        <p><strong>Week 3-4:</strong> Schedule intimacy 2x + try one new thing</p>
+                        <p><strong>Week 5-6:</strong> Plan a unique date + have a "desires" conversation</p>
+                        
+                        <h3>When to Seek Help</h3>
+                        <p>Consider sex therapy if:</p>
+                        <ul>
+                            <li>You haven't been intimate in 6+ months</li>
+                            <li>One partner is deeply unhappy</li>
+                            <li>There's pain or dysfunction</li>
+                            <li>Past trauma affects intimacy</li>
+                        </ul>
+                        
+                        <p><strong>Remember:</strong> Passion ebbs and flows. What matters is that you're both willing to invest in keeping the fire burning.</p>
+                        
+                        <p>🔥 <em>Long-term passion isn't about butterflies—it's about choosing each other again and again.</em></p>
+                    `
+                },
+                'toxicvshealth': {
+                    title: 'Toxic vs Healthy Relationships',
+                    content: `
+                        <h2>Toxic vs Healthy Relationships</h2>
+                        <p><strong>By Dr. Jordan Blake | 17 min read</strong></p>
+                        
+                        <h3>Know the Difference</h3>
+                        <p>Not all relationship problems mean it's toxic. But some patterns are red flags that shouldn't be ignored. Here's how to tell the difference.</p>
+                        
+                        <h3>Healthy Relationship Signs</h3>
+                        <ul>
+                            <li>✅ <strong>Trust:</strong> No need to check phone or track location</li>
+                            <li>✅ <strong>Communication:</strong> You can talk about anything without fear</li>
+                            <li>✅ <strong>Respect:</strong> They value your opinions even when disagreeing</li>
+                            <li>✅ <strong>Support:</strong> They celebrate your wins and comfort your losses</li>
+                            <li>✅ <strong>Independence:</strong> You can have your own friends and interests</li>
+                            <li>✅ <strong>Equality:</strong> Decisions are made together</li>
+                            <li>✅ <strong>Growth:</strong> You both become better versions of yourselves</li>
+                            <li>✅ <strong>Conflict resolution:</strong> You fight fair and actually solve problems</li>
+                        </ul>
+                        
+                        <h3>Toxic Relationship Signs</h3>
+                        <ul>
+                            <li>🚩 <strong>Control:</strong> They dictate what you wear, who you see, where you go</li>
+                            <li>🚩 <strong>Jealousy:</strong> Irrational accusations and possessiveness</li>
+                            <li>🚩 <strong>Manipulation:</strong> Guilt-tripping, gaslighting, emotional blackmail</li>
+                            <li>🚩 <strong>Disrespect:</strong> Name-calling, put-downs, public humiliation</li>
+                            <li>🚩 <strong>Isolation:</strong> They drive wedges between you and loved ones</li>
+                            <li>🚩 <strong>Walking on eggshells:</strong> You're constantly afraid of upsetting them</li>
+                            <li>🚩 <strong>One-sided:</strong> Your needs are never prioritized</li>
+                            <li>🚩 <strong>Cycles:</strong> Constant drama, breakup-makeup patterns</li>
+                        </ul>
+                        
+                        <h3>The Toxic Patterns</h3>
+                        <h4>1. Gaslighting</h4>
+                        <p>"That never happened" or "You're too sensitive" or "You're crazy" — making you doubt your reality.</p>
+                        
+                        <h4>2. Love Bombing Then Devaluing</h4>
+                        <p>Intense affection and attention at first, then criticism and coldness once you're hooked.</p>
+                        
+                        <h4>3. Silent Treatment</h4>
+                        <p>Withholding communication as punishment instead of healthy space to cool down.</p>
+                        
+                        <h4>4. Blame-Shifting</h4>
+                        <p>"You made me do this" — refusing to take responsibility for their actions.</p>
+                        
+                        <h4>5. Keeping Score</h4>
+                        <p>"I did this for you, so you owe me" — relationships aren't transactions.</p>
+                        
+                        <h3>But I Love Them...</h3>
+                        <p>Love isn't enough if it's destroying you. Ask yourself:</p>
+                        <ul>
+                            <li>Do I feel worse about myself since being with them?</li>
+                            <li>Am I constantly anxious or walking on eggshells?</li>
+                            <li>Have I lost touch with friends/family?</li>
+                            <li>Do I make excuses for their behavior?</li>
+                            <li>Is there a pattern of behavior, not just one incident?</li>
+                        </ul>
+                        
+                        <h3>Can Toxic Relationships Change?</h3>
+                        <p>Rarely, and only if:</p>
+                        <ul>
+                            <li>The toxic partner acknowledges the problem</li>
+                            <li>They actively get professional help (therapy)</li>
+                            <li>You see <strong>sustained</strong> behavior change (6+ months)</li>
+                            <li>You're not staying out of fear or obligation</li>
+                        </ul>
+                        
+                        <p><strong>Reality check:</strong> Most toxic people don't change. And you can't love someone into changing.</p>
+                        
+                        <h3>How to Leave Safely</h3>
+                        <ol>
+                            <li><strong>Make a plan:</strong> Have a place to go, financial resources ready</li>
+                            <li><strong>Tell someone:</strong> Friend, family, or therapist</li>
+                            <li><strong>Document everything:</strong> Texts, emails, incidents</li>
+                            <li><strong>Block everywhere:</strong> Phone, social media, email after the breakup</li>
+                            <li><strong>Get support:</strong> Therapist, support group, hotline</li>
+                        </ol>
+                        
+                        <h3>Resources</h3>
+                        <p>📞 <strong>National Domestic Violence Hotline:</strong> 1-800-799-7233</p>
+                        <p>💬 <strong>Text:</strong> "START" to 88788</p>
+                        <p>🌐 <strong>Online chat:</strong> thehotline.org</p>
+                        
+                        <p><strong>Remember:</strong> You deserve a relationship where you feel safe, respected, and valued. Always.</p>
+                        
+                        <p>💜 <em>Leaving is scary, but staying in toxicity is scarier. You're stronger than you think.</em></p>
+                    `
+                },
+                'parenting': {
+                    title: 'Parenting Together as Partners',
+                    content: `
+                        <h2>Parenting Together as Partners</h2>
+                        <p><strong>By Dr. Rachel Green | 14 min read</strong></p>
+                        
+                        <h3>The Co-Parenting Challenge</h3>
+                        <p>Kids are incredible, but they're also stressful. 67% of couples report a decrease in relationship satisfaction after having children. The good news? With intention, you can not only survive parenthood—you can use it to strengthen your partnership.</p>
+                        
+                        <h3>Before Kids: Have THE Talk</h3>
+                        <p>Discuss these BEFORE baby arrives:</p>
+                        <ul>
+                            <li>Parenting philosophy (discipline, education, religion)</li>
+                            <li>Division of labor expectations</li>
+                            <li>Career plans (will anyone stay home?)</li>
+                            <li>Financial planning</li>
+                            <li>Extended family involvement</li>
+                            <li>How you'll protect couple time</li>
+                        </ul>
+                        
+                        <h3>United Front Parenting</h3>
+                        <h4>1. Agree on Core Rules</h4>
+                        <p>Bedtime, screen time, discipline—get aligned on the non-negotiables. Kids will exploit any weakness!</p>
+                        
+                        <h4>2. Never Undermine Each Other</h4>
+                        <p>If you disagree with your partner's decision, discuss it privately later. Present a united front to kids.</p>
+                        
+                        <h4>3. Back Each Other Up</h4>
+                        <p>"What did your mom/dad say?" Don't let kids play you against each other.</p>
+                        
+                        <h4>4. Respect Different Styles</h4>
+                        <p>One parent might be strict, the other lenient. Find balance, not perfection.</p>
+                        
+                        <h3>Division of Labor</h3>
+                        <p>The #1 source of conflict! Create a visible chart:</p>
+                        
+                        <h4>Daily Tasks:</h4>
+                        <ul>
+                            <li>Morning routine (breakfast, dressing, school prep)</li>
+                            <li>Pickup/dropoff</li>
+                            <li>Homework help</li>
+                            <li>Dinner</li>
+                            <li>Bath time</li>
+                            <li>Bedtime routine</li>
+                        </ul>
+                        
+                        <h4>Mental Load:</h4>
+                        <p>Don't forget the invisible work—planning, remembering, scheduling. This needs to be shared too!</p>
+                        
+                        <h3>Protecting Your Relationship</h3>
+                        <h4>1. Weekly Date Nights</h4>
+                        <p>Non-negotiable! Even if it's 30 minutes after kids are asleep. No parent talk allowed.</p>
+                        
+                        <h4>2. Show Affection in Front of Kids</h4>
+                        <p>Hug, kiss, hold hands. It models healthy relationships and helps kids feel secure.</p>
+                        
+                        <h4>3. Bedtime for Adults Too</h4>
+                        <p>Kids in bed by 8pm = 2 hours of couple time before sleep.</p>
+                        
+                        <h4>4. Tag Team for Breaks</h4>
+                        <p>"You take 2 hours Saturday morning, I'll take Sunday morning." Everyone needs solo time.</p>
+                        
+                        <h3>Common Co-Parenting Conflicts</h3>
+                        <h4>Problem: "You're not doing enough!"</h4>
+                        <p><strong>Solution:</strong> Create that visual chart. Discuss weekly what's working and what needs adjustment.</p>
+                        
+                        <h4>Problem: Different discipline approaches</h4>
+                        <p><strong>Solution:</strong> Agree on consequences together beforehand. "If X happens, consequence is Y."</p>
+                        
+                        <h4>Problem: One parent is "fun," other is "strict"</h4>
+                        <p><strong>Solution:</strong> Both need to do fun stuff AND discipline. Rotate roles.</p>
+                        
+                        <h4>Problem: Exhausted, no intimacy</h4>
+                        <p><strong>Solution:</strong> Schedule it! Afternoon delight while kids nap? Morning before they wake? Get creative.</p>
+                        
+                        <h3>When Parents Disagree</h3>
+                        <ol>
+                            <li><strong>Pause:</strong> "We need to discuss this privately."</li>
+                            <li><strong>Listen:</strong> "Why do you feel that way about this?"</li>
+                            <li><strong>Find common ground:</strong> "We both want what's best for them."</li>
+                            <li><strong>Compromise:</strong> "How about we try it your way for a month and reassess?"</li>
+                        </ol>
+                        
+                        <h3>Keeping Your Identity</h3>
+                        <p>You're not just "Mom" and "Dad"—you're still individuals!</p>
+                        <ul>
+                            <li>Maintain hobbies (even in shorter doses)</li>
+                            <li>See friends without kids</li>
+                            <li>Talk about non-kid topics</li>
+                            <li>Remember who you were before kids</li>
+                        </ul>
+                        
+                        <h3>When Kids Leave the Nest</h3>
+                        <p>Couples who only focus on kids often struggle when they leave. Nurture your relationship throughout so you're not strangers at empty nest.</p>
+                        
+                        <p><strong>Remember:</strong> The best thing you can do for your kids is have a strong, loving relationship with your partner. They learn about love by watching you.</p>
+                        
+                        <p>👨‍👩‍👧‍👦 <em>You're a team. Kids are your shared project, but your relationship is the foundation.</em></p>
+                    `
+                },
+                'finance': {
+                    title: 'Money Conversations in Relationships',
+                    content: `
+                        <h2>Money Conversations in Relationships</h2>
+                        <p><strong>By Dr. Kevin Chen | 15 min read</strong></p>
+                        
+                        <h3>Why Money Matters</h3>
+                        <p>Money is the #1 cause of relationship stress. Not because of the actual numbers, but because of what money represents: values, security, power, freedom, identity.</p>
+                        
+                        <h3>Have the Money Talk EARLY</h3>
+                        <p>Before moving in together or getting engaged, discuss:</p>
+                        <ul>
+                            <li>Current debt (student loans, credit cards, etc.)</li>
+                            <li>Credit score</li>
+                            <li>Income and savings</li>
+                            <li>Spending habits and money mindset</li>
+                            <li>Financial goals (retirement, house, travel)</li>
+                            <li>How your parents handled money</li>
+                        </ul>
+                        
+                        <h3>Money Personalities</h3>
+                        <h4>The Saver</h4>
+                        <p>Security-focused, conservative spending, anxiety about waste.</p>
+                        
+                        <h4>The Spender</h4>
+                        <p>YOLO mindset, enjoys experiences now, worries less about future.</p>
+                        
+                        <h4>The Avoider</h4>
+                        <p>Ignores bills, doesn't check accounts, anxious about finances.</p>
+                        
+                        <h4>The Investor</h4>
+                        <p>Strategic, plans long-term, researches every decision.</p>
+                        
+                        <p><strong>Important:</strong> Opposites often attract, but this causes friction! Understanding each other's money personality helps.</p>
+                        
+                        <h3>Merging Finances: Options</h3>
+                        <h4>1. Fully Joint (Everything Combined)</h4>
+                        <p><strong>Pros:</strong> Simple, transparent, "our money"</p>
+                        <p><strong>Cons:</strong> Loss of autonomy, potential conflict over spending</p>
+                        
+                        <h4>2. Fully Separate (Keep Everything Apart)</h4>
+                        <p><strong>Pros:</strong> Independence, less conflict</p>
+                        <p><strong>Cons:</strong> Complicated for shared expenses, less partnership feeling</p>
+                        
+                        <h4>3. Hybrid (Shared + Individual)</h4>
+                        <p><strong>Pros:</strong> Balance of partnership and autonomy</p>
+                        <p><strong>Cons:</strong> Requires more management</p>
+                        <p><em>Most popular option! Joint account for bills/savings, separate accounts for discretionary spending.</em></p>
+                        
+                        <h3>Setting Up Your System</h3>
+                        <h4>Step 1: List All Income Sources</h4>
+                        <h4>Step 2: List All Shared Expenses</h4>
+                        <ul>
+                            <li>Rent/mortgage</li>
+                            <li>Utilities</li>
+                            <li>Groceries</li>
+                            <li>Insurance</li>
+                            <li>Subscriptions</li>
+                            <li>Date nights/entertainment</li>
+                        </ul>
+                        
+                        <h4>Step 3: Decide Contribution Method</h4>
+                        <ul>
+                            <li><strong>50/50:</strong> Each pays half (fair if income is similar)</li>
+                            <li><strong>Proportional:</strong> Each pays based on income percentage (fair if big income gap)</li>
+                            <li><strong>One pays all bills:</strong> Other contributes differently (rare but works for some)</li>
+                        </ul>
+                        
+                        <h4>Step 4: Set Individual "Fun Money" Limits</h4>
+                        <p>$X per month each person can spend no questions asked.</p>
+                        
+                        <h3>Monthly Money Date</h3>
+                        <p>Schedule 30 minutes monthly to:</p>
+                        <ol>
+                            <li>Review spending together</li>
+                            <li>Check progress toward goals</li>
+                            <li>Adjust budget if needed</li>
+                            <li>Discuss upcoming expenses</li>
+                            <li>Celebrate wins!</li>
+                        </ol>
+                        
+                        <h3>Handling Financial Disagreements</h3>
+                        <h4>Rule #1: Big Purchases Require Discussion</h4>
+                        <p>Set a threshold: "Anything over $X requires joint approval."</p>
+                        
+                        <h4>Rule #2: No Financial Secrets</h4>
+                        <p>Secret credit cards, hidden purchases, undisclosed debt — relationship killers.</p>
+                        
+                        <h4>Rule #3: Compromise</h4>
+                        <p>Saver wants to save 40%, Spender wants to save 10%? Meet at 25%.</p>
+                        
+                        <h3>Common Money Conflicts</h3>
+                        <h4>"You spend too much on [X]!"</h4>
+                        <p><strong>Solution:</strong> Set "fun money" budgets. Within that, no judgment.</p>
+                        
+                        <h4>"I make more, so I should have more say!"</h4>
+                        <p><strong>Solution:</strong> Nope. Equal partnership regardless of income. Non-financial contributions (childcare, housework) have value too.</p>
+                        
+                        <h4>"You never want to spend on anything fun!"</h4>
+                        <p><strong>Solution:</strong> Budget for fun! Put experiences in the plan, not as afterthought.</p>
+                        
+                        <h3>Financial Goals as a Couple</h3>
+                        <ul>
+                            <li>Emergency fund (3-6 months expenses)</li>
+                            <li>Debt payoff plan</li>
+                            <li>Retirement savings</li>
+                            <li>Down payment for house</li>
+                            <li>Dream vacation fund</li>
+                            <li>Kids' education</li>
+                        </ul>
+                        
+                        <h3>When One Partner Overspends</h3>
+                        <p>If it's a pattern that threatens financial health:</p>
+                        <ol>
+                            <li>Have a calm conversation about the impact</li>
+                            <li>Understand WHY (emotional spending? addiction?)</li>
+                            <li>Set up accountability (alerts, spending limits)</li>
+                            <li>Consider therapy if it's compulsive</li>
+                        </ol>
+                        
+                        <p><strong>Remember:</strong> You're on the same team. It's not "my money vs your money"—it's OUR financial future together.</p>
+                        
+                        <p>💰 <em>Talk about money openly now to avoid fighting about it later.</em></p>
+                    `
+                },
+                'lgbtq': {
+                    title: 'LGBTQ+ Relationship Support',
+                    content: `
+                        <h2>LGBTQ+ Relationship Support</h2>
+                        <p><strong>By Dr. Taylor Brooks | 12 min read</strong></p>
+                        
+                        <h3>You Belong Here</h3>
+                        <p>Love is love, and healthy relationship principles apply to everyone—but LGBTQ+ relationships also face unique challenges. You deserve support that sees and affirms your identity.</p>
+                        
+                        <h3>Unique Challenges</h3>
+                        <h4>1. Coming Out (Again and Again)</h4>
+                        <p>Coming out isn't one conversation—it's ongoing. Every new job, friend group, or family gathering requires a decision about disclosure.</p>
+                        <ul>
+                            <li><strong>As a couple:</strong> Discuss comfort levels about being "out" in different contexts</li>
+                            <li><strong>Support each other:</strong> One partner might be more out than the other—respect that</li>
+                            <li><strong>No pressure:</strong> Coming out is personal and timing matters</li>
+                        </ul>
+                        
+                        <h4>2. Family Acceptance Issues</h4>
+                        <p>Not everyone's family embraces their LGBTQ+ identity. This affects relationships.</p>
+                        <ul>
+                            <li>Your partner needs to stand up for you with their family</li>
+                            <li>Set boundaries with unsupportive family members</li>
+                            <li>Create "chosen family" with supportive friends</li>
+                            <li>Consider couples therapy to navigate family dynamics</li>
+                        </ul>
+                        
+                        <h4>3. Societal Discrimination</h4>
+                        <p>Microaggressions, stares, comments—they're exhausting and affect mental health.</p>
+                        <ul>
+                            <li>Check in with each other after stressful situations</li>
+                            <li>Find LGBTQ+-affirming spaces to just BE</li>
+                            <li>Support each other's mental health needs</li>
+                        </ul>
+                        
+                        <h4>4. Minority Stress</h4>
+                        <p>The chronic stress of being marginalized takes a toll. Higher rates of anxiety, depression, and substance use in LGBTQ+ communities aren't because being LGBTQ+ is wrong—it's because discrimination is harmful.</p>
+                        
+                        <h3>Relationship Strengths</h3>
+                        <p>LGBTQ+ relationships often have unique strengths:</p>
+                        <ul>
+                            <li>✨ <strong>Less rigid gender roles:</strong> You create your own relationship rules</li>
+                            <li>✨ <strong>Deeper communication:</strong> Had to articulate identity, so often better at expressing needs</li>
+                            <li>✨ <strong>Strong community:</strong> LGBTQ+ chosen family provides amazing support</li>
+                            <li>✨ <strong>Resilience:</strong> Overcome adversity together</li>
+                        </ul>
+                        
+                        <h3>Communication in LGBTQ+ Relationships</h3>
+                        <h4>Define Your Relationship</h4>
+                        <p>Without heteronormative scripts, you get to decide what works for you!</p>
+                        <ul>
+                            <li>Are you monogamous or open?</li>
+                            <li>Who does what household tasks? (No default gender roles)</li>
+                            <li>How do you label each other? (Partner, boyfriend, girlfriend, spouse, etc.)</li>
+                            <li>What does commitment look like for you?</li>
+                        </ul>
+                        
+                        <h4>Navigate Identity Evolution</h4>
+                        <p>Identity can be fluid. Support each other through:</p>
+                        <ul>
+                            <li>Pronoun changes</li>
+                            <li>Name changes</li>
+                            <li>Transition processes</li>
+                            <li>Sexuality evolution</li>
+                        </ul>
+                        
+                        <h3>Sex and Intimacy</h3>
+                        <p>Talk openly about:</p>
+                        <ul>
+                            <li>What feels good (no assumptions based on anatomy)</li>
+                            <li>Dysphoria triggers (if applicable)</li>
+                            <li>Boundaries and preferences</li>
+                            <li>Desires and fantasies</li>
+                        </ul>
+                        
+                        <h3>Finding Affirming Support</h3>
+                        <h4>Look for LGBTQ+-Affirming Therapists</h4>
+                        <ul>
+                            <li>Ask: "Do you have experience working with LGBTQ+ clients?"</li>
+                            <li>Check directories: Psychology Today filter, NQTTCN, OutCare</li>
+                            <li>Avoid: Anyone who mentions "conversion therapy" or isn't affirming</li>
+                        </ul>
+                        
+                        <h4>Community Resources</h4>
+                        <ul>
+                            <li>🌈 <strong>The Trevor Project:</strong> 1-866-488-7386 (crisis support for LGBTQ+ youth)</li>
+                            <li>🏳️‍⚧️ <strong>Trans Lifeline:</strong> 877-565-8860 (US), 877-330-6366 (Canada)</li>
+                            <li>💬 <strong>LGBTQ+ Discord/Slack communities:</strong> Online support groups</li>
+                            <li>🏘️ <strong>Local LGBTQ+ centers:</strong> Events, groups, resources</li>
+                        </ul>
+                        
+                        <h3>Relationship Types</h3>
+                        <h4>Monogamous</h4>
+                        <p>Exclusive romantic and sexual relationship. Totally valid!</p>
+                        
+                        <h4>Ethically Non-Monogamous</h4>
+                        <p>Open relationships, polyamory, etc. Also valid! Requires clear communication and boundaries.</p>
+                        
+                        <h4>Chosen Family Structures</h4>
+                        <p>Some LGBTQ+ folks create family-like bonds with friends. These relationships are just as important as romantic ones.</p>
+                        
+                        <h3>Dealing with Internalized Homophobia/Transphobia</h3>
+                        <p>Sometimes we absorb negative messages about our identities. This can show up as:</p>
+                        <ul>
+                            <li>Shame about your identity</li>
+                            <li>Hiding your relationship</li>
+                            <li>Self-sabotage</li>
+                            <li>Judgment of other LGBTQ+ people</li>
+                        </ul>
+                        
+                        <p><strong>Healing:</strong> Therapy, LGBTQ+ community, pride events, affirming media, self-compassion work.</p>
+                        
+                        <h3>Legal Considerations</h3>
+                        <ul>
+                            <li>Marriage equality (where available)</li>
+                            <li>Power of attorney and healthcare directives</li>
+                            <li>Adoption/foster care rights</li>
+                            <li>Name and gender marker changes</li>
+                            <li>Know your local rights</li>
+                        </ul>
+                        
+                        <p><strong>Remember:</strong> Your love is valid, beautiful, and deserves celebration. You don't need to justify your existence or your relationship to anyone.</p>
+                        
+                        <p>🏳️‍🌈 <em>You are loved. You are worthy. You are enough.</em></p>
+                    `
+                },
+                'growth': {
+                    title: 'Growing Together Through Life Changes',
+                    content: `
+                        <h2>Growing Together Through Life Changes</h2>
+                        <p><strong>By Dr. Amanda Foster | 13 min read</strong></p>
+                        
+                        <h3>Change is Inevitable</h3>
+                        <p>Jobs change. Bodies change. Dreams evolve. The question isn't IF you'll change during your relationship—it's WHETHER you'll grow together or grow apart.</p>
+                        
+                        <h3>Types of Life Changes</h3>
+                        <ul>
+                            <li>Career shifts (new job, promotion, unemployment)</li>
+                            <li>Relocation</li>
+                            <li>Health challenges</li>
+                            <li>Having kids (or deciding not to)</li>
+                            <li>Loss and grief</li>
+                            <li>Personal growth/identity evolution</li>
+                            <li>Financial changes</li>
+                            <li>Midlife transitions</li>
+                        </ul>
+                        
+                        <h3>Growing Together vs Growing Apart</h3>
+                        <h4>Signs You're Growing Together ✅</h4>
+                        <ul>
+                            <li>You share your evolving dreams and goals</li>
+                            <li>You support each other's individual growth</li>
+                            <li>You adapt to changes as a team</li>
+                            <li>You're curious about who your partner is becoming</li>
+                            <li>You face challenges united</li>
+                        </ul>
+                        
+                        <h4>Signs You're Growing Apart 🚩</h4>
+                        <ul>
+                            <li>You hide your true self or new interests</li>
+                            <li>You resent their changes</li>
+                            <li>You have completely different visions for the future</li>
+                            <li>You feel like roommates, not partners</li>
+                            <li>You're pursuing separate lives</li>
+                        </ul>
+                        
+                        <h3>How to Support Each Other's Growth</h3>
+                        <h4>1. Regular "State of the Union" Talks</h4>
+                        <p>Quarterly check-ins: "Who are you becoming? What do you need from me? Where are we heading?"</p>
+                        
+                        <h4>2. Champion Their Dreams</h4>
+                        <p>Even if it means sacrifice. Your partner wants to go back to school? Career change? Support them!</p>
+                        
+                        <h4>3. Grow Individually</h4>
+                        <p>You can't grow together if you're not growing individually. Pursue your own interests, friendships, goals.</p>
+                        
+                        <h4>4. Be Curious, Not Critical</h4>
+                        <p>When they change: "Tell me more about this new interest!" not "Why are you suddenly into that?"</p>
+                        
+                        <h3>Navigating Specific Changes</h3>
+                        <h4>Career Changes</h4>
+                        <ul>
+                            <li>Discuss financial impact openly</li>
+                            <li>Adjust household responsibilities</li>
+                            <li>Celebrate wins, big and small</li>
+                            <li>Provide emotional support during transitions</li>
+                        </ul>
+                        
+                        <h4>Having Kids</h4>
+                        <ul>
+                            <li>Acknowledge the relationship will change</li>
+                            <li>Schedule couple time intentionally</li>
+                            <li>Support each other's parenting journey</li>
+                            <li>Remember you're still partners, not just parents</li>
+                        </ul>
+                        
+                        <h4>Health Challenges</h4>
+                        <ul>
+                            <li>Communicate needs clearly</li>
+                            <li>Attend appointments together when possible</li>
+                            <li>Adjust expectations and division of labor</li>
+                            <li>Seek support (therapy, support groups)</li>
+                        </ul>
+                        
+                        <h4>Relocation</h4>
+                        <ul>
+                            <li>Decide together, even if one's job initiates it</li>
+                            <li>The relocating partner needs extra support initially</li>
+                            <li>Explore the new place together</li>
+                            <li>Build new routines and traditions</li>
+                        </ul>
+                        
+                        <h3>When One Person Changes Drastically</h3>
+                        <p>Sometimes a partner discovers a new passion, identity, or worldview that shifts who they are.</p>
+                        
+                        <h4>If You're the One Changing:</h4>
+                        <ul>
+                            <li>Communicate about your evolution</li>
+                            <li>Be patient with your partner's adjustment</li>
+                            <li>Reassure them of your commitment</li>
+                            <li>Include them in your new world when possible</li>
+                        </ul>
+                        
+                        <h4>If Your Partner Is Changing:</h4>
+                        <ul>
+                            <li>Get curious instead of defensive</li>
+                            <li>Express your fears honestly</li>
+                            <li>Find connection points in their new interests</li>
+                            <li>Don't take it personally</li>
+                        </ul>
+                        
+                        <h3>The Compatibility Question</h3>
+                        <p>Sometimes people grow in incompatible directions. That's painful but okay.</p>
+                        
+                        <p><strong>Stay if:</strong> You still share core values, you're both willing to adapt, you're genuinely interested in who they're becoming.</p>
+                        
+                        <p><strong>Consider leaving if:</strong> Fundamental values no longer align, one person refuses to compromise, you're holding each other back.</p>
+                        
+                        <h3>Embracing the Journey</h3>
+                        <p>The person you're with at 25 won't be the same at 35, 45, or 65. That's beautiful! You get to fall in love with them over and over as they (and you) evolve.</p>
+                        
+                        <h3>Questions to Ask Regularly</h3>
+                        <ul>
+                            <li>What are you learning about yourself lately?</li>
+                            <li>What do you need more/less of in your life?</li>
+                            <li>Where do you see yourself in 5 years?</li>
+                            <li>How can I support your growth?</li>
+                            <li>What's one thing you want to try that you've been scared to tell me?</li>
+                        </ul>
+                        
+                        <p><strong>Remember:</strong> The goal isn't to stay the same forever. It's to choose each other through the changes.</p>
+                        
+                        <p>🌱 <em>Grow as individuals. Grow as a couple. That's the magic.</em></p>
+                    `
+                },
+                'mindfulness': {
+                    title: 'Mindful Relationship Practices',
+                    content: `
+                        <h2>Mindful Relationship Practices</h2>
+                        <p><strong>By Dr. Zen Nakamura | 14 min read</strong></p>
+                        
+                        <h3>What is Mindful Love?</h3>
+                        <p>Mindfulness in relationships means being fully present with your partner—not distracted by your phone, ruminating about the past, or worrying about the future. It's about showing up, really seeing them, and connecting deeply.</p>
+                        
+                        <h3>The Mindfulness Foundation</h3>
+                        <h4>1. Presence Over Perfection</h4>
+                        <p>You don't need to have the perfect date or solve every problem. Just be THERE—mentally and emotionally.</p>
+                        
+                        <h4>2. Non-Judgment</h4>
+                        <p>Notice when you're judging your partner (or yourself). Acknowledge the thought, then return to curiosity and compassion.</p>
+                        
+                        <h4>3. Acceptance</h4>
+                        <p>This doesn't mean tolerating harmful behavior. It means accepting that your partner is human, flawed, and doing their best.</p>
+                        
+                        <h3>Daily Mindful Practices</h3>
+                        <h4>Morning Connection (5 minutes)</h4>
+                        <p>Before phones, before rushing:</p>
+                        <ol>
+                            <li>Make eye contact</li>
+                            <li>Take 3 deep breaths together</li>
+                            <li>Share one intention for the day</li>
+                            <li>Exchange a meaningful hug (20+ seconds)</li>
+                        </ol>
+                        
+                        <h4>Mindful Check-In (2 minutes)</h4>
+                        <p>When you reunite after work:</p>
+                        <ul>
+                            <li>Stop what you're doing</li>
+                            <li>Put phone down</li>
+                            <li>Hug/kiss hello with full attention</li>
+                            <li>"How are you REALLY?"</li>
+                        </ul>
+                        
+                        <h4>Phone-Free Time (1+ hour daily)</h4>
+                        <p>Create sacred tech-free time together:</p>
+                        <ul>
+                            <li>Dinner without phones at table</li>
+                            <li>Evening walk</li>
+                            <li>Before bed cuddle time</li>
+                        </ul>
+                        
+                        <h3>Mindful Communication</h3>
+                        <h4>The STOP Technique (When Triggered)</h4>
+                        <ul>
+                            <li><strong>S</strong>top: Pause before reacting</li>
+                            <li><strong>T</strong>ake a breath: 3 deep breaths</li>
+                            <li><strong>O</strong>bserve: What am I feeling? Why?</li>
+                            <li><strong>P</strong>roceed: Respond thoughtfully, not reactively</li>
+                        </ul>
+                        
+                        <h4>Active Listening Meditation</h4>
+                        <p>When your partner is talking:</p>
+                        <ol>
+                            <li>Make eye contact</li>
+                            <li>Notice when your mind wanders (to your response, your day, etc.)</li>
+                            <li>Gently return attention to their words and emotions</li>
+                            <li>Ask: "Is there more?"</li>
+                            <li>Reflect back what you heard before responding</li>
+                        </ol>
+                        
+                        <h3>Mindful Conflict Resolution</h3>
+                        <h4>Before the Conversation:</h4>
+                        <ul>
+                            <li>Ground yourself (feet on floor, deep breaths)</li>
+                            <li>Set intention: "I want to understand and be understood"</li>
+                            <li>Check in with body (where is the tension?)</li>
+                        </ul>
+                        
+                        <h4>During Conflict:</h4>
+                        <ul>
+                            <li>Notice when you're escalating (rapid heartbeat, raised voice)</li>
+                            <li>Call a mindful timeout if needed: "I need 5 minutes to breathe"</li>
+                            <li>Stay with your own experience ("I feel..." not "You always...")</li>
+                            <li>Remember: This is your partner, not your enemy</li>
+                        </ul>
+                        
+                        <h3>Gratitude Practice</h3>
+                        <h4>Daily Appreciation (1 minute)</h4>
+                        <p>Tell your partner one specific thing you appreciate:</p>
+                        <p>Not: "Thanks for dinner"</p>
+                        <p>Yes: "I appreciate that you remembered I love that pasta dish and made it after my stressful day. That showed real care."</p>
+                        
+                        <h4>Gratitude Jar</h4>
+                        <p>Keep a jar. Weekly, write one thing you're grateful for about your partner. Read them together monthly.</p>
+                        
+                        <h3>Mindful Physical Intimacy</h3>
+                        <h4>Non-Sexual Touch Meditation</h4>
+                        <ol>
+                            <li>Sit facing each other</li>
+                            <li>Hold hands</li>
+                            <li>Close eyes</li>
+                            <li>Focus on the sensation of their skin, warmth, pulse</li>
+                            <li>Breathe together for 5 minutes</li>
+                        </ol>
+                        
+                        <h4>Mindful Sex</h4>
+                        <ul>
+                            <li>Start with eye contact and breathing</li>
+                            <li>Go slowly, notice sensations</li>
+                            <li>When mind wanders, return to present moment</li>
+                            <li>Communicate what feels good</li>
+                            <li>Focus on connection, not performance</li>
+                        </ul>
+                        
+                        <h3>Loving-Kindness Meditation for Relationships</h3>
+                        <p>Practice this when feeling disconnected:</p>
+                        <ol>
+                            <li>Sit quietly, visualize your partner</li>
+                            <li>Silently repeat:
+                                <ul>
+                                    <li>"May you be happy"</li>
+                                    <li>"May you be healthy"</li>
+                                    <li>"May you be safe"</li>
+                                    <li>"May you be loved"</li>
+                                </ul>
+                            </li>
+                            <li>Notice any resistance, breathe through it</li>
+                            <li>Extend same wishes to yourself</li>
+                        </ol>
+                        
+                        <h3>Weekly Mindful Rituals</h3>
+                        <h4>Sunday Planning (15 minutes)</h4>
+                        <ul>
+                            <li>Review the week ahead together</li>
+                            <li>Schedule quality time</li>
+                            <li>Identify potential stressors</li>
+                            <li>Plan how to support each other</li>
+                        </ul>
+                        
+                        <h4>Date Night Reset</h4>
+                        <ul>
+                            <li>Start with 2 minutes of hand-holding silence</li>
+                            <li>Each person shares high and low of the week</li>
+                            <li>No problem-solving, just listening</li>
+                            <li>End with appreciation</li>
+                        </ul>
+                        
+                        <h3>Mindful Self-Care for Better Relationships</h3>
+                        <p>You can't pour from an empty cup:</p>
+                        <ul>
+                            <li>Daily meditation practice (even 5 minutes)</li>
+                            <li>Regular exercise</li>
+                            <li>Healthy sleep habits</li>
+                            <li>Time with friends</li>
+                            <li>Solo hobbies</li>
+                        </ul>
+                        
+                        <h3>When Mindfulness is Hard</h3>
+                        <p>Some days you'll be reactive, distracted, or impatient. That's human! Mindfulness isn't about perfection—it's about noticing when you're off-track and gently returning.</p>
+                        
+                        <p><strong>Self-compassion mantra:</strong> "I'm doing my best. I can start again right now."</p>
+                        
+                        <p><strong>Remember:</strong> Every moment is a chance to show up more fully for your partner and yourself.</p>
+                        
+                        <p>🧘 <em>Be here now. With them. With yourself. That's where love lives.</em></p>
+                    `
+                },
+                'betrayal': {
+                    title: 'Rebuilding After Betrayal',
+                    content: `
+                        <h2>Rebuilding After Betrayal</h2>
+                        <p><strong>By Dr. Morgan Ellis | 22 min read</strong></p>
+                        
+                        <h3>The Impact of Betrayal</h3>
+                        <p>Infidelity, lies, broken trust—betrayal is one of the most painful relationship experiences. Whether you stay together or part ways, healing is possible. This is your roadmap.</p>
+                        
+                        <h3>Types of Betrayal</h3>
+                        <ul>
+                            <li><strong>Physical infidelity:</strong> Sexual involvement with someone else</li>
+                            <li><strong>Emotional affairs:</strong> Deep emotional connection outside relationship</li>
+                            <li><strong>Financial betrayal:</strong> Secret spending, hidden debt</li>
+                            <li><strong>Broken promises:</strong> Repeated violations of agreements</li>
+                            <li><strong>Dishonesty:</strong> Ongoing lies about important matters</li>
+                        </ul>
+                        
+                        <h3>Immediate Aftermath (Days 1-30)</h3>
+                        <h4>For the Betrayed Partner:</h4>
+                        <ul>
+                            <li>Feel all the feelings (anger, grief, shock—it's all valid)</li>
+                            <li>Don't make permanent decisions immediately</li>
+                            <li>Tell a trusted friend or therapist (don't isolate)</li>
+                            <li>Take care of basic needs (eat, sleep, move your body)</li>
+                            <li>It's okay to ask questions, but obsessing over details can be retraumatizing</li>
+                        </ul>
+                        
+                        <h4>For the Person Who Betrayed:</h4>
+                        <ul>
+                            <li>End the affair/behavior immediately and completely</li>
+                            <li>Answer questions honestly (but don't overshare graphic details)</li>
+                            <li>No defensiveness—take full responsibility</li>
+                            <li>Show remorse through actions, not just words</li>
+                            <li>Be patient—rebuilding trust takes time</li>
+                        </ul>
+                        
+                        <h3>Can the Relationship Be Saved?</h3>
+                        <p>Not all relationships should be saved, but many can be if:</p>
+                        <ul>
+                            <li>✅ The betrayer is genuinely remorseful</li>
+                            <li>✅ They're willing to be completely transparent</li>
+                            <li>✅ Both partners want to rebuild</li>
+                            <li>✅ The betrayer is willing to do the hard work (therapy, behavior change)</li>
+                            <li>✅ There's a foundation of love to build on</li>
+                            <li>✅ This isn't a pattern of repeated betrayals</li>
+                        </ul>
+                        
+                        <p><strong>Don't stay if:</strong></p>
+                        <ul>
+                            <li>❌ They blame you for their cheating</li>
+                            <li>❌ They won't cut contact with affair partner</li>
+                            <li>❌ They refuse transparency (phone passwords, whereabouts)</li>
+                            <li>❌ This is the 3rd+ time</li>
+                            <li>❌ You're staying out of fear, not love</li>
+                        </ul>
+                        
+                        <h3>The Rebuilding Process (Months 1-24)</h3>
+                        <p><em>Yes, it takes that long. Trust takes time.</em></p>
+                        
+                        <h4>Phase 1: Crisis and Decision (Months 1-3)</h4>
+                        <ul>
+                            <li>Full disclosure of betrayal</li>
+                            <li>Decide whether to try to rebuild</li>
+                            <li>Set ground rules (transparency, no contact with affair partner)</li>
+                            <li>Start individual and/or couples therapy</li>
+                        </ul>
+                        
+                        <h4>Phase 2: Understanding Why (Months 3-9)</h4>
+                        <ul>
+                            <li>Explore what led to betrayal (not to excuse it, but to understand)</li>
+                            <li>Address underlying relationship issues</li>
+                            <li>Betrayer does deep personal work</li>
+                            <li>Betrayed partner processes trauma</li>
+                        </ul>
+                        
+                        <h4>Phase 3: Rebuilding (Months 9-18)</h4>
+                        <ul>
+                            <li>Establish new patterns of honesty and communication</li>
+                            <li>Create new positive memories together</li>
+                            <li>Gradually rebuild intimacy (emotional, then physical)</li>
+                            <li>See progress (more good days than bad)</li>
+                        </ul>
+                        
+                        <h4>Phase 4: New Normal (18-24+ months)</h4>
+                        <ul>
+                            <li>Trust is mostly restored (though triggers may still happen)</li>
+                            <li>Forward focus instead of dwelling on past</li>
+                            <li>Stronger foundation than before</li>
+                            <li>Recommitment to relationship</li>
+                        </ul>
+                        
+                        <h3>Rebuilding Trust: Concrete Steps</h3>
+                        <h4>For the Person Who Betrayed:</h4>
+                        <ol>
+                            <li><strong>Radical transparency:</strong> Share phone passwords, location, schedules</li>
+                            <li><strong>Check-ins:</strong> Regular updates about whereabouts without being asked</li>
+                            <li><strong>Accountability:</strong> Let partner verify your words</li>
+                            <li><strong>Patience:</strong> Don't say "When will you get over this?"</li>
+                            <li><strong>Actions over words:</strong> Show up consistently every single day</li>
+                            <li><strong>Therapy:</strong> Individual work to understand why you betrayed</li>
+                            <li><strong>Empathy:</strong> Sit with your partner's pain without defensiveness</li>
+                        </ol>
+                        
+                        <h4>For the Betrayed Partner:</h4>
+                        <ol>
+                            <li><strong>Express your needs:</strong> "I need to know where you are"</li>
+                            <li><strong>Set boundaries:</strong> "I'm not ready for physical intimacy yet"</li>
+                            <li><strong>Work toward forgiveness:</strong> (This is a process, not instant)</li>
+                            <li><strong>Avoid revenge affairs:</strong> Won't heal your pain</li>
+                            <li><strong>Notice progress:</strong> Acknowledge small positive changes</li>
+                            <li><strong>Get support:</strong> Therapy is crucial for processing trauma</li>
+                            <li><strong>Decide:</strong> Am I working toward forgiveness or toward leaving?</li>
+                        </ol>
+                        
+                        <h3>Setbacks and Triggers</h3>
+                        <p>Even months later, something will trigger the pain—a song, a place, an anniversary. This is normal!</p>
+                        <ul>
+                            <li>Name the trigger: "I'm having a hard day because..."</li>
+                            <li>Ask for what you need: "I need reassurance right now"</li>
+                            <li>Betrayer: Respond with empathy, not frustration</li>
+                        </ul>
+                        
+                        <h3>When to Walk Away</h3>
+                        <p>Sometimes the relationship can't be saved. It's okay to leave if:</p>
+                        <ul>
+                            <li>You've given it 12+ months and still feel miserable</li>
+                            <li>Your mental health is suffering</li>
+                            <li>They betrayed again</li>
+                            <li>You realize you're staying out of sunk cost fallacy</li>
+                            <li>You can't see a future together</li>
+                        </ul>
+                        
+                        <p><strong>Leaving doesn't mean you failed.</strong> Sometimes the strongest choice is to walk away.</p>
+                        
+                        <h3>If You're the One Who Betrayed</h3>
+                        <p>Forgive yourself eventually. You made a terrible mistake, but you're not a terrible person if you:</p>
+                        <ul>
+                            <li>Take full responsibility</li>
+                            <li>Do the work to change</li>
+                            <li>Make amends</li>
+                            <li>Become a better partner and person</li>
+                        </ul>
+                        
+                        <h3>The Paradox</h3>
+                        <p>Strangely, many couples say their relationship is stronger AFTER successfully rebuilding from betrayal. Why? Because they had to:</p>
+                        <ul>
+                            <li>Communicate more deeply than ever</li>
+                            <li>Address issues they'd been avoiding</li>
+                            <li>Recommit intentionally</li>
+                            <li>Appreciate what they almost lost</li>
+                        </ul>
+                        
+                        <p>Not that betrayal is good—it's devastating. But it CAN be a catalyst for profound growth.</p>
+                        
+                        <h3>Getting Professional Help</h3>
+                        <p>You NEED a therapist specializing in infidelity recovery. Look for:</p>
+                        <ul>
+                            <li>Gottman Method Therapists</li>
+                            <li>EFT (Emotionally Focused Therapy) practitioners</li>
+                            <li>AAMFT certified couples counselors</li>
+                        </ul>
+                        
+                        <p><strong>Remember:</strong> Healing is possible—whether together or apart. You will survive this.</p>
+                        
+                        <p>💔➡️❤️ <em>The wound is where the light enters. You're stronger than you know.</em></p>
+                    `
                 }
             };
             
@@ -3204,7 +4809,7 @@
                 
                 modal.innerHTML = `
                     <div style="max-width: 800px; margin: 0 auto; background: rgba(26,26,46,0.98); border-radius: 20px; padding: 3rem; position: relative;">
-                        <button onclick="this.closest('div').parentElement.remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s;">×</button>
+                        <button onclick="document.getElementById('articleModal').remove()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255,255,255,0.1); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s;">×</button>
                         <div class="article-content" style="color: white; line-height: 1.8;">
                             ${articles[articleId].content}
                         </div>
@@ -3253,13 +4858,49 @@
                         </style>
                         <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
                             <p style="color: rgba(255,255,255,0.6); margin-bottom: 1rem;">Was this article helpful?</p>
-                            <button onclick="alert('Thank you for your feedback!'); this.closest('div').parentElement.remove();" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; margin: 0 0.5rem; cursor: pointer; font-weight: 600;">👍 Yes, helpful!</button>
-                            <button onclick="const modal = document.getElementById('articleModal'); if(modal) modal.remove(); setTimeout(() => { const chatBtn = document.getElementById('chatBubbleBtn'); if(chatBtn) chatBtn.click(); }, 100);" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 1rem 2rem; border-radius: 10px; margin: 0 0.5rem; cursor: pointer; font-weight: 600;">💬 Chat with AI Therapist</button>
+                            <button onclick="alert('Thank you for your feedback!'); document.getElementById('articleModal').remove();" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; margin: 0 0.5rem; cursor: pointer; font-weight: 600;">👍 Yes, helpful!</button>
+                            <button onclick="const modal = document.getElementById('articleModal'); if(modal) modal.remove(); setTimeout(() => { const chatBtn = document.getElementById('chatBubbleBtn'); if(chatBtn) chatBtn.click(); }, 100);" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 1rem 2rem; border-radius: 10px; margin: 0 0.5rem; cursor: pointer; font-weight: 600;">💬 Chat with NUPI</button>
                         </div>
                     </div>
                 `;
                 
+                // Click outside to close
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+                
                 document.body.appendChild(modal);
+            } else {
+                // Article not available - chat with NUPI instead
+                const articleTopics = {
+                    'identity': 'maintaining my identity in a relationship',
+                    'attachment': 'understanding attachment styles',
+                    'longdistance': 'long-distance relationship advice',
+                    'passion': 'keeping the spark alive in a relationship',
+                    'toxicvshealth': 'recognizing toxic vs healthy relationships',
+                    'parenting': 'parenting together as partners',
+                    'finance': 'financial communication in relationships',
+                    'lgbtq': 'LGBTQ+ relationship support',
+                    'growth': 'growing together through challenges',
+                    'mindfulness': 'mindful relationship practices',
+                    'betrayal': 'rebuilding after betrayal or infidelity'
+                };
+                
+                const topic = articleTopics[articleId] || 'relationship advice';
+                
+                // Open chat and send topic question
+                setTimeout(() => {
+                    const chatBtn = document.getElementById('chatBubbleBtn');
+                    if (chatBtn) chatBtn.click();
+                    
+                    setTimeout(() => {
+                        if (window.therapistChat) {
+                            window.therapistChat.quickMessage(`I need help with ${topic}`);
+                        }
+                    }, 500);
+                }, 100);
             }
         }
 
@@ -3694,7 +5335,90 @@
                 canvas.appendChild(cell);
             }
         }
+
+        // Yoga Pose Modal with Detailed Instructions
+        function showYogaPoseModal(poseName) {
+            // Yoga pose guidance messages for NUPI
+            const yogaGuidance = {
+                mountain: 'Guide me through Mountain Pose step by step. Help me understand proper alignment and breathing. Be encouraging and remind me to stay present.',
+                tree: 'Guide me through Tree Pose. Help me with balance, remind me to breathe, and be patient if I wobble. Encourage me throughout the practice.',
+                child: "Guide me through Child's Pose for deep relaxation. Use a calming voice to help me release tension. Remind me to breathe deeply.",
+                warrior: 'Guide me through Warrior II Pose. Help me build strength and confidence. Remind me to breathe and maintain proper form.',
+                catcow: 'Guide me through Cat-Cow Pose. Help me flow with my breath and release tension in my spine. Be encouraging and calming.',
+                corpse: 'Guide me into deep relaxation with Savasana. Use a calming voice to help me release all tension. Lead me through a full body scan.',
+                breathing: 'Guide me through box breathing exercise. Count with me: inhale 4, hold 4, exhale 4, hold 4. Help me calm my nervous system.',
+                meditation: 'Guide me through a seated meditation. Help me focus on my breath and gently bring me back when my mind wanders. Be patient and encouraging.',
+                sun: 'Guide me through Sun Salutation flow. Help me move with my breath, remind me of proper form, and encourage me through the sequence.'
+            };
+
+            const message = yogaGuidance[poseName];
+            if (!message) return;
+
+            // Open NUPI chat directly with yoga guidance
+            setTimeout(() => {
+                if (window.therapistChat && typeof window.therapistChat.toggleChat === 'function') {
+                    window.therapistChat.toggleChat();
+                    setTimeout(() => {
+                        if (window.therapistChat.quickMessage) {
+                            window.therapistChat.quickMessage(message);
+                        }
+                    }, 500);
+                } else {
+                    // Fallback to clicking chat button
+                    const chatBtn = document.getElementById('chatBubbleBtn');
+                    if (chatBtn) {
+                        chatBtn.click();
+                        setTimeout(() => {
+                            if (window.therapistChat && window.therapistChat.quickMessage) {
+                                window.therapistChat.quickMessage(message);
+                            }
+                        }, 500);
+                    }
+                }
+            }, 100);
+        }
+
+        // Exercise NUPI Guidance - Connect exercises to AI coach
+        function askNUPIForGuidance(exerciseType) {
+            const exercisePrompts = {
+                breathing: 'Guide me through the 4-7-8 breathing exercise. Count with me step by step: inhale for 4 seconds, hold for 7 seconds, exhale for 8 seconds. Help me calm my nervous system and reduce anxiety.',
+                grounding: 'Guide me through the 5-4-3-2-1 grounding technique. Help me identify 5 things I can see, 4 things I can touch, 3 things I can hear, 2 things I can smell, and 1 thing I can taste. Bring me back to the present moment.',
+                bodyscan: 'Guide me through a 10-minute body scan meditation. Help me systematically relax each part of my body from head to toe, noticing sensations without judgment. Use a calming, patient voice.',
+                visualization: 'Guide me through a calming visualization exercise. Help me imagine a peaceful, safe place in vivid detail using all my senses - what I see, hear, smell, feel. Make it feel real and comforting.',
+                gratitude: 'Guide me through a gratitude practice. Help me identify 3 things I\'m grateful for today and explore why they matter. Remind me to appreciate the small things and find joy in everyday moments.',
+                reframing: 'Help me reframe negative thoughts into more balanced, compassionate perspectives. Walk me through identifying cognitive distortions and challenging unhelpful thinking patterns with kindness.'
+            };
+
+            const prompt = exercisePrompts[exerciseType];
+            if (!prompt) return;
+
+            // Open NUPI chat and send exercise-specific prompt
+            setTimeout(() => {
+                if (window.therapistChat && typeof window.therapistChat.toggleChat === 'function') {
+                    window.therapistChat.toggleChat();
+                    setTimeout(() => {
+                        if (window.therapistChat.quickMessage) {
+                            window.therapistChat.quickMessage(prompt);
+                        }
+                    }, 500);
+                } else {
+                    // Fallback to clicking chat button
+                    const chatBtn = document.getElementById('chatBubbleBtn');
+                    if (chatBtn) {
+                        chatBtn.click();
+                        setTimeout(() => {
+                            if (window.therapistChat && window.therapistChat.quickMessage) {
+                                window.therapistChat.quickMessage(prompt);
+                            }
+                        }, 500);
+                    }
+                }
+            }, 100);
+        }
     </script>
+    <script src="games-functions.js"></script>
+    <script src="nupi-avatar.js"></script>
+    <script src="chat-guide-system.js"></script>
     <script src="chat-widget.js"></script>
 </body>
 </html>

@@ -45,35 +45,46 @@
 
         .goal-input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(102, 194, 165, 0.3);
             border-radius: 10px;
             padding: 0.75rem;
-            color: white;
+            color: #ffffff;
             font-family: inherit;
             margin-bottom: 1rem;
+        }
+
+        .goal-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .goal-input:focus {
             outline: none;
             border-color: var(--therapeutic-green);
+            background: rgba(0, 0, 0, 0.6);
         }
 
         .goal-category-select {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(102, 194, 165, 0.3);
             border-radius: 10px;
             padding: 0.75rem;
-            color: white;
+            color: #ffffff;
             font-family: inherit;
             margin-bottom: 1rem;
             cursor: pointer;
         }
 
+        .goal-category-select:focus {
+            outline: none;
+            border-color: var(--therapeutic-green);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
         .goal-category-select option {
-            background: var(--dark-bg);
-            color: white;
+            background: #0a0a0a;
+            color: #ffffff;
         }
 
         .add-goal-btn {
@@ -420,7 +431,7 @@
             <div class="nav-links">
                 <a href="dashboard.html">Dashboard</a>
                 <a href="sessions.html">Sessions</a>
-                <a href="therapists.html">Therapists</a>
+                <a href="therapist-finder.html">Therapists</a>
                 <a href="resources.html">Resources</a>
                 <a href="profile.html">Profile</a>
                 <button class="btn btn-secondary" onclick="logout()">Logout</button>
@@ -479,234 +490,42 @@
 
                 <!-- Main Content -->
                 <div class="goals-main">
-                    <!-- Stats Overview -->
+                    <!-- Stats Overview - REAL DATA CALCULATED FROM ACTUAL GOALS -->
                     <div class="stats-overview">
                         <div class="stat-box">
                             <div class="stat-icon">🎯</div>
-                            <div class="stat-number">8</div>
+                            <div class="stat-number" id="activeGoalsCount">0</div>
                             <div class="stat-text">Active Goals</div>
                         </div>
                         <div class="stat-box">
                             <div class="stat-icon">✅</div>
-                            <div class="stat-number">12</div>
+                            <div class="stat-number" id="completedGoalsCount">0</div>
                             <div class="stat-text">Completed</div>
                         </div>
                         <div class="stat-box">
                             <div class="stat-icon">📈</div>
-                            <div class="stat-number">65%</div>
+                            <div class="stat-number" id="avgProgress">0%</div>
                             <div class="stat-text">Avg Progress</div>
                         </div>
                         <div class="stat-box">
                             <div class="stat-icon">🔥</div>
-                            <div class="stat-number">21</div>
-                            <div class="stat-text">Day Streak</div>
+                            <div class="stat-number" id="totalGoalsCount">0</div>
+                            <div class="stat-text">Total Goals</div>
                         </div>
                     </div>
 
                     <!-- Goals Grid -->
                     <div class="goals-grid">
-                        <!-- Goal 1 -->
-                        <div class="goal-card">
-                            <div class="goal-header-row">
-                                <div class="goal-title-section">
-                                    <span class="goal-category-badge">🧠 Mental Health</span>
-                                    <h3 class="goal-title">Practice daily meditation for 30 days</h3>
-                                    <p class="goal-target-date">Target: December 10, 2025</p>
-                                </div>
-                                <div class="goal-actions">
-                                    <button class="action-icon-btn" onclick="editGoal(this)" title="Edit">✏️</button>
-                                    <button class="action-icon-btn" onclick="deleteGoal(this)" title="Delete">🗑️</button>
-                                </div>
-                            </div>
-
-                            <p class="goal-description">
-                                Establish a consistent meditation practice to reduce anxiety and improve focus. Start with 10 minutes daily and gradually increase.
+                        <!-- No goals yet - Empty state -->
+                        <div style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem;">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">🎯</div>
+                            <h3 style="color: white; margin-bottom: 0.75rem;">No Goals Yet</h3>
+                            <p style="color: var(--gray); max-width: 500px; margin: 0 auto 2rem;">
+                                Set your first wellness goal to start tracking your progress and achieve lasting positive change.
                             </p>
-
-                            <div class="progress-section">
-                                <div class="progress-header">
-                                    <span class="progress-label">Overall Progress</span>
-                                    <span class="progress-percentage">70%</span>
-                                </div>
-                                <div class="progress-bar-container">
-                                    <div class="progress-bar-fill" style="width: 70%;"></div>
-                                </div>
-                            </div>
-
-                            <div class="milestones-section">
-                                <h4 class="milestones-title">Milestones:</h4>
-                                <div class="milestone-list">
-                                    <div class="milestone-item completed">
-                                        <div class="milestone-checkbox checked"></div>
-                                        <span class="milestone-text">Complete 7 consecutive days</span>
-                                    </div>
-                                    <div class="milestone-item completed">
-                                        <div class="milestone-checkbox checked"></div>
-                                        <span class="milestone-text">Increase to 15 minutes per session</span>
-                                    </div>
-                                    <div class="milestone-item">
-                                        <div class="milestone-checkbox"></div>
-                                        <span class="milestone-text">Complete 21 consecutive days</span>
-                                    </div>
-                                    <div class="milestone-item">
-                                        <div class="milestone-checkbox"></div>
-                                        <span class="milestone-text">Reach 30-day milestone</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="goal-footer">
-                                <span class="days-remaining">⏰ 9 days remaining</span>
-                                <button class="complete-goal-btn" onclick="completeGoal(this)">✓ Mark Complete</button>
-                            </div>
-                        </div>
-
-                        <!-- Goal 2 -->
-                        <div class="goal-card">
-                            <div class="goal-header-row">
-                                <div class="goal-title-section">
-                                    <span class="goal-category-badge">💪 Physical Health</span>
-                                    <h3 class="goal-title">Exercise 3 times per week</h3>
-                                    <p class="goal-target-date">Target: December 31, 2025</p>
-                                </div>
-                                <div class="goal-actions">
-                                    <button class="action-icon-btn" onclick="editGoal(this)" title="Edit">✏️</button>
-                                    <button class="action-icon-btn" onclick="deleteGoal(this)" title="Delete">🗑️</button>
-                                </div>
-                            </div>
-
-                            <p class="goal-description">
-                                Incorporate regular physical activity to boost mood and energy levels. Focus on activities I enjoy like walking, yoga, or swimming.
-                            </p>
-
-                            <div class="progress-section">
-                                <div class="progress-header">
-                                    <span class="progress-label">Overall Progress</span>
-                                    <span class="progress-percentage">85%</span>
-                                </div>
-                                <div class="progress-bar-container">
-                                    <div class="progress-bar-fill" style="width: 85%;"></div>
-                                </div>
-                            </div>
-
-                            <div class="milestones-section">
-                                <h4 class="milestones-title">Milestones:</h4>
-                                <div class="milestone-list">
-                                    <div class="milestone-item completed">
-                                        <div class="milestone-checkbox checked"></div>
-                                        <span class="milestone-text">Complete first week</span>
-                                    </div>
-                                    <div class="milestone-item completed">
-                                        <div class="milestone-checkbox checked"></div>
-                                        <span class="milestone-text">Maintain for 1 month</span>
-                                    </div>
-                                    <div class="milestone-item completed">
-                                        <div class="milestone-checkbox checked"></div>
-                                        <span class="milestone-text">Try a new activity</span>
-                                    </div>
-                                    <div class="milestone-item">
-                                        <div class="milestone-checkbox"></div>
-                                        <span class="milestone-text">Complete 3-month goal</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="goal-footer">
-                                <span class="days-remaining">⏰ 50 days remaining</span>
-                                <button class="complete-goal-btn" onclick="completeGoal(this)">✓ Mark Complete</button>
-                            </div>
-                        </div>
-
-                        <!-- Goal 3 -->
-                        <div class="goal-card">
-                            <div class="goal-header-row">
-                                <div class="goal-title-section">
-                                    <span class="goal-category-badge">❤️ Relationships</span>
-                                    <h3 class="goal-title">Improve communication with family</h3>
-                                    <p class="goal-target-date">Target: January 15, 2026</p>
-                                </div>
-                                <div class="goal-actions">
-                                    <button class="action-icon-btn" onclick="editGoal(this)" title="Edit">✏️</button>
-                                    <button class="action-icon-btn" onclick="deleteGoal(this)" title="Delete">🗑️</button>
-                                </div>
-                            </div>
-
-                            <p class="goal-description">
-                                Practice active listening and express feelings more openly. Schedule weekly check-ins and practice using "I" statements during difficult conversations.
-                            </p>
-
-                            <div class="progress-section">
-                                <div class="progress-header">
-                                    <span class="progress-label">Overall Progress</span>
-                                    <span class="progress-percentage">45%</span>
-                                </div>
-                                <div class="progress-bar-container">
-                                    <div class="progress-bar-fill" style="width: 45%;"></div>
-                                </div>
-                            </div>
-
-                            <div class="milestones-section">
-                                <h4 class="milestones-title">Milestones:</h4>
-                                <div class="milestone-list">
-                                    <div class="milestone-item completed">
-                                        <div class="milestone-checkbox checked"></div>
-                                        <span class="milestone-text">Have first family check-in</span>
-                                    </div>
-                                    <div class="milestone-item">
-                                        <div class="milestone-checkbox"></div>
-                                        <span class="milestone-text">Maintain weekly check-ins for 1 month</span>
-                                    </div>
-                                    <div class="milestone-item">
-                                        <div class="milestone-checkbox"></div>
-                                        <span class="milestone-text">Have a difficult conversation using new skills</span>
-                                    </div>
-                                    <div class="milestone-item">
-                                        <div class="milestone-checkbox"></div>
-                                        <span class="milestone-text">Notice improvement in relationship quality</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="goal-footer">
-                                <span class="days-remaining">⏰ 65 days remaining</span>
-                                <button class="complete-goal-btn" onclick="completeGoal(this)">✓ Mark Complete</button>
-                            </div>
-                        </div>
-
-                        <!-- Goal 4 - Completed -->
-                        <div class="goal-card completed">
-                            <div class="goal-header-row">
-                                <div class="goal-title-section">
-                                    <span class="goal-category-badge">🌱 Personal Growth</span>
-                                    <h3 class="goal-title">Read 5 self-help books</h3>
-                                    <p class="goal-target-date">Completed: November 5, 2025</p>
-                                </div>
-                                <div class="goal-actions">
-                                    <button class="action-icon-btn" onclick="editGoal(this)" title="Edit">✏️</button>
-                                    <button class="action-icon-btn" onclick="deleteGoal(this)" title="Delete">🗑️</button>
-                                </div>
-                            </div>
-
-                            <p class="goal-description">
-                                Expand knowledge on mental health, mindfulness, and personal development through reading.
-                            </p>
-
-                            <div class="progress-section">
-                                <div class="progress-header">
-                                    <span class="progress-label">Overall Progress</span>
-                                    <span class="progress-percentage">100%</span>
-                                </div>
-                                <div class="progress-bar-container">
-                                    <div class="progress-bar-fill" style="width: 100%;"></div>
-                                </div>
-                            </div>
-
-                            <div class="goal-footer">
-                                <span class="completed-badge">
-                                    <span>✓</span>
-                                    <span>Completed!</span>
-                                </span>
-                            </div>
+                            <button class="quick-action-btn" onclick="document.getElementById('goalTitle').focus()">
+                                ➕ Create Your First Goal
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -716,6 +535,34 @@
 
     <script src="script.js"></script>
     <script>
+        // Calculate REAL stats from actual goals on page
+        function updateStats() {
+            const allGoals = document.querySelectorAll('.goal-card');
+            const completedGoals = document.querySelectorAll('.goal-card.completed');
+            const activeGoals = allGoals.length - completedGoals.length;
+
+            // Calculate average progress from active goals only
+            let totalProgress = 0;
+            let progressCount = 0;
+            document.querySelectorAll('.goal-card:not(.completed) .progress-percentage').forEach(el => {
+                const progress = parseInt(el.textContent);
+                if (!isNaN(progress)) {
+                    totalProgress += progress;
+                    progressCount++;
+                }
+            });
+            const avgProgress = progressCount > 0 ? Math.round(totalProgress / progressCount) : 0;
+
+            // Update the stats display with REAL data
+            document.getElementById('activeGoalsCount').textContent = activeGoals;
+            document.getElementById('completedGoalsCount').textContent = completedGoals.length;
+            document.getElementById('avgProgress').textContent = avgProgress + '%';
+            document.getElementById('totalGoalsCount').textContent = allGoals.length;
+        }
+
+        // Update stats when page loads
+        document.addEventListener('DOMContentLoaded', updateStats);
+
         function addGoal() {
             const title = document.getElementById('goalTitle').value;
             const description = document.getElementById('goalDescription').value;
@@ -734,6 +581,9 @@
             document.getElementById('goalDescription').value = '';
             document.getElementById('goalCategory').value = '';
             document.getElementById('goalTargetDate').value = '';
+
+            // Update stats after adding goal
+            updateStats();
         }
 
         function filterGoals(filter) {
@@ -750,6 +600,9 @@
             if (confirm('Are you sure you want to delete this goal?')) {
                 btn.closest('.goal-card').remove();
                 alert('Goal deleted successfully.');
+                
+                // Update stats with REAL data after deletion
+                updateStats();
             }
         }
 
@@ -757,7 +610,17 @@
             if (confirm('Mark this goal as complete?')) {
                 const card = btn.closest('.goal-card');
                 card.classList.add('completed');
+                
+                // Update progress to 100%
+                const progressBar = card.querySelector('.progress-bar-fill');
+                const progressPercentage = card.querySelector('.progress-percentage');
+                if (progressBar) progressBar.style.width = '100%';
+                if (progressPercentage) progressPercentage.textContent = '100%';
+                
                 alert('🎉 Congratulations on completing your goal!');
+                
+                // Update stats with REAL data
+                updateStats();
             }
         }
 
@@ -769,6 +632,8 @@
         }
     </script>
     <link rel="stylesheet" href="chat-widget.css">
+    <script src="nupi-avatar.js"></script>
+    <script src="chat-guide-system.js"></script>
     <script src="chat-widget.js"></script>
 </body>
 </html>

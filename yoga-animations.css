@@ -1,0 +1,328 @@
+/* Yoga Figure Animations - CSS Art */
+
+.yoga-figure {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Mountain Pose - Standing Figure */
+.mountain-pose {
+    width: 40px;
+    height: 120px;
+    background: white;
+    border-radius: 20px 20px 5px 5px;
+    position: relative;
+}
+
+.mountain-pose::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    top: -25px;
+    left: -5px;
+}
+
+.mountain-pose::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 4px;
+    background: white;
+    top: 30px;
+    left: -20px;
+    border-radius: 2px;
+}
+
+/* Tree Pose - Balance */
+.tree-pose {
+    width: 40px;
+    height: 120px;
+    background: white;
+    border-radius: 20px 20px 5px 5px;
+    position: relative;
+    transform: rotate(0deg);
+    animation: treeBalance 4s ease-in-out infinite;
+}
+
+@keyframes treeBalance {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+}
+
+.tree-pose::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    top: -25px;
+    left: -5px;
+}
+
+.tree-pose::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: transparent;
+    border: 4px solid white;
+    border-radius: 50%;
+    top: 10px;
+    left: -10px;
+}
+
+/* Child's Pose - Kneeling/Bowing */
+.child-pose {
+    width: 100px;
+    height: 60px;
+    background: white;
+    border-radius: 50px 50px 10px 10px;
+    position: relative;
+}
+
+.child-pose::before {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    top: -10px;
+    left: 10px;
+}
+
+/* Warrior Pose - Lunging */
+.warrior-pose {
+    width: 120px;
+    height: 100px;
+    position: relative;
+}
+
+.warrior-pose::before {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 80px;
+    background: white;
+    border-radius: 20px;
+    transform: rotate(-30deg);
+    left: 20px;
+}
+
+.warrior-pose::after {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: white;
+    border-radius: 50%;
+    top: -10px;
+    left: 25px;
+}
+
+/* Cat-Cow - All Fours */
+.catcow-pose {
+    width: 100px;
+    height: 60px;
+    background: white;
+    border-radius: 30px;
+    position: relative;
+    animation: catcow 3s ease-in-out infinite;
+}
+
+@keyframes catcow {
+    0%, 100% { border-radius: 30px 30px 50px 50px; }
+    50% { border-radius: 50px 50px 30px 30px; }
+}
+
+.catcow-pose::before {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: white;
+    border-radius: 50%;
+    top: -10px;
+    left: 5px;
+}
+
+/* Corpse Pose - Lying Down */
+.corpse-pose {
+    width: 120px;
+    height: 40px;
+    background: white;
+    border-radius: 20px;
+    position: relative;
+}
+
+.corpse-pose::before {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 10px;
+}
+
+.corpse-pose::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background: white;
+    top: 18px;
+    right: 5px;
+}
+
+/* Sun Salutation - Reaching Up */
+.sun-pose {
+    width: 40px;
+    height: 120px;
+    background: white;
+    border-radius: 20px;
+    position: relative;
+    animation: sunReach 4s ease-in-out infinite;
+}
+
+@keyframes sunReach {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.1); }
+}
+
+.sun-pose::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    top: -25px;
+    left: -5px;
+}
+
+.sun-pose::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 4px;
+    background: white;
+    top: 10px;
+    left: -30px;
+    transform: rotate(-20deg);
+}
+
+/* Meditation Pose - Seated Lotus */
+.meditation-pose {
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+
+.meditation-pose::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 50px;
+    background: white;
+    border-radius: 30px 30px 50px 50px;
+    bottom: 0;
+    left: 10px;
+}
+
+.meditation-pose::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    top: 0;
+    left: 20px;
+}
+
+/* Breathing Animation */
+@keyframes breathe {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    25% {
+        transform: scale(1.3);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+    }
+    75% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+/* Enhanced Breathing Circle with Pulsing Glow */
+.breathing-circle {
+    position: relative;
+}
+
+.breathing-circle::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(102, 194, 165, 0.4), transparent);
+    animation: breathePulse 8s infinite;
+    transform-origin: center;
+}
+
+@keyframes breathePulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% { 
+        transform: scale(2);
+        opacity: 0.8;
+    }
+}
+
+/* Add glow effect to active figures */
+.pose-animation:hover .yoga-figure {
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+}
+
+/* Breathing instruction text animation */
+.breathing-instruction {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    animation: breatheText 8s infinite;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes breatheText {
+    0%, 20% { content: 'Breathe In...'; opacity: 1; }
+    21%, 45% { opacity: 0; }
+    46%, 70% { content: 'Hold...'; opacity: 1; }
+    71%, 95% { opacity: 0; }
+    96%, 100% { content: 'Breathe Out...'; opacity: 1; }
+}

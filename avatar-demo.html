@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUPI Avatar - TherapyConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .avatar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #mainAvatar {
+            width: 600px;
+            max-width: 90vw;
+            height: 750px;
+            max-height: 90vh;
+        }
+
+        .avatar-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 90vw;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .emotion-btn {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #eb3349, #f45c43);
+        }
+
+        .avatar-info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            border-radius: 15px;
+            max-width: 300px;
+        }
+
+        .avatar-info h2 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+
+        .avatar-info p {
+            margin: 5px 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .talk-input {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            max-width: 40vw;
+        }
+
+        .talk-input input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .talk-input input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            #mainAvatar {
+                width: 100vw;
+                height: 60vh;
+            }
+
+            .avatar-controls {
+                bottom: 10px;
+                padding: 15px;
+                gap: 10px;
+            }
+
+            .control-btn {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+
+            .talk-input {
+                position: fixed;
+                top: auto;
+                bottom: 100px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+                max-width: none;
+            }
+
+            .avatar-info {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="particles"></div>
+
+    <div class="avatar-info">
+        <h2>NUPI Avatar</h2>
+        <p>🎭 <strong>Emotion:</strong> <span id="currentEmotion">Calm</span></p>
+        <p>🎬 <strong>Action:</strong> <span id="currentAction">Idle</span></p>
+        <p>💬 <strong>Status:</strong> <span id="avatarStatus">Ready</span></p>
+    </div>
+
+    <div class="talk-input">
+        <input type="text" id="talkInput" placeholder="Type a message for NUPI to react to..." />
+    </div>
+
+    <div class="avatar-container">
+        <div id="mainAvatar"></div>
+    </div>
+
+    <div class="avatar-controls">
+        <div style="width: 100%; text-align: center; color: white; font-weight: 600; margin-bottom: 10px;">
+            🎭 Emotions
+        </div>
+        <button class="control-btn emotion-btn" onclick="setEmotion('calm')">😌 Calm</button>
+        <button class="control-btn emotion-btn" onclick="setEmotion('happy')">😊 Happy</button>
+        <button class="control-btn emotion-btn" onclick="setEmotion('empathetic')">💙 Empathetic</button>
+        <button class="control-btn emotion-btn" onclick="setEmotion('concerned')">😟 Concerned</button>
+        <button class="control-btn emotion-btn" onclick="setEmotion('thinking')">🤔 Thinking</button>
+        <button class="control-btn emotion-btn" onclick="setEmotion('encouraging')">🌟 Encouraging</button>
+        
+        <div style="width: 100%; text-align: center; color: white; font-weight: 600; margin: 10px 0;">
+            🎬 Actions
+        </div>
+        <button class="control-btn action-btn" onclick="doAction('idle')">🧘 Idle</button>
+        <button class="control-btn action-btn" onclick="doAction('welcoming')">👋 Welcome</button>
+        <button class="control-btn action-btn" onclick="doAction('listening')">👂 Listen</button>
+        <button class="control-btn action-btn" onclick="doAction('nodding')">👌 Nod</button>
+        <button class="control-btn action-btn" onclick="doAction('thinking')">💭 Think</button>
+        <button class="control-btn action-btn" onclick="doAction('talking')">💬 Talk</button>
+    </div>
+
+    <script src="nupi-avatar.js"></script>
+    <script>
+        let avatar;
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            // Initialize avatar
+            avatar = new NUPIAvatar('mainAvatar');
+            avatar.setState('welcoming');
+            
+            // Auto greet
+            setTimeout(() => {
+                avatar.setState('idle');
+                updateStatus('Ready to help!');
+            }, 2000);
+            
+            // Talk input handler
+            document.getElementById('talkInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const message = e.target.value.trim();
+                    if (message) {
+                        handleMessage(message);
+                        e.target.value = '';
+                    }
+                }
+            });
+        });
+        
+        function setEmotion(emotion) {
+            if (avatar) {
+                avatar.setEmotion(emotion);
+                document.getElementById('currentEmotion').textContent = 
+                    emotion.charAt(0).toUpperCase() + emotion.slice(1);
+                updateStatus(`Feeling ${emotion}`);
+            }
+        }
+        
+        function doAction(action) {
+            if (avatar) {
+                avatar.setState(action);
+                document.getElementById('currentAction').textContent = 
+                    action.charAt(0).toUpperCase() + action.slice(1);
+                
+                if (action === 'talking') {
+                    avatar.startTalking('Hello! How can I help you today?');
+                    updateStatus('Speaking...');
+                    setTimeout(() => {
+                        avatar.stopTalking();
+                        avatar.setState('idle');
+                        updateStatus('Ready');
+                    }, 3000);
+                } else {
+                    updateStatus(`${action.charAt(0).toUpperCase() + action.slice(1)}...`);
+                    setTimeout(() => {
+                        updateStatus('Ready');
+                    }, 2000);
+                }
+            }
+        }
+        
+        function handleMessage(message) {
+            if (avatar) {
+                // Detect emotion and react
+                avatar.detectEmotion(message);
+                avatar.setState('listening');
+                updateStatus('Listening...');
+                
+                // Start talking animation
+                setTimeout(() => {
+                    avatar.startTalking(message);
+                    updateStatus('Responding...');
+                    
+                    // Stop after message length based duration
+                    setTimeout(() => {
+                        avatar.stopTalking();
+                        avatar.setState('idle');
+                        updateStatus('Ready');
+                    }, Math.min(message.length * 50, 5000));
+                }, 1000);
+            }
+        }
+        
+        function updateStatus(status) {
+            document.getElementById('avatarStatus').textContent = status;
+        }
+        
+        // Demo sequence on page load
+        setTimeout(() => {
+            if (avatar) {
+                // Demo the avatar capabilities
+                avatar.setState('welcoming');
+                setTimeout(() => {
+                    avatar.startTalking('Hi! I\'m NUPI, your AI therapist companion.');
+                    setTimeout(() => {
+                        avatar.stopTalking();
+                        avatar.nod();
+                        setTimeout(() => {
+                            avatar.setState('idle');
+                        }, 2000);
+                    }, 3000);
+                }, 1000);
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

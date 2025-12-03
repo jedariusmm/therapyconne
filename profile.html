@@ -312,7 +312,7 @@
             <div class="nav-links">
                 <a href="dashboard.html">Dashboard</a>
                 <a href="sessions.html">Sessions</a>
-                <a href="therapists.html">Therapists</a>
+                <a href="therapist-finder.html">Therapists</a>
                 <a href="resources.html">Resources</a>
                 <a href="profile.html" class="active">Profile</a>
                 <button class="btn btn-secondary" onclick="logout()">Logout</button>
@@ -324,10 +324,15 @@
         <div class="container">
             <!-- Profile Header -->
             <div class="profile-header">
-                <div class="profile-avatar" id="profileAvatar">👤</div>
+                <div class="profile-avatar" id="profileAvatar" style="cursor: pointer; position: relative; overflow: hidden;">
+                    <img id="profileAvatarImg" style="width: 100%; height: 100%; object-fit: cover; display: none; border-radius: 50%;">
+                    <span id="profileAvatarText">👤</span>
+                </div>
                 <h1 style="color: white; margin-bottom: 0.5rem;" id="profileName">Your Name</h1>
                 <p style="color: var(--gray);" id="profileEmail">your.email@example.com</p>
-                <button class="upload-avatar-btn" onclick="uploadAvatar()">📷 Change Photo</button>
+                <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="handleAvatarUpload(event)">
+                <button class="upload-avatar-btn" onclick="document.getElementById('avatarInput').click()">📷 Change Photo</button>
+                <button class="upload-avatar-btn" onclick="removeAvatar()" id="removeAvatarBtn" style="display: none; background: rgba(239, 68, 68, 0.2); color: #ef4444; border-color: #ef4444; margin-left: 0.5rem;">🗑️ Remove Photo</button>
             </div>
 
             <!-- Success Message -->
@@ -400,10 +405,37 @@
 
                         <div class="form-group">
                             <label for="bio">About Me</label>
-                            <textarea id="bio" placeholder="Tell us a bit about yourself..."></textarea>
+                            <textarea id="bio" placeholder="Tell us a bit about yourself..." rows="4" maxlength="500"></textarea>
+                            <small style="color: var(--gray); font-size: 0.8rem; display: block; margin-top: 0.25rem;">
+                                <span id="bioCharCount">0</span>/500 characters
+                            </small>
                         </div>
 
-                        <button type="submit" class="save-btn">💾 Save Changes</button>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="City, State or Country" maxlength="100">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interests">Interests & Hobbies</label>
+                            <input type="text" id="interests" placeholder="Reading, Yoga, Hiking, Music... (separate with commas)" maxlength="200">
+                            <small style="color: var(--gray); font-size: 0.8rem; display: block; margin-top: 0.25rem;">
+                                Enter your interests separated by commas
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="goals">Personal Goals</label>
+                            <textarea id="goals" placeholder="What are you working towards in your mental health journey?" rows="4" maxlength="500"></textarea>
+                            <small style="color: var(--gray); font-size: 0.8rem; display: block; margin-top: 0.25rem;">
+                                <span id="goalsCharCount">0</span>/500 characters
+                            </small>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                            <button type="button" class="upload-avatar-btn" onclick="cancelEdit()" style="background: rgba(255,255,255,0.05); color: var(--gray); border-color: rgba(255,255,255,0.2);">✕ Cancel</button>
+                            <button type="submit" class="save-btn">💾 Save Changes</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -637,6 +669,40 @@
                 document.getElementById('profileName').textContent = userData.name;
             }
 
+            // Load additional profile fields
+            if (userData.bio) {
+                document.getElementById('bio').value = userData.bio;
+                updateCharCount('bio', 'bioCharCount');
+            }
+            if (userData.location) {
+                document.getElementById('location').value = userData.location;
+            }
+            if (userData.interests) {
+                document.getElementById('interests').value = userData.interests;
+            }
+            if (userData.goals) {
+                document.getElementById('goals').value = userData.goals;
+                updateCharCount('goals', 'goalsCharCount');
+            }
+            if (userData.phone) {
+                document.getElementById('phone').value = userData.phone;
+            }
+            if (userData.dateOfBirth) {
+                document.getElementById('dateOfBirth').value = userData.dateOfBirth;
+            }
+            if (userData.gender) {
+                document.getElementById('gender').value = userData.gender;
+            }
+            if (userData.timezone) {
+                document.getElementById('timezone').value = userData.timezone;
+            }
+
+            // Load profile picture
+            loadProfilePicture();
+
+            // Add form submission handler
+            setupFormHandlers();
+
             if (userData.plan) {
                 const planNames = {
                     trial: 'Free Trial',
@@ -656,6 +722,92 @@
             }
         });
 
+        function loadProfilePicture() {
+            const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+            const img = document.getElementById('profileAvatarImg');
+            const text = document.getElementById('profileAvatarText');
+            const removeBtn = document.getElementById('removeAvatarBtn');
+
+            if (userData.profilePicture) {
+                img.src = userData.profilePicture;
+                img.style.display = 'block';
+                text.style.display = 'none';
+                removeBtn.style.display = 'inline-block';
+            } else {
+                img.style.display = 'none';
+                text.style.display = 'block';
+                removeBtn.style.display = 'none';
+                
+                // Show initials if name exists
+                if (userData.name) {
+                    const initials = userData.name.split(' ').map(n => n[0]).join('');
+                    text.textContent = initials;
+                }
+            }
+        }
+
+        function handleAvatarUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file (JPG, PNG, GIF, etc.)');
+                return;
+            }
+
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image size must be less than 5MB');
+                return;
+            }
+
+            // Read and convert to base64
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+                
+                // Save to localStorage
+                const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+                userData.profilePicture = imageData;
+                localStorage.setItem('therapyConnectUser', JSON.stringify(userData));
+                
+                // Update display
+                loadProfilePicture();
+                updateProfilePictureEverywhere(imageData);
+                showSuccess();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeAvatar() {
+            if (confirm('Remove your profile picture?')) {
+                const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+                delete userData.profilePicture;
+                localStorage.setItem('therapyConnectUser', JSON.stringify(userData));
+                
+                loadProfilePicture();
+                updateProfilePictureEverywhere(null);
+                showSuccess();
+            }
+        }
+
+        function updateProfilePictureEverywhere(imageData) {
+            // Update navbar avatar if it exists
+            const navAvatar = document.getElementById('navUserAvatar');
+            if (navAvatar) {
+                if (imageData) {
+                    navAvatar.innerHTML = `<img src="${imageData}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">`;
+                } else {
+                    const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+                    if (userData.name) {
+                        const initials = userData.name.split(' ').map(n => n[0]).join('');
+                        navAvatar.textContent = initials;
+                    }
+                }
+            }
+        }
+
         function switchTab(tabName) {
             // Update tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -666,33 +818,86 @@
             document.getElementById(tabName + '-tab').classList.add('active');
         }
 
-        function uploadAvatar() {
-            // Simulate avatar upload
-            const emojis = ['👤', '😊', '🌟', '💚', '🧠', '✨', '🌈', '🦋'];
-            const random = emojis[Math.floor(Math.random() * emojis.length)];
-            document.getElementById('profileAvatar').textContent = random;
-            showSuccess();
-        }
-
         function showSuccess() {
             const msg = document.getElementById('successMessage');
             msg.classList.add('show');
             setTimeout(() => msg.classList.remove('show'), 3000);
         }
 
-        // Form submissions
-        document.getElementById('personalInfoForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
-            userData.name = document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value;
-            userData.email = document.getElementById('email').value;
-            userData.phone = document.getElementById('phone').value;
-            userData.dateOfBirth = document.getElementById('dateOfBirth').value;
-            userData.gender = document.getElementById('gender').value;
-            userData.bio = document.getElementById('bio').value;
-            localStorage.setItem('therapyConnectUser', JSON.stringify(userData));
-            showSuccess();
-        });
+        // Setup form handlers
+        function setupFormHandlers() {
+            // Character count handlers
+            document.getElementById('bio').addEventListener('input', () => updateCharCount('bio', 'bioCharCount'));
+            document.getElementById('goals').addEventListener('input', () => updateCharCount('goals', 'goalsCharCount'));
+
+            // Personal Info form submission
+            document.getElementById('personalInfoForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const firstName = document.getElementById('firstName').value.trim();
+                const lastName = document.getElementById('lastName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const dateOfBirth = document.getElementById('dateOfBirth').value;
+                const gender = document.getElementById('gender').value;
+                const timezone = document.getElementById('timezone').value;
+                const bio = document.getElementById('bio').value.trim();
+                const location = document.getElementById('location').value.trim();
+                const interests = document.getElementById('interests').value.trim();
+                const goals = document.getElementById('goals').value.trim();
+
+                // Validation
+                if (!firstName || !lastName) {
+                    alert('⚠️ Please enter your first and last name');
+                    return;
+                }
+                if (!email || !validateEmail(email)) {
+                    alert('⚠️ Please enter a valid email address');
+                    return;
+                }
+
+                const userData = JSON.parse(localStorage.getItem('therapyConnectUser') || '{}');
+                userData.name = `${firstName} ${lastName}`;
+                userData.fullName = `${firstName} ${lastName}`;
+                userData.email = email;
+                userData.phone = phone;
+                userData.dateOfBirth = dateOfBirth;
+                userData.gender = gender;
+                userData.timezone = timezone;
+                userData.bio = bio;
+                userData.location = location;
+                userData.interests = interests;
+                userData.goals = goals;
+                
+                localStorage.setItem('therapyConnectUser', JSON.stringify(userData));
+                
+                // Update profile header
+                document.getElementById('profileName').textContent = userData.name;
+                document.getElementById('profileEmail').textContent = userData.email;
+                
+                // Update navbar profile picture if needed
+                updateProfilePictureEverywhere(userData.profilePicture);
+                
+                showSuccess();
+            });
+        }
+
+        function updateCharCount(textareaId, counterId) {
+            const textarea = document.getElementById(textareaId);
+            const counter = document.getElementById(counterId);
+            counter.textContent = textarea.value.length;
+        }
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function cancelEdit() {
+            if (confirm('Discard unsaved changes?')) {
+                // Reload page to reset form
+                window.location.reload();
+            }
+        }
 
         document.getElementById('preferencesForm').addEventListener('submit', (e) => {
             e.preventDefault();
