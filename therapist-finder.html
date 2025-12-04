@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find a Therapist Near You | TherapyConnect</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
+        body {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            min-height: 100vh;
+        }
+        
         .finder-container {
             padding: 2rem;
             max-width: 1400px;
@@ -48,33 +53,47 @@
 
         .search-input {
             padding: 1rem;
-            background: rgba(20, 20, 20, 0.8);
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            background: rgba(20, 20, 20, 0.95);
+            border: 2px solid rgba(99, 102, 241, 0.5);
             border-radius: 0.5rem;
             color: white;
             font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .search-input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2), 0 4px 12px rgba(99, 102, 241, 0.4);
+            background: rgba(30, 30, 30, 0.95);
         }
 
         .search-btn {
             padding: 1rem 2rem;
-            background: var(--primary);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             color: white;
             border: none;
             border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+            white-space: nowrap;
         }
 
         .search-btn:hover {
-            background: #5558e3;
+            background: linear-gradient(135deg, #5558e3, #7c3aed);
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+        }
+        
+        .search-btn:active {
+            transform: translateY(0);
         }
 
         .filter-section {
