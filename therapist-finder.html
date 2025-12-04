@@ -18,13 +18,14 @@
         }
 
         .finder-header h1 {
-            color: white;
+            color: #6366f1;
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
         }
 
         .finder-header p {
-            color: var(--gray);
+            color: #e5e7eb;
             font-size: 1.2rem;
             max-width: 600px;
             margin: 0 auto;
@@ -139,7 +140,7 @@
         }
 
         .therapist-name {
-            color: white;
+            color: #f3f4f6;
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 0.25rem;
@@ -269,12 +270,14 @@
         }
 
         .empty-state h3 {
-            color: white;
+            color: #f3f4f6;
+            font-size: 1.5rem;
             margin-bottom: 0.5rem;
         }
 
         .empty-state p {
-            color: var(--gray);
+            color: #9ca3af;
+            font-size: 1.1rem;
         }
 
         .location-permission {
@@ -308,6 +311,72 @@
 
             .search-controls {
                 grid-template-columns: 1fr;
+            }
+
+            .finder-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .finder-header p {
+                font-size: 1rem;
+            }
+
+            .therapist-result {
+                padding: 1rem;
+            }
+
+            .therapist-name {
+                font-size: 1.1rem;
+            }
+
+            .therapist-actions {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+
+            .rating-distance {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .finder-container {
+                padding: 1rem;
+            }
+
+            .finder-header {
+                margin-bottom: 2rem;
+            }
+
+            .finder-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .finder-header p {
+                font-size: 0.9rem;
+            }
+
+            .search-section {
+                padding: 1rem;
+            }
+
+            .filter-chip {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .map-container {
+                height: 300px;
+            }
+
+            .therapist-info {
+                flex-direction: column;
+                gap: 0.5rem;
             }
         }
     </style>

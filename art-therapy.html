@@ -119,26 +119,33 @@
         .color-palette {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 0.5rem;
+            gap: 0.75rem;
+            padding: 0.5rem;
         }
 
         .color-btn {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            border: 3px solid transparent;
+            border: 3px solid rgba(255,255,255,0.2);
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .color-btn:hover {
-            transform: scale(1.15);
+            transform: scale(1.1);
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
         .color-btn.active {
             border-color: white;
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+            box-shadow: 0 0 15px rgba(255,255,255,0.8);
+            transform: scale(1.15);
+            z-index: 3;
         }
 
         .brush-sizes {
@@ -326,14 +333,80 @@
         @media (max-width: 768px) {
             #paintCanvas {
                 height: 400px;
+                max-width: 100%;
+            }
+
+            .canvas-studio {
+                padding: 1rem;
+            }
+
+            .canvas-container {
+                padding: 0.5rem;
             }
 
             .canvas-tools {
                 grid-template-columns: 1fr;
+                gap: 1rem;
             }
 
             .color-palette {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 0.5rem;
+            }
+
+            .color-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .tool-section {
+                padding: 1rem;
+            }
+
+            .action-btns {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .art-tabs {
+                padding: 0 1rem;
+            }
+
+            .art-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .color-palette {
                 grid-template-columns: repeat(4, 1fr);
+            }
+
+            .color-btn {
+                width: 35px;
+                height: 35px;
+            }
+
+            #paintCanvas {
+                height: 300px;
+            }
+
+            .art-container {
+                padding-top: 80px;
+            }
+
+            .brush-sizes {
+                justify-content: center;
+            }
+
+            .size-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
             }
         }
     </style>
