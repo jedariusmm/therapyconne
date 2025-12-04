@@ -476,33 +476,34 @@
                     </div>
 
                     <div class="canvas-tools">
-                        <!-- Color Palette - Essential Colors Only -->
+                        <!-- Colors -->
                         <div class="tool-section">
                             <h4>Colors</h4>
-                            <div class="color-palette">
+                            <div class="color-palette" style="grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));">
                                 <button class="color-btn active" style="background: #000000;" onclick="selectColor('#000000')" title="Black"></button>
                                 <button class="color-btn" style="background: #ef4444;" onclick="selectColor('#ef4444')" title="Red"></button>
+                                <button class="color-btn" style="background: #f59e0b;" onclick="selectColor('#f59e0b')" title="Orange"></button>
+                                <button class="color-btn" style="background: #eab308;" onclick="selectColor('#eab308')" title="Yellow"></button>
                                 <button class="color-btn" style="background: #22c55e;" onclick="selectColor('#22c55e')" title="Green"></button>
                                 <button class="color-btn" style="background: #3b82f6;" onclick="selectColor('#3b82f6')" title="Blue"></button>
-                                <button class="color-btn" style="background: #eab308;" onclick="selectColor('#eab308')" title="Yellow"></button>
                                 <button class="color-btn" style="background: #8b5cf6;" onclick="selectColor('#8b5cf6')" title="Purple"></button>
-                                <input type="color" id="customColor" style="width: 50px; height: 50px; border-radius: 50%; border: 3px solid var(--therapeutic-green); cursor: pointer; background: none;" onchange="selectColor(this.value)" title="Custom Color">
+                                <button class="color-btn" style="background: #ec4899;" onclick="selectColor('#ec4899')" title="Pink"></button>
+                                <button class="color-btn" style="background: #14b8a6;" onclick="selectColor('#14b8a6')" title="Teal"></button>
+                                <button class="color-btn" style="background: #ffffff; border: 2px solid #333;" onclick="selectColor('#ffffff')" title="White"></button>
+                                <button class="color-btn" style="background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);" onclick="useRainbowMode()" title="Rainbow">🌈</button>
+                                <input type="color" id="customColor" style="width: 45px; height: 45px; border-radius: 50%; border: 3px solid var(--therapeutic-green); cursor: pointer;" onchange="selectColor(this.value)" title="Custom">
                             </div>
                         </div>
 
-                        <!-- Tool Selection - Essential Tools -->
+                        <!-- Tools -->
                         <div class="tool-section">
                             <h4>Tools</h4>
-                            <div class="brush-sizes" style="grid-template-columns: repeat(3, 1fr);">
-                                <button class="size-btn active" onclick="useTool('brush')">
-                                    Brush
-                                </button>
-                                <button class="size-btn" onclick="useTool('stamp')">
-                                    Stamp
-                                </button>
-                                <button class="size-btn" onclick="useTool('eraser')">
-                                    Erase
-                                </button>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap: 0.5rem;">
+                                <button class="size-btn active" onclick="useTool('brush')">Brush</button>
+                                <button class="size-btn" onclick="useTool('spray')">Spray</button>
+                                <button class="size-btn" onclick="useTool('glow')">Glow</button>
+                                <button class="size-btn" onclick="useTool('stamp')">Stamp</button>
+                                <button class="size-btn" onclick="useTool('eraser')">Erase</button>
                             </div>
                         </div>
 
@@ -517,32 +518,32 @@
                             </div>
                         </div>
 
-                        <!-- Essential Stamps Only -->
+                        <!-- Stamps -->
                         <div class="tool-section">
                             <h4>Stamps</h4>
-                            <div class="color-palette" style="grid-template-columns: repeat(6, 1fr);">
-                                <button class="size-btn" onclick="addStamp('❤️')" title="Heart">❤️</button>
-                                <button class="size-btn" onclick="addStamp('⭐')" title="Star">⭐</button>
-                                <button class="size-btn" onclick="addStamp('')" title="Rainbow">🌈</button>
-                                <button class="size-btn" onclick="addStamp('🦋')" title="Butterfly">🦋</button>
-                                <button class="size-btn" onclick="addStamp('🌸')" title="Flower">🌸</button>
-                                <button class="size-btn" onclick="addStamp('✨')" title="Sparkles">✨</button>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); gap: 0.5rem;">
+                                <button class="size-btn" onclick="addStamp('❤️')">❤️</button>
+                                <button class="size-btn" onclick="addStamp('⭐')">⭐</button>
+                                <button class="size-btn" onclick="addStamp('🌟')">🌟</button>
+                                <button class="size-btn" onclick="addStamp('💚')">💚</button>
+                                <button class="size-btn" onclick="addStamp('🌈')">🌈</button>
+                                <button class="size-btn" onclick="addStamp('🦋')">🦋</button>
+                                <button class="size-btn" onclick="addStamp('🌸')">🌸</button>
+                                <button class="size-btn" onclick="addStamp('✨')">✨</button>
+                                <button class="size-btn" onclick="addStamp('�')">🎨</button>
+                                <button class="size-btn" onclick="addStamp('🌺')">�</button>
+                                <button class="size-btn" onclick="addStamp('🍀')">🍀</button>
+                                <button class="size-btn" onclick="addStamp('🌙')">🌙</button>
                             </div>
-                        </div>
-
-                        <!-- Essential Actions -->
+                        </div>                        <!-- Actions -->
                         <div class="tool-section">
                             <h4>Actions</h4>
-                            <div class="action-btns" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
-                                <button class="action-btn" onclick="undoLastAction()" style="background: rgba(59, 130, 246, 0.2); border-color: #3b82f6;">
-                                    Undo
-                                </button>
-                                <button class="action-btn clear" onclick="clearCanvas()">
-                                    Clear
-                                </button>
-                                <button class="action-btn save" onclick="saveArtwork()">
-                                    Save
-                                </button>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 0.5rem;">
+                                <button class="action-btn" onclick="undoLastAction()" style="background: rgba(59, 130, 246, 0.2); border-color: #3b82f6;">Undo</button>
+                                <button class="action-btn" onclick="addBackground()" style="background: rgba(168, 85, 247, 0.2); border-color: #a855f7;">Background</button>
+                                <button class="action-btn" onclick="addFilter()" style="background: rgba(236, 72, 153, 0.2); border-color: #ec4899;">Filter</button>
+                                <button class="action-btn clear" onclick="clearCanvas()">Clear</button>
+                                <button class="action-btn save" onclick="saveArtwork()">Save</button>
                             </div>
                         </div>
                     </div>
