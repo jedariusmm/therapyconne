@@ -476,50 +476,37 @@
                     </div>
 
                     <div class="canvas-tools">
-                        <!-- Color Palette with Rainbow & Custom -->
+                        <!-- Color Palette - Essential Colors Only -->
                         <div class="tool-section">
                             <h4>Colors</h4>
                             <div class="color-palette">
                                 <button class="color-btn active" style="background: #000000;" onclick="selectColor('#000000')" title="Black"></button>
                                 <button class="color-btn" style="background: #ef4444;" onclick="selectColor('#ef4444')" title="Red"></button>
-                                <button class="color-btn" style="background: #f59e0b;" onclick="selectColor('#f59e0b')" title="Orange"></button>
-                                <button class="color-btn" style="background: #eab308;" onclick="selectColor('#eab308')" title="Yellow"></button>
                                 <button class="color-btn" style="background: #22c55e;" onclick="selectColor('#22c55e')" title="Green"></button>
                                 <button class="color-btn" style="background: #3b82f6;" onclick="selectColor('#3b82f6')" title="Blue"></button>
+                                <button class="color-btn" style="background: #eab308;" onclick="selectColor('#eab308')" title="Yellow"></button>
                                 <button class="color-btn" style="background: #8b5cf6;" onclick="selectColor('#8b5cf6')" title="Purple"></button>
-                                <button class="color-btn" style="background: #ec4899;" onclick="selectColor('#ec4899')" title="Pink"></button>
-                                <button class="color-btn" style="background: #14b8a6;" onclick="selectColor('#14b8a6')" title="Teal"></button>
-                                <button class="color-btn" style="background: #f97316;" onclick="selectColor('#f97316')" title="Bright Orange"></button>
-                                <button class="color-btn" style="background: #a855f7;" onclick="selectColor('#a855f7')" title="Violet"></button>
-                                <button class="color-btn" style="background: #ffffff; border: 2px solid #333;" onclick="selectColor('#ffffff')" title="White"></button>
-                                <button class="color-btn" style="background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);" onclick="useRainbowMode()" title="🌈 Rainbow!">🌈</button>
                                 <input type="color" id="customColor" style="width: 50px; height: 50px; border-radius: 50%; border: 3px solid var(--therapeutic-green); cursor: pointer; background: none;" onchange="selectColor(this.value)" title="Custom Color">
                             </div>
                         </div>
 
-                        <!-- Tool Selection -->
+                        <!-- Tool Selection - Essential Tools -->
                         <div class="tool-section">
                             <h4>Tools</h4>
-                            <div class="brush-sizes" style="grid-template-columns: repeat(5, 1fr);">
+                            <div class="brush-sizes" style="grid-template-columns: repeat(3, 1fr);">
                                 <button class="size-btn active" onclick="useTool('brush')">
-                                    🖌️<br>Brush
-                                </button>
-                                <button class="size-btn" onclick="useTool('spray')">
-                                    💨<br>Spray
-                                </button>
-                                <button class="size-btn" onclick="useTool('glow')">
-                                    ✨<br>Glow
+                                    Brush
                                 </button>
                                 <button class="size-btn" onclick="useTool('stamp')">
-                                    🌟<br>Stamp
+                                    Stamp
                                 </button>
                                 <button class="size-btn" onclick="useTool('eraser')">
-                                    🧹<br>Erase
+                                    Erase
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Brush Sizes -->
+                        <!-- Brush Size -->
                         <div class="tool-section">
                             <h4>Size</h4>
                             <div style="display: flex; align-items: center; gap: 1rem;">
@@ -530,47 +517,31 @@
                             </div>
                         </div>
 
-                        <!-- Stamps -->
+                        <!-- Essential Stamps Only -->
                         <div class="tool-section">
-                            <h4>Stamps & Emojis</h4>
-                            <div class="color-palette" style="grid-template-columns: repeat(8, 1fr);">
+                            <h4>Stamps</h4>
+                            <div class="color-palette" style="grid-template-columns: repeat(6, 1fr);">
                                 <button class="size-btn" onclick="addStamp('❤️')" title="Heart">❤️</button>
                                 <button class="size-btn" onclick="addStamp('⭐')" title="Star">⭐</button>
-                                <button class="size-btn" onclick="addStamp('🌟')" title="Sparkle">🌟</button>
-                                <button class="size-btn" onclick="addStamp('💚')" title="Green Heart">💚</button>
-                                <button class="size-btn" onclick="addStamp('🌈')" title="Rainbow">🌈</button>
+                                <button class="size-btn" onclick="addStamp('')" title="Rainbow">🌈</button>
                                 <button class="size-btn" onclick="addStamp('🦋')" title="Butterfly">🦋</button>
                                 <button class="size-btn" onclick="addStamp('🌸')" title="Flower">🌸</button>
                                 <button class="size-btn" onclick="addStamp('✨')" title="Sparkles">✨</button>
-                                <button class="size-btn" onclick="addStamp('🎨')" title="Art">🎨</button>
-                                <button class="size-btn" onclick="addStamp('🌺')" title="Hibiscus">🌺</button>
-                                <button class="size-btn" onclick="addStamp('🍀')" title="Clover">🍀</button>
-                                <button class="size-btn" onclick="addStamp('🌙')" title="Moon">🌙</button>
-                                <button class="size-btn" onclick="addStamp('☀️')" title="Sun">☀️</button>
-                                <button class="size-btn" onclick="addStamp('🎭')" title="Masks">🎭</button>
-                                <button class="size-btn" onclick="addStamp('🎪')" title="Circus">🎪</button>
-                                <button class="size-btn" onclick="addStamp('🎉')" title="Party">🎉</button>
                             </div>
                         </div>
 
-                        <!-- Actions -->
+                        <!-- Essential Actions -->
                         <div class="tool-section">
                             <h4>Actions</h4>
-                            <div class="action-btns" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem;">
+                            <div class="action-btns" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
                                 <button class="action-btn" onclick="undoLastAction()" style="background: rgba(59, 130, 246, 0.2); border-color: #3b82f6;">
-                                    ↶ Undo
-                                </button>
-                                <button class="action-btn" onclick="addBackground()" style="background: rgba(168, 85, 247, 0.2); border-color: #a855f7;">
-                                    🖼️ BG
-                                </button>
-                                <button class="action-btn" onclick="addFilter()" style="background: rgba(236, 72, 153, 0.2); border-color: #ec4899;">
-                                    🎭 Filter
+                                    Undo
                                 </button>
                                 <button class="action-btn clear" onclick="clearCanvas()">
-                                    🗑️ Clear
+                                    Clear
                                 </button>
                                 <button class="action-btn save" onclick="saveArtwork()">
-                                    💾 Save
+                                    Save
                                 </button>
                             </div>
                         </div>
