@@ -70,6 +70,9 @@
             border-radius: 20px;
             padding: 2rem;
             border: 1px solid rgba(102, 194, 165, 0.2);
+            max-width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         .canvas-container {
@@ -99,6 +102,8 @@
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         .tool-section {
@@ -106,6 +111,8 @@
             padding: 1.5rem;
             border-radius: 15px;
             border: 1px solid rgba(102, 194, 165, 0.2);
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .tool-section h4 {
@@ -121,6 +128,8 @@
             grid-template-columns: repeat(6, 1fr);
             gap: 0.75rem;
             padding: 0.5rem;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .color-btn {
@@ -214,6 +223,9 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 2rem;
+            max-width: 100%;
+            padding: 0 1rem;
+            box-sizing: border-box;
         }
 
         .coloring-card {
@@ -263,6 +275,9 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
+            max-width: 100%;
+            padding: 0 1rem;
+            box-sizing: border-box;
         }
 
         .gallery-item {
@@ -463,7 +478,7 @@
                     <div class="canvas-tools">
                         <!-- Color Palette with Rainbow & Custom -->
                         <div class="tool-section">
-                            <h4>� Colors</h4>
+                            <h4>🌈 Colors</h4>
                             <div class="color-palette">
                                 <button class="color-btn active" style="background: #000000;" onclick="selectColor('#000000')" title="Black"></button>
                                 <button class="color-btn" style="background: #ef4444;" onclick="selectColor('#ef4444')" title="Red"></button>
@@ -546,7 +561,7 @@
                                     ↶ Undo
                                 </button>
                                 <button class="action-btn" onclick="addBackground()" style="background: rgba(168, 85, 247, 0.2); border-color: #a855f7;">
-                                    �️ BG
+                                    🖼️ BG
                                 </button>
                                 <button class="action-btn" onclick="addFilter()" style="background: rgba(236, 72, 153, 0.2); border-color: #ec4899;">
                                     🎭 Filter
