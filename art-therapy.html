@@ -126,8 +126,8 @@
         .color-palette {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 0.75rem;
-            padding: 0.5rem;
+            gap: 1.25rem;  /* Increased from 0.75rem to prevent overlap */
+            padding: 1rem;  /* Increased padding for more space */
             max-width: 100%;
             box-sizing: border-box;
         }
@@ -138,23 +138,24 @@
             border-radius: 50%;
             border: 3px solid rgba(255,255,255,0.2);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease-in-out;
             position: relative;
             z-index: 1;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            margin: 0;  /* Remove any default margins */
         }
 
         .color-btn:hover {
-            transform: scale(1.1);
-            z-index: 2;
+            transform: scale(1.08);  /* Reduced from 1.1 to prevent overlap */
+            z-index: 10;  /* Much higher to ensure it's always on top */
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
         .color-btn.active {
             border-color: white;
             box-shadow: 0 0 15px rgba(255,255,255,0.8);
-            transform: scale(1.15);
-            z-index: 3;
+            transform: scale(1.12);  /* Slightly reduced from 1.15 */
+            z-index: 20;  /* Highest z-index for active state */
         }
 
         .brush-sizes {
