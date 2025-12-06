@@ -255,36 +255,19 @@ class TherapistChat {
 
     // Auto-start chat feature - ONLY when user actively uses resources or requests help
     autoStartChat() {
-        // Check if we're on games/resources page
-        const isResourcesPage = window.location.pathname.includes('games.html') || 
-                               window.location.pathname.includes('resources.html') ||
-                               window.location.href.includes('games.html') ||
-                               window.location.href.includes('resources.html');
-        
-        if (!isResourcesPage) {
-            return; // Don't auto-start on other pages
-        }
-        
-        // Check if user has seen auto-greeting in this session
-        const hasSeenGreeting = sessionStorage.getItem('nupi_auto_greeted_resources');
-        
-        if (!hasSeenGreeting) {
-            // Wait 5 seconds (not 2) to let user browse first
-            setTimeout(() => {
-                // Only show if user is still on page and hasn't already opened chat
-                if (!this.isOpen && document.getElementById('chatWindow')) {
-                    // Don't auto-open - just add a subtle pulse to the bubble
-                    const bubble = document.getElementById('chatBubbleBtn');
-                    if (bubble) {
-                        bubble.style.animation = 'pulse 2s infinite';
-                        bubble.title = '💙 NUPI is here if you need help with anything!';
-                    }
-                }
-                
-                // Mark as greeted for this session
-                sessionStorage.setItem('nupi_auto_greeted_resources', 'true');
-            }, 5000);
-        }
+        // MAKE CHAT BUBBLE VISIBLE ON ALL PAGES - ALWAYS
+        setTimeout(() => {
+            const bubble = document.getElementById('chatBubbleBtn');
+            if (bubble) {
+                // Make sure bubble is visible
+                bubble.style.display = 'flex';
+                bubble.style.opacity = '1';
+                bubble.style.visibility = 'visible';
+                // Add pulse animation to draw attention
+                bubble.style.animation = 'pulse 2s infinite';
+                bubble.title = '💙 NUPI Therapist - Click to chat anytime!';
+            }
+        }, 1000);
     }
 
     openApiConfig() {
